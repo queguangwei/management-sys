@@ -1,0 +1,27 @@
+@import "../../styles/css/mixin";
+.login_bg {
+  background: #ffffff;
+  padding: px2rem(520px) px2rem(75px);
+
+  &_logo {
+
+  }
+
+  &_content {
+    text-align: center;
+  }
+  &_btn {
+    width: px2rem(600px);
+    height: px2rem(90px);
+    background: #2997de;
+    color: #ffffff;
+    font-size: px2rem(34px);
+    border-radius: px2rem(50px);
+    margin: px2rem(40px) auto;
+  }
+
+  &_forgot {
+    font-size: px2rem(24px);
+    color: #999999;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "env": "production",
+  "port": 4006,
+  "api": {
+    "com": {
+      "root": "/api",
+      "proxy":{
+
+      }
+    }
+  }
+}

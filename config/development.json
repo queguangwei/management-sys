@@ -1,0 +1,12 @@
+{
+  "env": "development",
+  "port": 6060,
+  "api": {
+    "lr": {
+      "root": "/api",
+      "proxy":{
+        "user": "http://192.168.51.240:8080/"
+      }
+    }
+  }
+}

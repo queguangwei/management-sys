@@ -1,0 +1,74 @@
+@mixin icon {
+    font-family: 'iconfont' !important;
+    font-style: normal;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: .2px;
+}
+
+// 清除浮动
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+    *height: 1%;
+}
+
+// flex布局
+@mixin box {
+  display: -webkit-box;
+  display: -moz-box;
+  display: flex;
+  display: -ms-flexbox;
+}
+
+// 浏览器适配
+@mixin browser($field, $value) {
+  #{$field}: $value;
+  -webkit-#{$field}: $value;
+  -moz-#{$field}: $value;
+  -ms-#{$field}: $value;
+  -o-#{$field}: $value;
+  @if $field == "box-flex" {
+    flex: $value;
+  }
+}
+
+$ratio: 2;
+$fontSize: 1;
+$fontSizePx: $fontSize*1px;
+$rate: $fontSize / $ratio;
+$base: 100px;
+
+@function px2rem($px) {
+  @return ($px/$base*$fontSize)*1rem;
+}
+
+
+@mixin first($num, $type: false) {
+  @if ($num ==1) and ($type == true) {
+    &:first-of-type{
+      @content;
+    }
+  }
+  @if ($num == 1) and ($type == false) {
+    &:first-child{
+      @content;
+    }
+  }
+  @if ($num !=1) and ($type == true) {
+    &:nth-of-type(-n + #{$num}){
+      @content;
+    }
+  }
+  @if ($num != 1) and ($type == false) {
+    &:nth-child(-n + #{$num}){
+      @content;
+    }
+  }
+}
