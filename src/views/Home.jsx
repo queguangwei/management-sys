@@ -26,24 +26,40 @@ class Home extends React.Component {
     }
 
 	onOpenChange(...args) {
-		console.log(args);
+
 		this.setState({ open: !this.state.open });
 	}
 
+	search() {
+		console.log(1);
+	}
+
     render() {
-		const sidebar = (<List>
-			{[0, 1, 2, 3, 4, 5].map((i, index) => {
-				if (index === 0) {
-					return (<List.Item key={index}
-									   thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
-									   multipleLine
-					>Category</List.Item>);
-				}
-				return (<List.Item key={index}
-								   thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
-				>Category{index}</List.Item>);
-			})}
-		</List>);
+		const sidebar = (
+			<List className="drawer-slider">
+				<Item multipleLine>
+					<div>王大锤</div>
+					<Brief>13867896542</Brief>
+				</Item>
+				<Item className="drawer-slider-item">
+					新进客户
+				</Item>
+				<Item className="drawer-slider-item">
+					意向客户
+				</Item>
+				<Item className="drawer-slider-item">
+					成交客户
+				</Item>
+				<Item className="drawer-slider-item">
+					全部客户
+				</Item>
+				<Item className="drawer-slider-item">
+					账号
+				</Item>
+				<Item className="drawer-slider-item">
+					密码
+				</Item>
+			</List>);
 
         return (
             <div className="">
@@ -51,39 +67,48 @@ class Home extends React.Component {
 					icon={<Icon type="ellipsis" />}
 					onLeftClick={this.onOpenChange.bind(this)}
 					rightContent={[
-						<Icon key="0" type="search" style={{ marginRight: '16px' }} />,
+						<Icon key="0" type="search" style={{ marginRight: '16px' }} onClick={this.search.bind(this)}/>,
 						<Icon key="1" type="plus" />,
-					]}>
+					]}
+				>
 					客户管理系统
 				</NavBar>
 				<Drawer
 					className="my-drawer"
 					style={{ minHeight: document.documentElement.clientHeight }}
 					enableDragHandle
-					contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
 					sidebar={sidebar}
 					open={this.state.open}
-					onOpenChange={this.onOpenChange.bind(this)}
+					onOpenChange={this.onOpenChange}
 				>
-					<List renderHeader={() => 'Subtitle'} className="my-list">
+					<List className="my-list">
 						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							Title <Brief>subtitle</Brief>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
 						</Item>
-						<Item
-							arrow="horizontal"
-							multipleLine
-							onClick={() => {}}
-							platform="android"
-						>
-							ListItem （Android）<Brief>There may have water ripple effect of <br /> material if you set the click event.</Brief>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
 						</Item>
-						<Item
-							arrow="horizontal"
-							thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-							multipleLine
-							onClick={() => {}}
-						>
-							Title <Brief>subtitle</Brief>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
+						</Item>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
+						</Item>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
+						</Item>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
+						</Item>
+						<Item arrow="horizontal" multipleLine onClick={() => {}}>
+							王小迪 电话:13765765436
+							<Brief>电话状态:已接</Brief>
 						</Item>
 					</List>
 				</Drawer>

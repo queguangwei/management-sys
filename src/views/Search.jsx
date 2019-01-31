@@ -7,7 +7,7 @@ import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 
 
-class Notice extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -94,5 +94,5 @@ export default connect(state => ({
     user: state.user
 }), dispath => ({
     actions: bindActionCreators(Actions, dispath)
-}))(Notice)
+}))(Search)
 module.exports = exports['default']

@@ -15,11 +15,11 @@ export const routes = {
     },
     childRoutes: [
         {
-            path: 'notice',
+            path: 'search',
             getComponent(nextState,cb){
                 require.ensure([],require=>{
-                    cb(null,require('../views/Notice'));
-                },'notice')
+                    cb(null,require('../views/Search'));
+                },'search')
             },
 
         }

@@ -1,2 +1,2 @@
-# managementSys
+# management-sys
 
