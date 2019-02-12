@@ -5,15 +5,17 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { Drawer, List, NavBar, Icon } from 'antd-mobile';
+import { Drawer, List, NavBar, Icon, Tabs, WhiteSpace } from 'antd-mobile'
+import { StickyContainer, Sticky } from 'react-sticky'
 const Item = List.Item;
 const Brief = Item.Brief;
+
 
 class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-			open: true,
+			open: false,
             onUploading: false,
             data: [],
             momentHeader: [1],
@@ -34,7 +36,20 @@ class Home extends React.Component {
 		console.log(1);
 	}
 
+	renderTabBar(props) {
+    	console.log(props)
+		return (<Sticky>
+			{({ style }) => <div style={{ zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
+		</Sticky>);
+	}
+
     render() {
+		const tabs = [
+			{ title: '新进客户', sub: '1'},
+			{ title: '意向客户', sub: '2' },
+			{ title: '成交客户', sub: '3' },
+		];
+
 		const sidebar = (
 			<List className="drawer-slider">
 				<Item multipleLine>
@@ -81,36 +96,64 @@ class Home extends React.Component {
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<List className="my-list">
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item arrow="horizontal" multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-					</List>
+					<StickyContainer>
+						<Tabs tabs={tabs}
+							  initialPage={0}
+							  renderTabBar={this.renderTabBar}
+						>
+							<div>
+								<List className="my-list">
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+									<Item arrow="horizontal" multipleLine onClick={() => {}}>
+										王小迪 电话:13765765436
+										<Brief>电话状态:已接</Brief>
+									</Item>
+								</List>
+							</div>
+							<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+								Content of second tab
+							</div>
+							<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+								Content of third tab
+							</div>
+						</Tabs>
+					</StickyContainer>
+
 				</Drawer>
             </div>
         )
