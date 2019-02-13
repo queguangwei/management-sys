@@ -4,94 +4,17 @@
   position: relative;
 }
 
-
-//消息中心
-.notice-box {
-  width: 1180px;
-  min-height: 1250px;
-  background-color: #ffffff;
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-    height: 95px;
-    padding: 30px 30px 40px;
-    border-bottom: 1px solid #E9E9E9;
-    .read-all {
-      font-size: 14px;
-      color: #1194FE;
-      float: right;
-      cursor: pointer;
-    }
-  }
-  .notice-list {
-    margin-bottom: 40px;
-    li {
-      padding: 30px 130px;
-      border-bottom: 1px solid #E9E9E9;
-      height: 80px;
-      position: relative;
-      .member-avatar {
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          position: absolute;
-          left: 50px;
-          top: 0;
-          bottom: 0;
-          margin: auto;
-        }
-      }
-      .notice-link {
-        p {
-          color: #333333;
-          width: 879px;
-          overflow: hidden;
-        }
-      }
-      span.lastdate {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 30px;
-      }
-
-    }
-    li.unread {
-      &:before {
-        content: '';
-        display: block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #1194FE;
-        position: absolute;
-        left: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-  }
-  .load-more {
-    text-align: center;
-    .more-btn {
-      font-size: 14px;
-      width: 160px;
-      height: 40px;
-      color: #ffffff;
-      background-color: #1194FE;
-      border-radius: 4px;
-    }
-    .no-more {
-      font-size: 14px;
-      width: 240px;
-      height: 40px;
-      padding: 13px 57px;
-      color: #ffffff;
-      background-color: #CCCCCC;
-      border-radius: 4px;
-    }
-  }
+//搜索
+.search-button {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: px2rem(100px);
+  line-height: px2rem(100px);
+  text-align: center;
+  background-color: #2997DE;
+  color: #ffffff;
+  font-size: px2rem(30px);
 }
 
 .am-navbar {
@@ -112,7 +35,7 @@
   padding: 0;
 }
 .am-list-item {
-  padding-left: 0;
+  //padding-left: 0;
 }
 
 .drawer-slider .am-list-body .am-list-item {

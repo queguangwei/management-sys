@@ -7,7 +7,7 @@ export const routes = {
         },'nav')
     },
     indexRoute: {
-        getComponent(nextState,cb){
+        getComponent(nextState,cb) {
             require.ensure([],require=>{
                 cb(null,require('../views/Home'));
             },'home')
@@ -16,12 +16,35 @@ export const routes = {
     childRoutes: [
         {
             path: 'search',
-            getComponent(nextState,cb){
+            getComponent(nextState,cb) {
                 require.ensure([],require=>{
                     cb(null,require('../views/Search'));
                 },'search')
-            },
-
+            }
+        },
+        {
+			path: 'add',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/Add'));
+				},'add')
+			}
+        },
+        {
+            path: 'edit',
+            getComponent(nextState,cb) {
+                require.ensure([],require=>{
+                    cb(null,require('../views/EditCustomer'));
+                },'edit')
+            }
+        },
+        {
+			path: 'detail',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/Detail'));
+				},'detail')
+			}
         }
     ]
 };

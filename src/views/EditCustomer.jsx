@@ -84,19 +84,19 @@ class Form extends  React.Component {
 }
 const FormWrapper = createForm()(Form);
 
-class Search extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data: [],
+class EditCustomer extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			data: [],
 			cols: 1,
 			pickerValue: [],
 			asyncValue: [],
 			sValue: ['2013', '春'],
 			visible: false,
 			colorValue: ['#00FF00'],
-        }
-    }
+		}
+	}
 
 	back() {
 		browserHistory.push('/')
@@ -107,36 +107,35 @@ class Search extends React.Component {
 	}
 
 	degreePick(val) {
-    	console.log(val)
+		console.log(val)
 	}
 
-    componentDidMount() {
+	componentDidMount() {
 
-    }
+	}
 
-    render() {
+	render() {
 
-        return (
-            <div>
+		return (
+			<div>
 				<NavBar
 					mode="dark"
 					icon={<Icon type="left"/>}
 					onLeftClick={this.back.bind(this)}
 				>搜索
 				</NavBar>
-                <div className="">
+				<div className="">
 					<FormWrapper />
 
-                </div>
-            </div>
-        )
-    }
+				</div>
+			</div>
+		)
+	}
 }
 
-
 export default connect(state => ({
-    user: state.user
+	user: state.user
 }), dispath => ({
-    actions: bindActionCreators(Actions, dispath)
-}))(Search)
+	actions: bindActionCreators(Actions, dispath)
+}))(EditCustomer)
 module.exports = exports['default']

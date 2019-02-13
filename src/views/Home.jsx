@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { Drawer, List, NavBar, Icon, Tabs, WhiteSpace } from 'antd-mobile'
-import { StickyContainer, Sticky } from 'react-sticky'
+import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -33,14 +32,11 @@ class Home extends React.Component {
 	}
 
 	search() {
-		console.log(1);
+		browserHistory.push('/search')
 	}
 
-	renderTabBar(props) {
-    	console.log(props)
-		return (<Sticky>
-			{({ style }) => <div style={{ zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
-		</Sticky>);
+	add() {
+		browserHistory.push('/add')
 	}
 
     render() {
@@ -83,7 +79,7 @@ class Home extends React.Component {
 					onLeftClick={this.onOpenChange.bind(this)}
 					rightContent={[
 						<Icon key="0" type="search" style={{ marginRight: '16px' }} onClick={this.search.bind(this)}/>,
-						<Icon key="1" type="plus" />,
+						<Icon key="1" type="plus" onClick={this.add.bind(this)}/>,
 					]}
 				>
 					客户管理系统
@@ -96,63 +92,61 @@ class Home extends React.Component {
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<StickyContainer>
-						<Tabs tabs={tabs}
-							  initialPage={0}
-							  renderTabBar={this.renderTabBar}
-						>
-							<div>
-								<List className="my-list">
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-									<Item arrow="horizontal" multipleLine onClick={() => {}}>
-										王小迪 电话:13765765436
-										<Brief>电话状态:已接</Brief>
-									</Item>
-								</List>
-							</div>
-							<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-								Content of second tab
-							</div>
-							<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-								Content of third tab
-							</div>
-						</Tabs>
-					</StickyContainer>
+					<Tabs tabs={tabs}
+						  initialPage={0}
+						  onChange={(tab, index) => { console.log('onChange', index, tab); }}
+					>
+						<div>
+							<List className="my-list">
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+									王小迪 电话:13765765436
+									<Brief>电话状态:已接</Brief>
+								</Item>
+							</List>
+						</div>
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+							Content of second tab
+						</div>
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+							Content of third tab
+						</div>
+					</Tabs>
 
 				</Drawer>
             </div>

@@ -39,8 +39,8 @@ class App extends React.Component {
     render() {
 		const isLogined = this.isLogined()
 		console.log("是否已登录"+isLogined)
-		return !isLogined ? (
-				<div style={{background:'#f5f5f5'}}>
+		return isLogined ? (
+				<div>
 					{this.props.children}
 				</div>
 		) : <Login onLogined={this.handleLogined.bind(this)}/>
