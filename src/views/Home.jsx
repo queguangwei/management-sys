@@ -39,6 +39,10 @@ class Home extends React.Component {
 		browserHistory.push('/add')
 	}
 
+	detail() {
+		browserHistory.push('/detail')
+	}
+
     render() {
 		const tabs = [
 			{ title: '新进客户', sub: '1'},
@@ -98,7 +102,7 @@ class Home extends React.Component {
 					>
 						<div>
 							<List className="my-list">
-								<Item arrow="horizontal" multipleLine onClick={() => {}}>
+								<Item arrow="horizontal" multipleLine onClick={this.detail.bind(this)}>
 									王小迪 电话:13765765436
 									<Brief>电话状态:已接</Brief>
 								</Item>

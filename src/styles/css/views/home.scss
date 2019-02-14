@@ -17,6 +17,71 @@
   font-size: px2rem(30px);
 }
 
+//详情
+.detail {
+
+  &-bg {
+    height: px2rem(220px);
+    background-color: #2997DE;
+  }
+  &-layout {
+    position: absolute;
+    top: px2rem(128px);
+    width: 100%;
+  }
+  &-content {
+    margin: 0 auto;
+    width: px2rem(690px);
+    height: px2rem(358px);
+    background-color: #ffffff;
+    box-shadow:0px 6px 15px 0px rgba(41,151,222,0.3);
+    border-radius:10px;
+    &-box {
+      padding: px2rem(30px);
+    }
+
+  }
+  &-record {
+    margin-top: px2rem(30px);
+    p {
+      color: #999999;
+
+    }
+    p.title {
+      padding-left: px2rem(30px);
+      margin-bottom: px2rem(20px);
+    }
+    &-list {
+      li {
+        background-color: #ffffff;
+        padding: px2rem(30px);
+        margin-bottom: px2rem(10px);
+      }
+      h4 {
+        color: #333333;
+        margin-bottom: px2rem(20px);
+      }
+    }
+  }
+}
+.bottom-button {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  button {
+    font-size: px2rem(30px);
+    width: 50%;
+    height: px2rem(100px);
+    color: #ffffff;
+  }
+  &-yel {
+    background-color: #F5B846;
+  }
+  &-blu {
+    background-color: #2997DE;
+  }
+}
+
 .am-navbar {
   background-color: #2997DE;
 }

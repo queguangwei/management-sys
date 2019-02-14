@@ -124,12 +124,38 @@ class Detail extends React.Component {
 					mode="dark"
 					icon={<Icon type="left"/>}
 					onLeftClick={this.back.bind(this)}
-					rightContent={<span onClick={this.save.bind(this)}>保存</span>}
+					rightContent={<span onClick={this.save.bind(this)}>编辑</span>}
 				>
-					添加客户
+					客户详情
 				</NavBar>
-				<div className="">
-					<FormWrapper onSubmit={this.handleSubmit.bind(this)}/>
+				<div className="detail">
+					<div className="detail-bg"></div>
+					<div className="detail-layout">
+						<div className="detail-content">
+							<div className="detail-content-box">
+								<div className="">
+
+								</div>
+							</div>
+						</div>
+						<div className="detail-record">
+							<p className="title">跟进记录（0次）</p>
+							<ul className="detail-record-list">
+								<li>
+									<h4>跟进时间：2018-12-30</h4>
+									<p>去客户那边洽谈一些和合同相关的事项，尽量让客户签掉合 同。去见客户最好带一些客户喜欢的礼物，那样客户会比较 高兴，谈起来更融洽。</p>
+								</li>
+								<li>
+									<h4>跟进时间：2019-02-24</h4>
+									<p>去客户那边签合同</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div className="bottom-button">
+					<button className="bottom-button-yel">添加跟进</button>
+					<button className="bottom-button-blu">成交</button>
 				</div>
 			</div>
 		)
