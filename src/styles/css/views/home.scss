@@ -41,11 +41,43 @@
     }
 
   }
+  &-lesson {
+    margin-top: px2rem(30px);
+    p.title {
+      padding-left: px2rem(30px);
+      margin-bottom: px2rem(20px);
+    }
+    p {
+      color: #999999;
+    }
+    &-list {
+      li {
+        background-color: #ffffff;
+        padding: px2rem(30px);
+        margin-bottom: px2rem(10px);
+      }
+      h4 {
+        color: #333333;
+        margin-bottom: px2rem(20px);
+        padding-bottom: px2rem(20px);
+        border-bottom: 1px solid #EEEEEE;
+        &:before {
+          display: inline-block;
+          content: '';
+          width: px2rem(30px);
+          height: px2rem(30px);
+          margin-right: px2rem(6px);
+        }
+        span {
+          float: right;
+        }
+      }
+    }
+  }
   &-record {
     margin-top: px2rem(30px);
     p {
       color: #999999;
-
     }
     p.title {
       padding-left: px2rem(30px);
@@ -62,6 +94,9 @@
         margin-bottom: px2rem(20px);
       }
     }
+  }
+  .op {
+    height: px2rem(100px);
   }
 }
 .bottom-button {

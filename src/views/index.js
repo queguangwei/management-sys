@@ -4,7 +4,9 @@ var views = {
 	Search: require('./Search'),
 	Add: require('./Add'),
 	EditCustomer: require('./EditCustomer'),
-	Detail: require('./Detail')
+	Detail: require('./Detail'),
+	FollowUp: require('./FollowUp'),
+	Deal: require('./Deal')
 }
 
 module.exports = views

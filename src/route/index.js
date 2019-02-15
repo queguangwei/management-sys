@@ -1,4 +1,5 @@
-import { App, Home } from '../views';
+import { App } from '../views';
+
 export const routes = {
     path: '/',
     getComponent(nextState,cb){
@@ -45,6 +46,22 @@ export const routes = {
 					cb(null,require('../views/Detail'));
 				},'detail')
 			}
-        }
+        },
+		{
+			path: 'followup',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/FollowUp'));
+				},'followup')
+			}
+		},
+		{
+			path: 'deal',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/Deal'));
+				},'deal')
+			}
+		}
     ]
 };

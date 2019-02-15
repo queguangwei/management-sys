@@ -5,88 +5,7 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, Modal, Picker, InputItem, List } from 'antd-mobile'
-import { createForm } from 'rc-form'
-
-const alert = Modal.alert;
-let finialValues = {}
-
-class Form extends  React.Component {
-	handleSubmit(e) {
-		e.preventDefault();
-		this.props.form.validateFields({ force: true }, (error, value) => {
-			console.log(value)
-			if (!error) {
-				console.log(this.props.form.getFieldsValue());
-			} else {
-				console.log(error);
-				alert('Validation failed');
-			}
-		});
-
-	}
-
-	render() {
-		const { getFieldProps } = this.props.form;
-		const IntentionDegree = [
-			{label: 'A类', value: 'classA'},
-			{label: 'B类', value: 'classB'},
-			{label: 'C类', value: 'classC'}
-		]
-		const gender = [
-			{label: '男', value: 'male'},
-			{label: '女', value: 'female'}
-		]
-		return (
-			<form onSubmit={this.handleSubmit.bind(this)}>
-				<List>
-					<InputItem
-						{...getFieldProps('companynNme')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>公司名称</InputItem>
-					<InputItem
-						{...getFieldProps('realName')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>联系人姓名</InputItem>
-					<InputItem
-						{...getFieldProps('mobile')}
-						type="phone"
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>电话</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>职位</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>身份证</InputItem>
-					<InputItem
-						{...getFieldProps('wxNum')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>微信号</InputItem>
-					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
-				</List>
-			</form>
-		)
-	}
-
-}
-const FormWrapper = createForm()(Form);
+import { NavBar, Icon } from 'antd-mobile'
 
 class Detail extends React.Component {
 	constructor(props) {
@@ -100,16 +19,16 @@ class Detail extends React.Component {
 		browserHistory.push('/')
 	}
 
-	save() {
-		alert('保存', '确认保存吗???', [
-			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => console.log('ok') },
-		])
-		this.handleSubmit(finialValues)
+	edit() {
+		browserHistory.push('/')
 	}
 
-	handleSubmit(values) {
-		console.log(values)
+	followUp() {
+		browserHistory.push('/followup')
+	}
+
+	deal() {
+		browserHistory.push('/deal')
 	}
 
 	componentDidMount() {
@@ -117,14 +36,13 @@ class Detail extends React.Component {
 	}
 
 	render() {
-
 		return (
 			<div>
 				<NavBar
 					mode="dark"
 					icon={<Icon type="left"/>}
 					onLeftClick={this.back.bind(this)}
-					rightContent={<span onClick={this.save.bind(this)}>编辑</span>}
+					rightContent={<span onClick={this.edit.bind(this)}>编辑</span>}
 				>
 					客户详情
 				</NavBar>
@@ -137,6 +55,31 @@ class Detail extends React.Component {
 
 								</div>
 							</div>
+						</div>
+						<div className="detail-lesson">
+							<p className="title">课程数（2）</p>
+							<ul className="detail-lesson-list">
+								<li>
+									<h4>课程名称：舌行演讲
+										<span>报名人数：3</span>
+									</h4>
+									<p>
+										<div>1.王小峰 13456409654 高级采购员</div>
+										<div>2.胡不大 13456788884 hr人员</div>
+										<div>1.王小峰 13456409654 高级采购员</div>
+									</p>
+								</li>
+								<li>
+									<h4>课程名称：舌行演讲
+										<span>报名人数：3</span>
+									</h4>
+									<p>
+										<div>1.王小峰 13456409654 高级采购员</div>
+										<div>2.胡不大 13456788884 hr人员</div>
+										<div>1.王小峰 13456409654 高级采购员</div>
+									</p>
+								</li>
+							</ul>
 						</div>
 						<div className="detail-record">
 							<p className="title">跟进记录（0次）</p>
@@ -151,11 +94,12 @@ class Detail extends React.Component {
 								</li>
 							</ul>
 						</div>
+						<div className="op"></div>
 					</div>
 				</div>
 				<div className="bottom-button">
-					<button className="bottom-button-yel">添加跟进</button>
-					<button className="bottom-button-blu">成交</button>
+					<button className="bottom-button-yel" onClick={this.followUp.bind(this)}>添加跟进</button>
+					<button className="bottom-button-blu" onClick={this.deal.bind(this)}>成交</button>
 				</div>
 			</div>
 		)
