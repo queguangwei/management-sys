@@ -15,8 +15,8 @@ class Form extends  React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			val: 3,
-			val1: 2,
+			val: 1,
+			keys: [1]
 		};
 	}
 	handleSubmit(e) {
@@ -33,8 +33,12 @@ class Form extends  React.Component {
 
 	}
 	onChange(val) {
-		// console.log(val);
-		this.setState({ val });
+		console.log(val);
+		let keys = []
+		for(let i = 1;i <= val;i ++) {
+			keys.push(val)
+		}
+		this.setState({ val, keys });
 	}
 	render() {
 		const { getFieldProps } = this.props.form;
@@ -45,6 +49,31 @@ class Form extends  React.Component {
 			{label: 'B类', value: 'classB'},
 			{label: 'C类', value: 'classC'}
 		]
+		const formItems = this.state.keys.map((k, index) => {
+			return (
+				<div >
+					<InputItem
+						{...getFieldProps('name')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>姓名</InputItem>
+					<InputItem
+						{...getFieldProps('mobile')}
+						type="phone"
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>电话</InputItem>
+					<InputItem
+						{...getFieldProps('post')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>职位</InputItem>
+				</div>
+			)
+		});
 		return (
 			<form onSubmit={this.handleSubmit.bind(this)}>
 				<List>
@@ -73,25 +102,9 @@ class Form extends  React.Component {
 					</List.Item>
 				</List>
 				<List>
-					<InputItem
-						{...getFieldProps('mobile')}
-						type="phone"
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>电话</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>职位</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>身份证</InputItem>
+					{formItems}
+
+
 				</List>
 				<WhiteSpace />
 				<List>
