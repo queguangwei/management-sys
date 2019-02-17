@@ -53,6 +53,9 @@ class Home extends React.Component {
 		const sidebar = (
 			<List className="drawer-slider">
 				<Item multipleLine>
+                    <div className="header-img">
+                        <img src="" />
+                    </div>
 					<div>王大锤</div>
 					<Brief>13867896542</Brief>
 				</Item>

@@ -1,7 +1,10 @@
 //首页
-.substance {
-  margin: 0 auto;
-  position: relative;
+.header-img {
+  img {
+    width: px2rem(120px);
+    height: px2rem(120px);
+    border-radius: 50%;
+  }
 }
 
 //搜索
