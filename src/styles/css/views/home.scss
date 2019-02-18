@@ -1,9 +1,26 @@
 //首页
 .header-img {
+  float: left;
+  margin-right: px2rem(30px);
+  margin-bottom: px2rem(30px);
   img {
     width: px2rem(120px);
     height: px2rem(120px);
     border-radius: 50%;
+  }
+}
+.login-out {
+  position: absolute;
+  bottom: px2rem(120px);
+  left: px2rem(150px);
+  color: #ffffff;
+  font-size: px2rem(34px);
+  &:before {
+    content: '';
+    display: inline-block;
+    width: px2rem(42px);
+    height: px2rem(34px);
+    margin-right: px2rem(20px);
   }
 }
 
@@ -137,10 +154,6 @@
 .my-drawer .am-drawer-sidebar .am-list {
   padding: 0;
 }
-.am-list-item {
-  //padding-left: 0;
-}
-
 .drawer-slider .am-list-body .am-list-item {
   background-color: #2997DE;
 }

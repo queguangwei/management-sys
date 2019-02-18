@@ -45,39 +45,39 @@ class Home extends React.Component {
 
     render() {
 		const tabs = [
-			{ title: '新进客户', sub: '1'},
-			{ title: '意向客户', sub: '2' },
-			{ title: '成交客户', sub: '3' },
+			{ title: 'A类', sub: '1'},
+			{ title: 'B类', sub: '2' },
+			{ title: 'C类', sub: '3' },
 		];
 
 		const sidebar = (
-			<List className="drawer-slider">
-				<Item multipleLine>
-                    <div className="header-img">
-                        <img src="" />
-                    </div>
-					<div>王大锤</div>
-					<Brief>13867896542</Brief>
-				</Item>
-				<Item className="drawer-slider-item">
-					新进客户
-				</Item>
-				<Item className="drawer-slider-item">
-					意向客户
-				</Item>
-				<Item className="drawer-slider-item">
-					成交客户
-				</Item>
-				<Item className="drawer-slider-item">
-					全部客户
-				</Item>
-				<Item className="drawer-slider-item">
-					账号
-				</Item>
-				<Item className="drawer-slider-item">
-					密码
-				</Item>
-			</List>);
+			<div>
+				<List className="drawer-slider">
+					<Item multipleLine>
+						<div className="header-img">
+							<img src="" />
+						</div>
+						<div style={{color:'#fff'}}>王大锤</div>
+						<Brief style={{color:'#fff'}}>13867896542</Brief>
+					</Item>
+					<Item className="drawer-slider-item">
+						新进客户
+					</Item>
+					<Item className="drawer-slider-item">
+						意向客户
+					</Item>
+					<Item className="drawer-slider-item">
+						成交客户
+					</Item>
+					<Item className="drawer-slider-item">
+						全部客户
+					</Item>
+				</List>
+				<div className="login-out">
+					退出
+				</div>
+			</div>
+			);
 
         return (
             <div className="">
