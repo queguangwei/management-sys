@@ -15,6 +15,22 @@ export const routes = {
         }
     },
     childRoutes: [
+		{
+			path: 'purposelist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/PurposeList'));
+				},'purposelist')
+			}
+		},
+		{
+			path: 'deallist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/DealList'));
+				},'deallist')
+			}
+		},
         {
             path: 'search',
             getComponent(nextState,cb) {

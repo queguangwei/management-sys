@@ -23,6 +23,67 @@
     margin-right: px2rem(20px);
   }
 }
+.my-list {
+  .am-list-body {
+    background-color: transparent;
+    .am-list-item {
+      margin-bottom: px2rem(10px);
+    }
+  }
+  &-content {
+    font-size: px2rem(26px);
+    padding-bottom: px2rem(15px);
+    border-bottom: 1px solid #EEEEEE;
+    .name {
+      font-size: px2rem(30px);
+      margin-right: px2rem(20px);
+    }
+    &:after {
+      content: '';
+      display: inline-block;
+      width: px2rem(30px);
+      height: px2rem(30px);
+      background: url("../../assets/images/icon_new.png")no-repeat;
+      background-size: px2rem(30px);
+      margin-left: px2rem(20px);
+    }
+  }
+  &-info {
+    line-height: 1;
+    font-size: px2rem(26px);
+    margin-top: px2rem(20px);
+    span.err-status {
+      color: #FF0000;
+    }
+    span.status {
+      color: #7BC768;
+    }
+    span.address {
+      float: right;
+      display: block;
+      margin-right: px2rem(50px);
+      width: px2rem(400px);
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+  }
+  &-time {
+    font-size: px2rem(24px);
+    color: #999999;
+    margin-top: px2rem(20px);
+    line-height: 1;
+    &:before {
+      content: '';
+      display: inline-block;
+      width: px2rem(10px);
+      height: px2rem(10px);
+      border-radius: 50%;
+      background-color: #E74242;
+      margin-right: px2rem(20px);
+    }
+  }
+}
 
 //搜索
 .search-button {
