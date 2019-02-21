@@ -31,6 +31,14 @@ export const routes = {
 				},'deallist')
 			}
 		},
+		{
+			path: 'alllist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/AllList'));
+				},'alllist')
+			}
+		},
         {
             path: 'search',
             getComponent(nextState,cb) {

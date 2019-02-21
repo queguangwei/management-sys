@@ -51,7 +51,11 @@ class Detail extends React.Component {
 					<div className="detail-layout">
 						<div className="detail-content">
 							<div className="detail-content-box">
-								<div className="">
+								<div className="top">
+									<div className="headerimg"></div>
+
+								</div>
+								<div className="bottom">
 
 								</div>
 							</div>

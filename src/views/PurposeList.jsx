@@ -48,7 +48,15 @@ class PurposeList extends React.Component {
 	}
 
 	purposelist() {
-		this.setState({ open: !this.state.open });
+		this.setState({ open: !this.state.open })
+	}
+
+	deallist() {
+		browserHistory.push('/deallist')
+	}
+
+	alllist() {
+		browserHistory.push('/alllist')
 	}
 
 	render() {
@@ -74,10 +82,10 @@ class PurposeList extends React.Component {
 					<Item className="drawer-slider-item" onClick={this.purposelist.bind(this)}>
 						意向客户
 					</Item>
-					<Item className="drawer-slider-item">
+					<Item className="drawer-slider-item" onClick={this.deallist.bind(this)}>
 						成交客户
 					</Item>
-					<Item className="drawer-slider-item">
+					<Item className="drawer-slider-item" onClick={this.alllist.bind(this)}>
 						全部客户
 					</Item>
 				</List>

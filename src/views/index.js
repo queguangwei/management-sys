@@ -3,6 +3,7 @@ var views = {
     Home: require('./Home'),
 	PurposeList: require('./PurposeList'),
 	DealList: require('./DealList'),
+	AllList: require('./AllList'),
 	Search: require('./Search'),
 	Add: require('./Add'),
 	EditCustomer: require('./EditCustomer'),

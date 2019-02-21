@@ -54,6 +54,14 @@ class Home extends React.Component {
 		browserHistory.push('/deallist')
 	}
 
+	alllist() {
+		browserHistory.push('/alllist')
+	}
+
+	loginout() {
+    	console.log(1)
+	}
+
     render() {
 
 		const sidebar = (
@@ -61,7 +69,6 @@ class Home extends React.Component {
 				<List className="drawer-slider">
 					<Item multipleLine>
 						<div className="header-img">
-							<img src="" />
 						</div>
 						<div style={{color:'#fff'}}>王大锤</div>
 						<Brief style={{color:'#fff'}}>13867896542</Brief>
@@ -75,15 +82,16 @@ class Home extends React.Component {
 					<Item className="drawer-slider-item" onClick={this.deallist.bind(this)}>
 						成交客户
 					</Item>
-					<Item className="drawer-slider-item">
+					<Item className="drawer-slider-item" onClick={this.alllist.bind(this)}>
 						全部客户
 					</Item>
 				</List>
-				<div className="login-out">
-					退出
+				<div className="login-out" onClick={this.loginout.bind(this)}>
+					<div className="login-out-icon"></div>
+					<div className="login-out-button">退出</div>
 				</div>
 			</div>
-			);
+		);
 
         return (
             <div className="">
@@ -108,7 +116,7 @@ class Home extends React.Component {
 					<List className="my-list">
 						<Item multipleLine onClick={this.detail.bind(this)}>
 							<div className="my-list-content" >
-								<span className="name">王小迪</span><span>电话:13765765436</span>
+								<span className="name">王小迪</span><span>电话:13765765436</span><span className="icon_new"></span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="status">已接</span>
@@ -117,7 +125,7 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">高勤斯维</span><span>电话:13868765436</span>
+								<span className="name">高勤斯维</span><span>电话:13868765436</span><span className="icon_new"></span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">未接</span>
@@ -127,7 +135,7 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">胡晴天</span><span>电话:13868765436</span>
+								<span className="name">胡晴天</span><span>电话:13868765436</span><span className="icon_new"></span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">空号</span>
@@ -137,7 +145,7 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">哈哈炜</span><span>电话:13868765436</span>
+								<span className="name">哈哈炜</span><span>电话:13868765436</span><span className="icon_new"></span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">错号</span>
