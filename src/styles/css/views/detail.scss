@@ -26,10 +26,38 @@
           border-radius: 50%;
           background: url("../../assets/images/icon_header.png")no-repeat;
           background-size: px2rem(60px);
+          float: left;
+        }
+        .headerinfo {
+          font-size: px2rem(24px);
+          color: #999999;
+          margin-left: px2rem(90px);
+          margin-bottom: px2rem(20px);
+          span {
+            font-size: px2rem(30px);
+            color: #333333;
+            margin-right: px2rem(10px);
+          }
+          i.new {
+            display: inline-block;
+            width: px2rem(30px);
+            height: px2rem(30px);
+            background: url("../../assets/images/icon_new.png")no-repeat;
+            background-size: px2rem(30px);
+            margin-left: px2rem(30px);
+          }
         }
       }
       .bottom {
-
+        font-size: px2rem(26px);
+        p {
+          line-height: 1;
+          margin-bottom: px2rem(30px);
+          span {
+            width: 50%;
+            display: inline-block;
+          }
+        }
       }
     }
 
@@ -85,6 +113,25 @@
       h4 {
         color: #333333;
         margin-bottom: px2rem(20px);
+      }
+      .no-record {
+        background-color: #ffffff;
+        padding: px2rem(30px);
+        h4 {
+          &:before {
+            content: '';
+            display: inline-block;
+            width: px2rem(26px);
+            height: px2rem(26px);
+            background: url("../../assets/images/icon_mark.png")no-repeat;
+            background-size: px2rem(26px);
+            margin-right: px2rem(20px);
+          }
+        }
+        p {
+          font-size: px2rem(24px);
+          margin-left: px2rem(46px);
+        }
       }
     }
   }

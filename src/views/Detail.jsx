@@ -53,10 +53,28 @@ class Detail extends React.Component {
 							<div className="detail-content-box">
 								<div className="top">
 									<div className="headerimg"></div>
-
+									<div className="headerinfo">
+										<span>高勤斯维</span>
+										先生 30岁
+										<i className="new"></i>
+									</div>
+									<div className="headerinfo">
+										高级财务/杭州帽科技有限公司
+									</div>
 								</div>
 								<div className="bottom">
-
+									<p>
+										<span>电话:<a href="tel:13867896470">13867896470</a></span>
+										<span>电话状态:未接</span>
+									</p>
+									<p>
+										<span>微信:wahaha372</span>
+										<span>意向度:A类</span>
+									</p>
+									<p>
+										<span>区域:浙江省杭州市</span>
+									</p>
+									<p>身份证:330382199087554328</p>
 								</div>
 							</div>
 						</div>
@@ -96,6 +114,10 @@ class Detail extends React.Component {
 									<h4>跟进时间：2019-02-24</h4>
 									<p>去客户那边签合同</p>
 								</li>
+								<div className="no-record">
+									<h4>此客户没有跟进记录，您可以</h4>
+									<p>点击下方设为意向客户进行跟进</p>
+								</div>
 							</ul>
 						</div>
 						<div className="op"></div>

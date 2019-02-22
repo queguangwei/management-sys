@@ -59,6 +59,10 @@ class AllList extends React.Component {
 		this.setState({ open: !this.state.open });
 	}
 
+	loginout() {
+
+	}
+
 	render() {
 
 		const sidebar = (
@@ -66,7 +70,6 @@ class AllList extends React.Component {
 				<List className="drawer-slider">
 					<Item multipleLine>
 						<div className="header-img">
-							<img src="" />
 						</div>
 						<div style={{color:'#fff'}}>王大锤</div>
 						<Brief style={{color:'#fff'}}>13867896542</Brief>
@@ -84,8 +87,9 @@ class AllList extends React.Component {
 						全部客户
 					</Item>
 				</List>
-				<div className="login-out">
-					退出
+				<div className="login-out" onClick={this.loginout.bind(this)}>
+					<div className="login-out-icon"></div>
+					<div className="login-out-button">退出</div>
 				</div>
 			</div>
 		);
