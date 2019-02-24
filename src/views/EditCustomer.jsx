@@ -23,10 +23,11 @@ class Form extends  React.Component {
 	}
 	render() {
 		const { getFieldProps } = this.props.form;
-		const IntentionDegree = [
-			{label: 'A类', value: 'classA'},
-			{label: 'B类', value: 'classB'},
-			{label: 'C类', value: 'classC'}
+		const phoneStatus = [
+			{label: '已接', value: 'classA'},
+			{label: '未接', value: 'classB'},
+			{label: '错号', value: 'classC'},
+			{label: '空号', value: 'classD'}
 		]
 		const gender = [
 			{label: '男', value: 'male'},
@@ -35,18 +36,18 @@ class Form extends  React.Component {
 		return (
 			<form>
 				<List>
-					<Picker data={IntentionDegree} cols={1} {...getFieldProps('IntentionDegree')}>
-						<List.Item arrow="horizontal">意向度</List.Item>
-					</Picker>
-					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
 					<InputItem
 						{...getFieldProps('name')}
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
-					>客户姓名</InputItem>
+					>公司名称</InputItem>
+					<InputItem
+						{...getFieldProps('name')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>联系人姓名</InputItem>
 					<InputItem
 						{...getFieldProps('mobile')}
 						type="phone"
@@ -60,6 +61,18 @@ class Form extends  React.Component {
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 					>地区</InputItem>
+					<InputItem
+						{...getFieldProps('district')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>地区</InputItem>
+					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
+						<List.Item arrow="horizontal">性别</List.Item>
+					</Picker>
+					<Picker data={phoneStatus} cols={1} {...getFieldProps('IntentionDegree')}>
+						<List.Item arrow="horizontal">电话状态</List.Item>
+					</Picker>
 				</List>
 				<WhiteSpace />
 				<List>
@@ -76,7 +89,6 @@ class Form extends  React.Component {
 						<List.Item arrow="horizontal">结束时间</List.Item>
 					</DatePicker>
 				</List>
-				<div className="search-button" onClick={this.onSubmit.bind(this)}>搜索</div>
 			</form>
 		)
 	}
@@ -122,7 +134,7 @@ class EditCustomer extends React.Component {
 					mode="dark"
 					icon={<Icon type="left"/>}
 					onLeftClick={this.back.bind(this)}
-				>搜索
+				>编辑客户
 				</NavBar>
 				<div className="">
 					<FormWrapper />

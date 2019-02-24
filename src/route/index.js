@@ -15,6 +15,30 @@ export const routes = {
         }
     },
     childRoutes: [
+		{
+			path: 'purposelist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/PurposeList'));
+				},'purposelist')
+			}
+		},
+		{
+			path: 'deallist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/DealList'));
+				},'deallist')
+			}
+		},
+		{
+			path: 'alllist',
+			getComponent(nextState,cb) {
+				require.ensure([],require=>{
+					cb(null,require('../views/AllList'));
+				},'alllist')
+			}
+		},
         {
             path: 'search',
             getComponent(nextState,cb) {

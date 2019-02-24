@@ -3,24 +3,122 @@
   float: left;
   margin-right: px2rem(30px);
   margin-bottom: px2rem(30px);
-  img {
-    width: px2rem(120px);
-    height: px2rem(120px);
-    border-radius: 50%;
-  }
+  width: px2rem(120px);
+  height: px2rem(120px);
+  border-radius: 50%;
+  background: url("../../assets/images/icon_header.png")no-repeat;
+  background-size: px2rem(120px);
 }
 .login-out {
   position: absolute;
   bottom: px2rem(120px);
-  left: px2rem(150px);
-  color: #ffffff;
-  font-size: px2rem(34px);
-  &:before {
-    content: '';
-    display: inline-block;
+  left: px2rem(240px);
+  &-icon {
+    position: absolute;
+    left: px2rem(-60px);
+    display: block;
     width: px2rem(42px);
     height: px2rem(34px);
-    margin-right: px2rem(20px);
+    background: url("../../assets/images/icon_loginout.png") no-repeat;
+    background-size: px2rem(42px) px2rem(34px);
+  }
+  &-button {
+    color: #ffffff;
+    font-size: px2rem(34px);
+  }
+}
+.my-list {
+  .am-list-body {
+    background-color: transparent;
+    .am-list-item {
+      margin-bottom: px2rem(10px);
+    }
+  }
+  &-content {
+    font-size: px2rem(26px);
+    padding-bottom: px2rem(15px);
+    .name {
+      font-size: px2rem(30px);
+      margin-right: px2rem(20px);
+    }
+    span.icon_new {
+      display: inline-block;
+      width: px2rem(30px);
+      height: px2rem(30px);
+      background: url("../../assets/images/icon_new.png")no-repeat;
+      background-size: px2rem(30px);
+      margin-left: px2rem(20px);
+    }
+  }
+  &-info {
+    line-height: 1;
+    font-size: px2rem(26px);
+    padding-top: px2rem(20px);
+    border-top: 1px solid #EEEEEE;
+    span.err-status {
+      color: #FF0000;
+    }
+    span.status {
+      color: #7BC768;
+    }
+    span.address {
+      float: right;
+      display: block;
+      margin-right: px2rem(50px);
+      width: px2rem(400px);
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+    span.lesson-name {
+      margin-right: px2rem(170px);
+    }
+    div.company {
+      margin: px2rem(20px) 0;
+    }
+    span.empty {
+      color: #999999;
+      &:before {
+        content: '';
+        display: inline-block;
+        width: px2rem(26px);
+        height: px2rem(26px);
+        background: url('../../assets/images/icon_mark.png')no-repeat;
+        background-size: px2rem(26px);
+        margin-right: px2rem(20px);
+      }
+    }
+  }
+  .new-status {
+    .lesson-name {
+      &:before {
+        content: '';
+        display: inline-block;
+        width: px2rem(10px);
+        height: px2rem(10px);
+        background-color: #7BC768;
+        border-radius: 50%;
+        margin-right: px2rem(20px);
+      }
+    }
+    .company {
+      padding-left: px2rem(30px);
+    }
+  }
+  &-time {
+    font-size: px2rem(24px);
+    color: #999999;
+    margin-top: px2rem(20px);
+    line-height: 1;
+    &:before {
+      content: '';
+      display: inline-block;
+      width: px2rem(10px);
+      height: px2rem(10px);
+      border-radius: 50%;
+      background-color: #E74242;
+      margin-right: px2rem(20px);
+    }
   }
 }
 
@@ -35,106 +133,6 @@
   background-color: #2997DE;
   color: #ffffff;
   font-size: px2rem(30px);
-}
-
-//详情
-.detail {
-
-  &-bg {
-    height: px2rem(220px);
-    background-color: #2997DE;
-  }
-  &-layout {
-    position: absolute;
-    top: px2rem(128px);
-    width: 100%;
-  }
-  &-content {
-    margin: 0 auto;
-    width: px2rem(690px);
-    height: px2rem(358px);
-    background-color: #ffffff;
-    box-shadow:0px 6px 15px 0px rgba(41,151,222,0.3);
-    border-radius:10px;
-    &-box {
-      padding: px2rem(30px);
-    }
-
-  }
-  &-lesson {
-    margin-top: px2rem(30px);
-    p.title {
-      padding-left: px2rem(30px);
-      margin-bottom: px2rem(20px);
-    }
-    p {
-      color: #999999;
-    }
-    &-list {
-      li {
-        background-color: #ffffff;
-        padding: px2rem(30px);
-        margin-bottom: px2rem(10px);
-      }
-      h4 {
-        color: #333333;
-        margin-bottom: px2rem(20px);
-        padding-bottom: px2rem(20px);
-        border-bottom: 1px solid #EEEEEE;
-        &:before {
-          display: inline-block;
-          content: '';
-          width: px2rem(30px);
-          height: px2rem(30px);
-          margin-right: px2rem(6px);
-        }
-        span {
-          float: right;
-        }
-      }
-    }
-  }
-  &-record {
-    margin-top: px2rem(30px);
-    p {
-      color: #999999;
-    }
-    p.title {
-      padding-left: px2rem(30px);
-      margin-bottom: px2rem(20px);
-    }
-    &-list {
-      li {
-        background-color: #ffffff;
-        padding: px2rem(30px);
-        margin-bottom: px2rem(10px);
-      }
-      h4 {
-        color: #333333;
-        margin-bottom: px2rem(20px);
-      }
-    }
-  }
-  .op {
-    height: px2rem(100px);
-  }
-}
-.bottom-button {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  button {
-    font-size: px2rem(30px);
-    width: 50%;
-    height: px2rem(100px);
-    color: #ffffff;
-  }
-  &-yel {
-    background-color: #F5B846;
-  }
-  &-blu {
-    background-color: #2997DE;
-  }
 }
 
 .am-navbar {

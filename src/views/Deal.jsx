@@ -131,6 +131,7 @@ class Deal extends React.Component {
 	}
 
 	back() {
+
 		browserHistory.push('/')
 	}
 

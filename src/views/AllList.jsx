@@ -5,32 +5,29 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { Drawer, List, NavBar, Icon } from 'antd-mobile'
+import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
 
 
-class Home extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+class AllList extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
 			open: false,
-            onUploading: false,
-            data: [],
-            momentHeader: [1],
-            momentList: [1],
-        }
-    }
-
-    componentDidMount() {
-
-    }
-
-	onOpenChange() {
-		this.setState({ open: !this.state.open });
+			onUploading: false,
+			data: [],
+			momentHeader: [1],
+			momentList: [1],
+		}
 	}
 
-	home() {
+	componentDidMount() {
+
+	}
+
+	onOpenChange(...args) {
+
 		this.setState({ open: !this.state.open });
 	}
 
@@ -46,6 +43,10 @@ class Home extends React.Component {
 		browserHistory.push('/detail')
 	}
 
+	home() {
+		browserHistory.push('/')
+	}
+
 	purposelist() {
 		browserHistory.push('/purposelist')
 	}
@@ -55,14 +56,14 @@ class Home extends React.Component {
 	}
 
 	alllist() {
-		browserHistory.push('/alllist')
+		this.setState({ open: !this.state.open });
 	}
 
 	loginout() {
-    	console.log(1)
+
 	}
 
-    render() {
+	render() {
 
 		const sidebar = (
 			<div>
@@ -93,8 +94,8 @@ class Home extends React.Component {
 			</div>
 		);
 
-        return (
-            <div className="">
+		return (
+			<div className="">
 				<NavBar
 					icon={<Icon type="ellipsis" />}
 					onLeftClick={this.onOpenChange.bind(this)}
@@ -103,7 +104,7 @@ class Home extends React.Component {
 						<Icon key="1" type="plus" onClick={this.add.bind(this)}/>,
 					]}
 				>
-					新进客户
+					全部客户
 				</NavBar>
 				<Drawer
 					className="my-drawer"
@@ -116,7 +117,7 @@ class Home extends React.Component {
 					<List className="my-list">
 						<Item multipleLine onClick={this.detail.bind(this)}>
 							<div className="my-list-content" >
-								<span className="name">王小迪</span><span>电话:13765765436</span><span className="icon_new"></span>
+								<span className="name">王小迪</span><span>电话:13765765436</span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="status">已接</span>
@@ -125,7 +126,7 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">高勤斯维</span><span>电话:13868765436</span><span className="icon_new"></span>
+								<span className="name">高勤斯维</span><span>电话:13868765436</span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">未接</span>
@@ -135,7 +136,7 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">胡晴天</span><span>电话:13868765436</span><span className="icon_new"></span>
+								<span className="name">胡晴天</span><span>电话:13868765436</span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">空号</span>
@@ -145,35 +146,24 @@ class Home extends React.Component {
 						</Item>
 						<Item multipleLine onClick={() => {}}>
 							<div className="my-list-content" >
-								<span className="name">哈哈炜</span><span>电话:13868765436</span><span className="icon_new"></span>
+								<span className="name">哈哈炜</span><span>电话:13868765436</span>
 							</div>
 							<div className="my-list-info">
 								电话状态:<span className="err-status">错号</span>
 								<span className="address">公司:杭州哈哈有限公司</span>
 							</div>
 						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
 					</List>
+
 				</Drawer>
-            </div>
-        )
-    }
+			</div>
+		)
+	}
 }
 
 export default connect(state => ({
-    user: state.user
+	user: state.user
 }), dispath => ({
-    actions: bindActionCreators(Actions, dispath)
-}))(Home)
+	actions: bindActionCreators(Actions, dispath)
+}))(AllList)
 module.exports = exports['default']
