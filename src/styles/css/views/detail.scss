@@ -46,6 +46,14 @@
             background-size: px2rem(30px);
             margin-left: px2rem(30px);
           }
+          i.classa {
+            display: inline-block;
+            width: px2rem(30px);
+            height: px2rem(30px);
+            background: url("../../assets/images/icon_class_a.png")no-repeat;
+            background-size: px2rem(30px);
+            margin-left: px2rem(30px);
+          }
         }
       }
       .bottom {
@@ -145,9 +153,12 @@
   width: 100%;
   button {
     font-size: px2rem(30px);
-    width: 50%;
+    width: 100%;
     height: px2rem(100px);
     color: #ffffff;
+  }
+  .fifty-per {
+    width: 50%;
   }
   &-yel {
     background-color: #F5B846;

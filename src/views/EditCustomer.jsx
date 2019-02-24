@@ -23,6 +23,11 @@ class Form extends  React.Component {
 	}
 	render() {
 		const { getFieldProps } = this.props.form;
+		const level = [
+			{label: 'A类', value: 'classA'},
+			{label: 'B类', value: 'classB'},
+			{label: 'C类', value: 'classC'}
+		]
 		const phoneStatus = [
 			{label: '已接', value: 'classA'},
 			{label: '未接', value: 'classB'},
@@ -60,34 +65,40 @@ class Form extends  React.Component {
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
-					>地区</InputItem>
+					>职位</InputItem>
 					<InputItem
 						{...getFieldProps('district')}
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
-					>地区</InputItem>
+					>身份证</InputItem>
+					<InputItem
+						{...getFieldProps('district')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>年龄</InputItem>
+					<InputItem
+						{...getFieldProps('district')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>微信号</InputItem>
 					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
 						<List.Item arrow="horizontal">性别</List.Item>
 					</Picker>
 					<Picker data={phoneStatus} cols={1} {...getFieldProps('IntentionDegree')}>
 						<List.Item arrow="horizontal">电话状态</List.Item>
 					</Picker>
-				</List>
-				<WhiteSpace />
-				<List>
-					<DatePicker
-						mode="date"
-						{...getFieldProps('startDate')}
-					>
-						<List.Item arrow="horizontal">开始时间</List.Item>
-					</DatePicker>
-					<DatePicker
-						mode="date"
-						{...getFieldProps('endDate')}
-					>
-						<List.Item arrow="horizontal">结束时间</List.Item>
-					</DatePicker>
+					<Picker data={level} cols={1} {...getFieldProps('IntentionDegree')}>
+						<List.Item arrow="horizontal">意向度</List.Item>
+					</Picker>
+					<InputItem
+						{...getFieldProps('district')}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>地区</InputItem>
 				</List>
 			</form>
 		)
@@ -111,7 +122,7 @@ class EditCustomer extends React.Component {
 	}
 
 	back() {
-		browserHistory.push('/')
+		browserHistory.goBack()
 	}
 
 	genderPick(val) {

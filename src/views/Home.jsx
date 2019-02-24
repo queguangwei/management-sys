@@ -42,8 +42,13 @@ class Home extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail() {
-		browserHistory.push('/detail')
+	detail(value) {
+		browserHistory.push({
+			pathname: '/detail',
+			query: {
+				type: value
+			}
+		})
 	}
 
 	purposelist() {
@@ -114,7 +119,7 @@ class Home extends React.Component {
 					onOpenChange={this.onOpenChange}
 				>
 					<List className="my-list">
-						<Item multipleLine onClick={this.detail.bind(this)}>
+						<Item multipleLine onClick={this.detail.bind(this, 'new')}>
 							<div className="my-list-content" >
 								<span className="name">王小迪</span><span>电话:13765765436</span><span className="icon_new"></span>
 							</div>

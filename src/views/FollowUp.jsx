@@ -66,7 +66,7 @@ class FollowUp extends React.Component {
 	}
 
 	back() {
-		browserHistory.push('/')
+		browserHistory.goBack()
 	}
 
 	save() {

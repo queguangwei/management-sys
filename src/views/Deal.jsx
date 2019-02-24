@@ -101,6 +101,7 @@ class Form extends  React.Component {
 						人数
 					</List.Item>
 				</List>
+				<WhiteSpace size="xs"/>
 				<List>
 					{formItems}
 
@@ -131,8 +132,7 @@ class Deal extends React.Component {
 	}
 
 	back() {
-
-		browserHistory.push('/')
+		browserHistory.goBack()
 	}
 
 	save() {
@@ -161,7 +161,7 @@ class Deal extends React.Component {
 					onLeftClick={this.back.bind(this)}
 					rightContent={<span onClick={this.save.bind(this)}>完成</span>}
 				>
-					成交填写信息
+					新增课程
 				</NavBar>
 				<div className="">
 					<FormWrapper onSubmit={this.handleSubmit.bind(this)}/>

@@ -11,6 +11,7 @@ class Detail extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			type: '',
 			data: [],
 		}
 	}
@@ -20,19 +21,27 @@ class Detail extends React.Component {
 	}
 
 	edit() {
-		browserHistory.push('/')
+		browserHistory.push('/edit')
 	}
-
+    //新进 设意向
+	set() {
+        browserHistory.push('/purposelist')
+	}
+    //成交 新增课程
+	add() {
+        browserHistory.push('/deal')
+	}
+    //意向 跟进
 	followUp() {
 		browserHistory.push('/followup')
 	}
-
+    //意向 成交
 	deal() {
 		browserHistory.push('/deal')
 	}
 
 	componentDidMount() {
-
+		this.setState({type: this.props.location.query.type})
 	}
 
 	render() {
@@ -56,7 +65,10 @@ class Detail extends React.Component {
 									<div className="headerinfo">
 										<span>高勤斯维</span>
 										先生 30岁
-										<i className="new"></i>
+										{this.state.type=='new'?
+											<i className="new"></i>:
+											<i className="classa"></i>
+										}
 									</div>
 									<div className="headerinfo">
 										高级财务/杭州帽科技有限公司
@@ -78,31 +90,33 @@ class Detail extends React.Component {
 								</div>
 							</div>
 						</div>
-						<div className="detail-lesson">
-							<p className="title">课程数（2）</p>
-							<ul className="detail-lesson-list">
-								<li>
-									<h4>课程名称：舌行演讲
-										<span>报名人数：3</span>
-									</h4>
-									<p>
-										<div>1.王小峰 13456409654 高级采购员</div>
-										<div>2.胡不大 13456788884 hr人员</div>
-										<div>1.王小峰 13456409654 高级采购员</div>
-									</p>
-								</li>
-								<li>
-									<h4>课程名称：舌行演讲
-										<span>报名人数：3</span>
-									</h4>
-									<p>
-										<div>1.王小峰 13456409654 高级采购员</div>
-										<div>2.胡不大 13456788884 hr人员</div>
-										<div>1.王小峰 13456409654 高级采购员</div>
-									</p>
-								</li>
-							</ul>
-						</div>
+						{this.state.type!='new'?
+							<div className="detail-lesson">
+								<p className="title">课程数（2）</p>
+								<ul className="detail-lesson-list">
+									<li>
+										<h4>课程名称：舌行演讲
+											<span>报名人数：3</span>
+										</h4>
+										<p>
+											<div>1.王小峰 13456409654 高级采购员</div>
+											<div>2.胡不大 13456788884 hr人员</div>
+											<div>1.王小峰 13456409654 高级采购员</div>
+										</p>
+									</li>
+									<li>
+										<h4>课程名称：舌行演讲
+											<span>报名人数：3</span>
+										</h4>
+										<p>
+											<div>1.王小峰 13456409654 高级采购员</div>
+											<div>2.胡不大 13456788884 hr人员</div>
+											<div>1.王小峰 13456409654 高级采购员</div>
+										</p>
+									</li>
+								</ul>
+							</div>:null
+						}
 						<div className="detail-record">
 							<p className="title">跟进记录（0次）</p>
 							<ul className="detail-record-list">
@@ -123,10 +137,19 @@ class Detail extends React.Component {
 						<div className="op"></div>
 					</div>
 				</div>
-				<div className="bottom-button">
-					<button className="bottom-button-yel" onClick={this.followUp.bind(this)}>添加跟进</button>
-					<button className="bottom-button-blu" onClick={this.deal.bind(this)}>成交</button>
-				</div>
+				{this.state.type=='new'?
+					<div className="bottom-button">
+						<button className="bottom-button-blu" onClick={this.set.bind(this)}>设为意向</button>
+					</div>:
+					this.state.type=='deal'?
+						<div className="bottom-button">
+							<button className="bottom-button-blu" onClick={this.add.bind(this)}>新增课程</button>
+						</div>:
+						<div className="bottom-button">
+							<button className="bottom-button-yel fifty-per" onClick={this.followUp.bind(this)}>添加跟进</button>
+							<button className="bottom-button-blu fifty-per" onClick={this.deal.bind(this)}>成交</button>
+						</div>
+				}
 			</div>
 		)
 	}
