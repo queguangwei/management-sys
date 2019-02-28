@@ -12,8 +12,16 @@ const alert = Modal.alert;
 let finialValues = {}
 
 class Form extends  React.Component {
-	handleSubmit(e) {
-		e.preventDefault();
+	constructor(props) {
+		super(props)
+		this.state={
+
+		}
+        this.props.onRef(this);
+	}
+
+	handleSubmit() {
+
 		this.props.form.validateFields({ force: true }, (error, value) => {
 			console.log(value)
 			if (!error) {
@@ -23,6 +31,14 @@ class Form extends  React.Component {
 				alert('Validation failed');
 			}
 		});
+
+	}
+
+    alertData() {
+		alert(1)
+	}
+
+	componentDidMount()  {
 
 	}
 
@@ -53,8 +69,8 @@ class Form extends  React.Component {
 			</form>
 		)
 	}
-
 }
+
 const FormWrapper = createForm()(Form);
 
 class FollowUp extends React.Component {
@@ -70,11 +86,17 @@ class FollowUp extends React.Component {
 	}
 
 	save() {
+		const that = this;
+		console.log(that)
+		that.props.refs.child.handleSubmit();
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => console.log('ok') },
 		])
-		this.handleSubmit(finialValues)
+	}
+
+	onRef(e) {
+		this.modal = e
 	}
 
 	handleSubmit(values) {
@@ -97,9 +119,7 @@ class FollowUp extends React.Component {
 				>
 					添加跟进
 				</NavBar>
-				<div className="">
-					<FormWrapper onSubmit={this.handleSubmit.bind(this)}/>
-				</div>
+				<FormWrapper ref="child" onRef={this.onRef}/>
 			</div>
 		)
 	}

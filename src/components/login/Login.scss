@@ -7,21 +7,90 @@
 
   }
 
-  &_content {
-    text-align: center;
+  &_number {
+    display: flex;
   }
-  &_btn {
+  &_password {
+    display: flex;
+    margin-top: px2rem(30px)!important;
+  }
+  &_forgot {
+    font-size: px2rem(24px);
+    color: #999999;
+  }
+
+  .login-w {
+    width: px2rem(600px);
+    height: px2rem(100px);
+    background-color: #f1f2f4;
+  }
+  .number__left {
+    width: px2rem(90px);
+    font-size: px2rem(30px);
+    color: #333333;
+    line-height: px2rem(100px);
+    text-align: right;
+  }
+  .number__right {
+    flex: 1;
+    height: px2rem(100px);
+    margin-left: px2rem(50px);
+    &--input {
+      width: 100%;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
+      border: none;
+      background-color: #f1f2f4;
+      color: #333333;
+      font-size: px2rem(30px);
+    }
+    &--input::placeholder {
+      color: #999999;
+      font-size: px2rem(30px);
+    }
+  }
+  .password__left {
+    width: px2rem(90px);
+    font-size: px2rem(30px);
+    color: #333333;
+    line-height: px2rem(100px);
+    text-align: right;
+  }
+  .password__right {
+    flex: 1;
+    margin-left: px2rem(50px);
+  }
+  .password__hide {
+    width: px2rem(90px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--icon {
+
+    }
+  }
+  .login_button {
     width: px2rem(600px);
     height: px2rem(90px);
-    background: #2997de;
+    background-color: #CCCCCC;
     color: #ffffff;
     font-size: px2rem(34px);
     border-radius: px2rem(50px);
     margin: px2rem(40px) auto;
   }
-
-  &_forgot {
-    font-size: px2rem(24px);
-    color: #999999;
+  .login_button_active {
+    width: px2rem(600px);
+    height: px2rem(90px);
+    background-color: #2997de;
+    color: #ffffff;
+    font-size: px2rem(34px);
+    border-radius: px2rem(50px);
+    margin: px2rem(40px) auto;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 100px #f1f2f4 inset;
+  }
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow:0 0 0 100px #f1f2f4 inset;
   }
 }

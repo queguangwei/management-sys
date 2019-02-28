@@ -23,8 +23,18 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-
+		this.getLessonList()
     }
+    getLessonList() {
+        ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
+            if (res.code == 200) {
+                this.state.data = res.data.admin;
+                Cookie.set('token', JSON.stringify(res.data.logToken), {path: '/'})
+            } else {
+
+            }
+        })
+	}
 
 	onOpenChange() {
 		this.setState({ open: !this.state.open });
