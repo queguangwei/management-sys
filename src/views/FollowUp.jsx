@@ -12,10 +12,11 @@ const alert = Modal.alert;
 let finialValues = {}
 
 class Form extends  React.Component {
-	handleSubmit(e) {
-		e.preventDefault();
+	constructor(props) {
+		super(props);
+	}
+	handleSubmit() {
 		this.props.form.validateFields({ force: true }, (error, value) => {
-			console.log(value)
 			if (!error) {
 				console.log(this.props.form.getFieldsValue());
 			} else {
@@ -24,6 +25,9 @@ class Form extends  React.Component {
 			}
 		});
 
+	}
+
+	componentDidMount() {
 	}
 
 	render() {
@@ -57,6 +61,31 @@ class Form extends  React.Component {
 }
 const FormWrapper = createForm()(Form);
 
+class Child extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			info:'快点击子组件按钮哈哈哈'
+		}
+	}
+	componentDidMount(){
+		this.props.onRef(this)
+		console.log(this)
+	}
+
+	handleChildClick() {
+		this.setState({info:'通过父组件按钮获取到子组件信息啦啦啦'})
+	}
+
+	render() {
+		return (
+			<div>
+				<button onClick={this.handleChildClick}>子组件按钮</button>
+			</div>
+		)
+	}
+}
+
 class FollowUp extends React.Component {
 	constructor(props) {
 		super(props)
@@ -70,15 +99,18 @@ class FollowUp extends React.Component {
 	}
 
 	save() {
-		alert('保存', '确认保存吗???', [
-			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => console.log('ok') },
-		])
-		this.handleSubmit(finialValues)
+		console.log(this,child.state.info)
+		this.child.myName();
+		// alert('保存', '确认保存吗???', [
+		// 	{ text: '取消', onPress: () => console.log('cancel') },
+		// 	{ text: '确定', onPress: () => console.log('ok') },
+		// ])
+
 	}
 
-	handleSubmit(values) {
-		console.log(values)
+	onRef(ref) {
+		this.child = ref;
+		console.log(ref)
 	}
 
 	componentDidMount() {
@@ -86,7 +118,7 @@ class FollowUp extends React.Component {
 	}
 
 	render() {
-
+		const that = this;
 		return (
 			<div>
 				<NavBar
@@ -97,9 +129,8 @@ class FollowUp extends React.Component {
 				>
 					添加跟进
 				</NavBar>
-				<div className="">
-					<FormWrapper onSubmit={this.handleSubmit.bind(this)}/>
-				</div>
+				<Child onRef={that.onRef}/>
+				{/*<FormWrapper ref={r => this.child = r}/>*/}
 			</div>
 		)
 	}
