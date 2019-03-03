@@ -1,11 +1,8 @@
 import { Map, List } from 'immutable'
-import {
-    OPERATOR_LOAD_INFO,
-} from '../constants/ActionTypes'
+import { OPERATOR_LOAD_INFO } from '../constants/ActionTypes'
 
 const initialState = Map({
     operator: Map({}),
-    dashbord: Map({}),
     logined: true
 })
 

@@ -1,7 +1,7 @@
 import Api from '../../constants/Api'
 import ApiCaller from '../../utils/ApiCaller'
 import Cookie from '../../utils/Cookie'
-import { OPERATOR_LOAD_INFO,} from '../constants/ActionTypes'
+import { OPERATOR_LOAD_INFO } from '../constants/ActionTypes'
 
 // 获取用户信息
 export function loadInfo(onSuccess = ()=>{}, onError = ()=>{}) {

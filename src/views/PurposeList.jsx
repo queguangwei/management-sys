@@ -34,8 +34,6 @@ class PurposeList extends React.Component {
 	getCustomerList(filter) {
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
 			if (res.code == 0) {
-				this.state.data = res.data.admin;
-				Cookie.set('token', JSON.stringify(res.data.logToken), {path: '/'})
 			} else {
 
 			}
@@ -48,7 +46,12 @@ class PurposeList extends React.Component {
 	}
 
 	search() {
-		browserHistory.push('/search')
+		browserHistory.push({
+			pathname: '/search',
+			query: {
+				lastPage: 'purpose'
+			}
+		})
 	}
 
 	add() {

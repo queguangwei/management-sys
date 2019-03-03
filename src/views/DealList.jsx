@@ -32,7 +32,12 @@ class DealList extends React.Component {
 	}
 
 	search() {
-		browserHistory.push('/search')
+		browserHistory.push({
+			pathname: '/search',
+			query: {
+				lastPage: 'deal'
+			}
+		})
 	}
 
 	add() {

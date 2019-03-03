@@ -5,40 +5,53 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, DatePicker, Picker, InputItem, List, WhiteSpace } from 'antd-mobile'
+import { NavBar, Icon, DatePicker, Picker, InputItem, List, WhiteSpace, Toast } from 'antd-mobile'
 import { createForm } from 'rc-form'
+let finialValues = {}
 
 class Form extends  React.Component {
 
 	onSubmit() {
 		this.props.form.validateFields({ force: true }, (error, value) => {
-			console.log(value)
 			if (!error) {
-				console.log(this.props.form.getFieldsValue());
+				finialValues = value;
+				console.log()
+				if(value.sex !=undefined) {
+					finialValues.sex = value.sex[0];
+				}
+				if(value.type != undefined) {
+					finialValues.type = value.type[0];
+				}
+				if(value.startTime != undefined) {
+					finialValues.startTime = value.startTime.getTime();
+				}
+				if(value.endTime != undefined) {
+					finialValues.endTime = value.endTime.getTime();
+				}
+				this.props.onSubmit();
 			} else {
 				console.log(error);
-				alert('Validation failed');
 			}
 		});
 	}
 	render() {
 		const { getFieldProps } = this.props.form;
 		const IntentionDegree = [
-			{label: 'A类', value: 'classA'},
-			{label: 'B类', value: 'classB'},
-			{label: 'C类', value: 'classC'}
+			{label: 'A类', value: 'A'},
+			{label: 'B类', value: 'B'},
+			{label: 'C类', value: 'C'}
 		]
 		const gender = [
-			{label: '男', value: 'male'},
-			{label: '女', value: 'female'}
+			{label: '男', value: 0},
+			{label: '女', value: 1}
 		]
 		return (
 			<form>
 				<List>
-					<Picker data={IntentionDegree} cols={1} {...getFieldProps('IntentionDegree')}>
+					<Picker data={IntentionDegree} cols={1} {...getFieldProps('type')}>
 						<List.Item arrow="horizontal">意向度</List.Item>
 					</Picker>
-					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
+					<Picker data={gender} cols={1} {...getFieldProps('sex')}>
 						<List.Item arrow="horizontal">性别</List.Item>
 					</Picker>
 					<InputItem
@@ -48,14 +61,14 @@ class Form extends  React.Component {
 						style={{textAlign:'right'}}
 					>客户姓名</InputItem>
 					<InputItem
-						{...getFieldProps('mobile')}
+						{...getFieldProps('code')}
 						type="phone"
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 					>电话</InputItem>
 					<InputItem
-						{...getFieldProps('district')}
+						{...getFieldProps('city')}
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
@@ -65,13 +78,13 @@ class Form extends  React.Component {
 				<List>
 					<DatePicker
 						mode="date"
-						{...getFieldProps('startDate')}
+						{...getFieldProps('startTime')}
 					>
 						<List.Item arrow="horizontal">开始时间</List.Item>
 					</DatePicker>
 					<DatePicker
 						mode="date"
-						{...getFieldProps('endDate')}
+						{...getFieldProps('endTime')}
 					>
 						<List.Item arrow="horizontal">结束时间</List.Item>
 					</DatePicker>
@@ -88,34 +101,49 @@ class Search extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: [],
-			cols: 1,
-			pickerValue: [],
-			asyncValue: [],
-			sValue: ['2013', '春'],
-			visible: false,
-			colorValue: ['#00FF00'],
+        	lastPage: '',
+			filter: {
+				current: 1,
+				size: 10
+			}
         }
     }
 
 	back() {
-		browserHistory.push('/')
+		browserHistory.goBack()
 	}
 
-	genderPick(val) {
-		console.log(val)
-	}
-
-	degreePick(val) {
-    	console.log(val)
+	onSubmit() {
+		const state = this.state;
+		let params = {};
+		if(state.lastPage == 'home') {
+			params = Object.assign(state.filter, {lessonState: 0}, finialValues);
+		} else if (state.lastPage == 'purpose') {
+			params = Object.assign(state,filter, {lessonState: 1}, finialValues);
+		} else if (state.lastPage == 'deal') {
+			params = Object.assign(state.filter, {lessonState: 2}, finialValues);
+		}
+		ApiCaller.call(Api.user.list, JSON.stringify(params), (res) => {
+			if (res.code == 0) {
+				if(res.data.total == 0) {
+					Toast.info("暂无搜索结果！");
+				} else {
+					browserHistory.push({
+						pathname: '/',
+						query: {
+							params: JSON.stringify(params)
+						}
+					})
+				}
+			}
+		})
 	}
 
     componentDidMount() {
-
+		this.setState({lastPage: this.props.location.query.lastPage})
     }
 
     render() {
-
         return (
             <div>
 				<NavBar
@@ -124,15 +152,11 @@ class Search extends React.Component {
 					onLeftClick={this.back.bind(this)}
 				>搜索
 				</NavBar>
-                <div className="">
-					<FormWrapper />
-
-                </div>
+				<FormWrapper onSubmit={this.onSubmit.bind(this)}/>
             </div>
         )
     }
 }
-
 
 export default connect(state => ({
     user: state.user

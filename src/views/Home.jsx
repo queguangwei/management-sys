@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
@@ -26,11 +26,16 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-    	this.getCustomerList(this.state.filter);
+        if(this.props.location.query.params) {
+            this.getCustomerList(JSON.parse(this.props.location.query.params));
+        } else {
+            this.getCustomerList(this.state.filter);
+        }
 		this.getLessonList()
     }
 
 	getCustomerList(filter) {
+        console.log(filter)
     	const state = this.state;
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
 			if (res.code == 0) {
@@ -60,7 +65,12 @@ class Home extends React.Component {
 	}
 
 	search() {
-		browserHistory.push('/search')
+		browserHistory.push({
+            pathname: '/search',
+            query: {
+                lastPage: 'home'
+            }
+        })
 	}
 
 	add() {
@@ -92,6 +102,7 @@ class Home extends React.Component {
 		Cookie.remove('token', {path: '/'});
 		location.href = '/'
 	}
+
     checkStatus(status) {
         console.log(status)
         let sta = '';
@@ -115,8 +126,8 @@ class Home extends React.Component {
 					<Item multipleLine>
 						<div className="header-img">
 						</div>
-						<div style={{color:'#fff'}}>王大锤</div>
-						<Brief style={{color:'#fff'}}>13867896542</Brief>
+						<div style={{color:'#fff'}}>{this.props.user.get('operator').get('name')}</div>
+						<Brief style={{color:'#fff'}}>{this.props.user.get('operator').get('code')}</Brief>
 					</Item>
 					<Item className="drawer-slider-item" onClick={this.home.bind(this)}>
 						新进客户
@@ -143,9 +154,11 @@ class Home extends React.Component {
 					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className="icon_new"></span>
 				</div>
 				<div className="my-list-info">
-					电话状态:<span className="status">{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
+					电话状态:
+                    <span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
 					<span className="address">公司:{item.company}</span>
 				</div>
+                {item.followTime ? <div className="my-list-time">下次跟进时间:2019-12-31</div> : null}
 			</Item>
 		)
         return (
@@ -170,44 +183,6 @@ class Home extends React.Component {
 				>
 					<List className="my-list">
 						{item}
-						<Item multipleLine onClick={this.detail.bind(this, 'new')}>
-							<div className="my-list-content" >
-								<span className="name">王小迪</span><span>电话:13765765436</span><span className="icon_new"></span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="status">已接</span>
-								<span className="address">公司:上海天天食品安全有限公司有限公</span>
-							</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">高勤斯维</span><span>电话:13868765436</span><span className="icon_new"></span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">未接</span>
-								<span className="address">公司:杭州帽科技有限公司</span>
-							</div>
-							<div className="my-list-time">下次跟进时间:2019-12-31</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">胡晴天</span><span>电话:13868765436</span><span className="icon_new"></span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">空号</span>
-								<span className="address">公司:杭州哈哈有限公司</span>
-							</div>
-							<div className="my-list-time">下次跟进时间:2019-12-31</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">哈哈炜</span><span>电话:13868765436</span><span className="icon_new"></span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">错号</span>
-								<span className="address">公司:杭州哈哈有限公司</span>
-							</div>
-						</Item>
 
 					</List>
 				</Drawer>
