@@ -116,8 +116,19 @@ class Detail extends React.Component {
                 <h4>跟进时间：{Format.date(item.followTime, 'yyyy-MM-dd')}</h4>
                 <p>{item.remark}</p>
             </li>
-        )
-
+        );
+        let lesLi = lessonData.map(item =>
+            <li>
+                <h4>课程名称：{item.name}
+                    <span>报名人数：{item.total}</span>
+                </h4>
+                <p>
+                    <div>1.王小峰 13456409654 高级采购员</div>
+                    <div>2.胡不大 13456788884 hr人员</div>
+                    <div>1.王小峰 13456409654 高级采购员</div>
+                </p>
+            </li>
+        );
 		return (
 			<div>
 				<NavBar
@@ -165,18 +176,10 @@ class Detail extends React.Component {
 						</div>
 						{type!=0?
 							<div className="detail-lesson">
-								<p className="title">课程数（2）</p>
+								<p className="title">课程数（{lessonData.length}）</p>
 								<ul className="detail-lesson-list">
-									<li>
-										<h4>课程名称：舌行演讲
-											<span>报名人数：3</span>
-										</h4>
-										<p>
-											<div>1.王小峰 13456409654 高级采购员</div>
-											<div>2.胡不大 13456788884 hr人员</div>
-											<div>1.王小峰 13456409654 高级采购员</div>
-										</p>
-									</li>
+                                    {lesLi}
+
 									<li>
 										<h4>课程名称：舌行演讲
 											<span>报名人数：3</span>

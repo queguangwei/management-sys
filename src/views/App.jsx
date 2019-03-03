@@ -36,7 +36,6 @@ class App extends React.Component {
 
     render() {
 		const isLogined = this.isLogined()
-		console.log("是否已登录"+isLogined)
 		return isLogined ? (
 				<div>
 					{this.props.children}

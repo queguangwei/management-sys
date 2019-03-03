@@ -49,6 +49,30 @@
       background-size: px2rem(30px);
       margin-left: px2rem(20px);
     }
+    span.icon_type_a {
+      display: inline-block;
+      width: px2rem(30px);
+      height: px2rem(30px);
+      background: url("../../assets/images/icon_class_a.png")no-repeat;
+      background-size: px2rem(30px);
+      margin-left: px2rem(20px);
+    }
+    span.icon_type_b {
+      display: inline-block;
+      width: px2rem(30px);
+      height: px2rem(30px);
+      background: url("../../assets/images/icon_class_b.png")no-repeat;
+      background-size: px2rem(30px);
+      margin-left: px2rem(20px);
+    }
+    span.icon_type_c {
+      display: inline-block;
+      width: px2rem(30px);
+      height: px2rem(30px);
+      background: url("../../assets/images/icon_class_c.png")no-repeat;
+      background-size: px2rem(30px);
+      margin-left: px2rem(20px);
+    }
   }
   &-info {
     line-height: 1;

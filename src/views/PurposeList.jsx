@@ -1,28 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
+import Cookie from "../utils/Cookie";
 const Item = List.Item;
 const Brief = Item.Brief;
-
 
 class PurposeList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			open: false,
-			onUploading: false,
 			data: [],
-			momentHeader: [1],
-			momentList: [1],
 			filter: {
 				current: 1,
 				size: 10,
 				lessonState: 1,
+				type: 'A'
 			}
 		}
 	}
@@ -32,16 +30,18 @@ class PurposeList extends React.Component {
 	}
 
 	getCustomerList(filter) {
+		const state = this.state;
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
 			if (res.code == 0) {
+				state.data = res.data.records;
+				this.setState(state);
 			} else {
 
 			}
 		})
 	}
 
-	onOpenChange(...args) {
-
+	onOpenChange() {
 		this.setState({ open: !this.state.open });
 	}
 
@@ -58,8 +58,13 @@ class PurposeList extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail() {
-		browserHistory.push('/detail')
+	detail(id) {
+		browserHistory.push({
+			pathname: '/detail',
+			query: {
+				id: id
+			}
+		})
 	}
 
 	home() {
@@ -79,24 +84,38 @@ class PurposeList extends React.Component {
 	}
 
 	loginout() {
-
+		Cookie.remove('token', {path: '/'});
+		location.href = '/'
 	}
 
-	render() {
-		const tabs = [
-			{ title: 'A类', sub: '1'},
-			{ title: 'B类', sub: '2' },
-			{ title: 'C类', sub: '3' },
-		];
+	onTabChange(index) {
+		const state = this.state;
+		state.filter = {
+			current: 1,
+			size: 10,
+			lessonState: 1,
+			type: index.sub
+		}
+		this.setState(state);
+		this.getCustomerList(this.state.filter);
+	}
 
+
+	render() {
+		let state = this.state;
+		const tabs = [
+			{ title: 'A类', sub: 'A'},
+			{ title: 'B类', sub: 'B' },
+			{ title: 'C类', sub: 'C' },
+		];
 		const sidebar = (
 			<div>
 				<List className="drawer-slider">
 					<Item multipleLine>
 						<div className="header-img">
 						</div>
-						<div style={{color:'#fff'}}>王大锤</div>
-						<Brief style={{color:'#fff'}}>13867896542</Brief>
+						<div style={{color:'#fff'}}>{this.props.user.get('operator').get('name')}</div>
+						<Brief style={{color:'#fff'}}>{this.props.user.get('operator').get('code')}</Brief>
 					</Item>
 					<Item className="drawer-slider-item" onClick={this.home.bind(this)}>
 						新进客户
@@ -117,7 +136,19 @@ class PurposeList extends React.Component {
 				</div>
 			</div>
 		);
-
+		let item = state.data.map(item =>
+			<Item multipleLine onClick={this.detail.bind(this, item.id)}>
+				<div className="my-list-content" >
+					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className={item.type=='A'?'icon_type_a':(item.type=='B'?'icon_class_b':'icon_class_c')}></span>
+				</div>
+				<div className="my-list-info">
+					电话状态:
+					<span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
+					<span className="address">公司:{item.company}</span>
+				</div>
+				{item.followTime?<div className="my-list-time">下次跟进时间:2019-12-31</div>:null}
+			</Item>
+		)
 		return (
 			<div className="">
 				<NavBar
@@ -140,94 +171,26 @@ class PurposeList extends React.Component {
 				>
 					<Tabs tabs={tabs}
 						  initialPage={0}
-						  onChange={(tab, index) => { console.log('onChange', index, tab); }}
+						  onChange={this.onTabChange.bind(this)}
 					>
+						{/* tabA */}
 						<div>
 							<List className="my-list">
-								<Item multipleLine onClick={this.detail.bind(this)}>
-									<div className="my-list-content" >
-										<span className="name">王小迪</span><span>电话:13765765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="status">已接</span>
-										<span className="address">公司:上海天天食品安全有限公司有限公</span>
-									</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">高勤斯维</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">未接</span>
-										<span className="address">公司:杭州帽科技有限公司</span>
-									</div>
-									<div className="my-list-time">下次跟进时间:2019-12-31</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">胡晴天</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">空号</span>
-										<span className="address">公司:杭州哈哈有限公司</span>
-									</div>
-									<div className="my-list-time">下次跟进时间:2019-12-31</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">哈哈炜</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">错号</span>
-										<span className="address">公司:杭州哈哈有限公司</span>
-									</div>
-								</Item>
+								{item}
+
 							</List>
 						</div>
+						{/* tabB */}
 						<div>
 							<List className="my-list">
-								<Item multipleLine onClick={this.detail.bind(this)}>
-									<div className="my-list-content" >
-										<span className="name">王小迪</span><span>电话:13765765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="status">已接</span>
-										<span className="address">公司:上海天天食品安全有限公司有限公</span>
-									</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">高勤斯维</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">未接</span>
-										<span className="address">公司:杭州帽科技有限公司</span>
-									</div>
-									<div className="my-list-time">下次跟进时间:2019-12-31</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">胡晴天</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">空号</span>
-										<span className="address">公司:杭州哈哈有限公司</span>
-									</div>
-									<div className="my-list-time">下次跟进时间:2019-12-31</div>
-								</Item>
-								<Item multipleLine onClick={() => {}}>
-									<div className="my-list-content" >
-										<span className="name">哈哈炜</span><span>电话:13868765436</span>
-									</div>
-									<div className="my-list-info">
-										电话状态:<span className="err-status">错号</span>
-										<span className="address">公司:杭州哈哈有限公司</span>
-									</div>
-								</Item>
+								{item}
 							</List>
 						</div>
-						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-							Content of third tab
+						{/* tabC */}
+						<div>
+							<List className="my-list">
+								{item}
+							</List>
 						</div>
 					</Tabs>
 
