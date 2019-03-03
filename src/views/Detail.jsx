@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
+import * as Format from '../utils/Format'
 import Api from '../constants/Api'
 import { NavBar, Icon } from 'antd-mobile'
 
@@ -11,10 +12,12 @@ class Detail extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			type: '',
-			userId: '',
-			data: [],
-		}
+            type: null,     //新进(0), 意向(1), 成交(2)
+            userId: '',
+            info: {},
+            followData: [],
+            lessonData: [],
+        }
 	}
 
 	back() {
@@ -45,7 +48,12 @@ class Detail extends React.Component {
 		const state = this.state;
 		ApiCaller.call(Api.user.info, JSON.stringify({userId: userId}), (res) => {
 			if (res.code == 0) {
-				state.data = res.data.records;
+			    state.type = res.data.user.lessonState;
+				state.info = res.data.user;
+				state.followData = res.data.followRecords;
+				state.lessonData = res.data.lessonRecords;
+				state.info.cellphoneState = this.checkCallStatus(res.data.user.callState);
+				state.info.age = this.checkAge(res.data.user.idCard);
 				this.setState(state);
 			} else {
 
@@ -53,13 +61,63 @@ class Detail extends React.Component {
 		})
 	}
 
-	componentDidMount() {
-		this.setState({type: this.props.location.query.type})
+    checkAge(idCard) {
+	    console.log(idCard)
+        let len = (idCard + "").length;
+        if (len == 0) {
+            return 0;
+        } else {
+            if ((len != 15) && (len != 18))//身份证号码只能为15位或18位其它不合法
+            {
+                return 0;
+            }
+        }
+        let strBirthday = "";
+        if (len == 18)//处理18位的身份证号码从号码中得到生日和性别代码
+        {
+            strBirthday = idCard.substr(6, 4) + "/" + idCard.substr(10, 2) + "/" + idCard.substr(12, 2);
+        }
+        if (len == 15) {
+            strBirthday = "19" + idCard.substr(6, 2) + "/" + idCard.substr(8, 2) + "/" + idCard.substr(10, 2);
+        }
+        //时间字符串里，必须是“/”
+        let birthDate = new Date(strBirthday);
+        let nowDateTime = new Date();
+        let age = nowDateTime.getFullYear() - birthDate.getFullYear();
+        //再考虑月、天的因素;.getMonth()获取的是从0开始的，这里进行比较，不需要加1
+        if (nowDateTime.getMonth() < birthDate.getMonth() || (nowDateTime.getMonth() == birthDate.getMonth() && nowDateTime.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
 
+    checkCallStatus(status) {
+        let sta = '';
+        if(status == 0) {
+            sta = '空号'
+        }else if (status == 1) {
+            sta = '未接'
+        }else if(status == 2) {
+            sta = '已接'
+        }else {
+            sta = '错号'
+        }
+        return sta;
+    }
+
+	componentDidMount() {
 		this.getCustomerDetail(this.props.location.query.id);
 	}
 
 	render() {
+        let { type, info, followData, lessonData } = this.state;
+        let fLi = followData.map(item =>
+            <li>
+                <h4>跟进时间：{Format.date(item.followTime, 'yyyy-MM-dd')}</h4>
+                <p>{item.remark}</p>
+            </li>
+        )
+
 		return (
 			<div>
 				<NavBar
@@ -78,34 +136,34 @@ class Detail extends React.Component {
 								<div className="top">
 									<div className="headerimg"></div>
 									<div className="headerinfo">
-										<span>高勤斯维</span>
-										先生 30岁
-										{this.state.type=='new'?
+										<span>{info.name}</span>
+                                        {info.sex==0?'先生':'女生'} {info.age}岁
+										{type==0?
 											<i className="new"></i>:
-											<i className="classa"></i>
+											<i className={info.type=='A'?'classa':(info.type=='B'?'classb':'classc')}></i>
 										}
 									</div>
 									<div className="headerinfo">
-										高级财务/杭州帽科技有限公司
+                                        {info.job}/{info.company}
 									</div>
 								</div>
 								<div className="bottom">
 									<p>
-										<span>电话:<a href="tel:13867896470">13867896470</a></span>
-										<span>电话状态:未接</span>
+										<span>电话:<a href="tel:13867896470">{info.code}</a></span>
+                                        <span>电话状态:<span className={info.callState==2?'status-gre':'status-red'}>{info.cellphoneState}</span></span>
 									</p>
 									<p>
-										<span>微信:wahaha372</span>
-										<span>意向度:A类</span>
+										<span>微信:{info.wx}</span>
+										<span>意向度:{info.type}类</span>
 									</p>
 									<p>
-										<span>区域:浙江省杭州市</span>
+										<span>区域:{info.province}{info.city}</span>
 									</p>
-									<p>身份证:330382199087554328</p>
+									<p>身份证:{info.idCard}</p>
 								</div>
 							</div>
 						</div>
-						{this.state.type!='new'?
+						{type!=0?
 							<div className="detail-lesson">
 								<p className="title">课程数（2）</p>
 								<ul className="detail-lesson-list">
@@ -133,30 +191,24 @@ class Detail extends React.Component {
 							</div>:null
 						}
 						<div className="detail-record">
-							<p className="title">跟进记录（0次）</p>
+							<p className="title">跟进记录（{followData.length}次）</p>
 							<ul className="detail-record-list">
-								<li>
-									<h4>跟进时间：2018-12-30</h4>
-									<p>去客户那边洽谈一些和合同相关的事项，尽量让客户签掉合 同。去见客户最好带一些客户喜欢的礼物，那样客户会比较 高兴，谈起来更融洽。</p>
-								</li>
-								<li>
-									<h4>跟进时间：2019-02-24</h4>
-									<p>去客户那边签合同</p>
-								</li>
-								<div className="no-record">
-									<h4>此客户没有跟进记录，您可以</h4>
-									<p>点击下方设为意向客户进行跟进</p>
-								</div>
+                                {fLi}
+                                {followData.length==0?
+                                    <div className="no-record">
+                                        <h4>此客户没有跟进记录，您可以</h4>
+                                        <p>点击下方设为意向客户进行跟进</p>
+                                    </div>:null}
 							</ul>
 						</div>
 						<div className="op"></div>
 					</div>
 				</div>
-				{this.state.type=='new'?
+				{type==0?
 					<div className="bottom-button">
 						<button className="bottom-button-blu" onClick={this.set.bind(this)}>设为意向</button>
 					</div>:
-					this.state.type=='deal'?
+					type==2?
 						<div className="bottom-button">
 							<button className="bottom-button-blu" onClick={this.add.bind(this)}>新增课程</button>
 						</div>:

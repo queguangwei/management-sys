@@ -67,12 +67,10 @@ class Home extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(value, id) {
-    	console.log(id)
+	detail(id) {
 		browserHistory.push({
 			pathname: '/detail',
 			query: {
-				type: value,
 				id: id
 			}
 		})
@@ -94,6 +92,20 @@ class Home extends React.Component {
 		Cookie.remove('token', {path: '/'});
 		location.href = '/'
 	}
+    checkStatus(status) {
+        console.log(status)
+        let sta = '';
+        if(status == 0) {
+            sta = '空号'
+        }else if (status == 1) {
+            sta = '未接'
+        }else if(status == 2) {
+            sta = '已接'
+        }else {
+            sta = '错号'
+        }
+        return sta;
+    }
 
     render() {
 		let state = this.state, that = this;
@@ -126,12 +138,12 @@ class Home extends React.Component {
 			</div>
 		);
 		let item = state.data.map(item =>
-			<Item multipleLine onClick={this.detail.bind(this, 'new', item.id)}>
+			<Item multipleLine onClick={this.detail.bind(this, item.id)}>
 				<div className="my-list-content" >
 					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className="icon_new"></span>
 				</div>
 				<div className="my-list-info">
-					电话状态:<span className="status">{item.callState==0?'空号':(item.callState==1?'未接':'已接')}</span>
+					电话状态:<span className="status">{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
 					<span className="address">公司:{item.company}</span>
 				</div>
 			</Item>

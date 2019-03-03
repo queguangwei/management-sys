@@ -54,6 +54,22 @@
             background-size: px2rem(30px);
             margin-left: px2rem(30px);
           }
+          i.classb {
+            display: inline-block;
+            width: px2rem(30px);
+            height: px2rem(30px);
+            background: url("../../assets/images/icon_class_b.png")no-repeat;
+            background-size: px2rem(30px);
+            margin-left: px2rem(30px);
+          }
+          i.classc {
+            display: inline-block;
+            width: px2rem(30px);
+            height: px2rem(30px);
+            background: url("../../assets/images/icon_class_c.png")no-repeat;
+            background-size: px2rem(30px);
+            margin-left: px2rem(30px);
+          }
         }
       }
       .bottom {
@@ -166,4 +182,11 @@
   &-blu {
     background-color: #2997DE;
   }
+}
+
+.status-gre {
+  color: #7BC768;
+}
+.status-red {
+  color: #FF0000;
 }
