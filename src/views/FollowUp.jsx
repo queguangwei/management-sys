@@ -13,8 +13,13 @@ let finialValues = {}
 
 class Form extends  React.Component {
 	constructor(props) {
-		super(props);
+        super(props)
+        this.state={
+
+        }
+        this.props.onRef(this);
 	}
+
 	handleSubmit() {
 		this.props.form.validateFields({ force: true }, (error, value) => {
 			if (!error) {
@@ -27,7 +32,7 @@ class Form extends  React.Component {
 
 	}
 
-	componentDidMount() {
+	componentDidMount()  {
 	}
 
 	render() {
@@ -57,8 +62,8 @@ class Form extends  React.Component {
 			</form>
 		)
 	}
-
 }
+
 const FormWrapper = createForm()(Form);
 
 class Child extends React.Component {
@@ -99,13 +104,13 @@ class FollowUp extends React.Component {
 	}
 
 	save() {
-		console.log(this,child.state.info)
-		this.child.myName();
-		// alert('保存', '确认保存吗???', [
-		// 	{ text: '取消', onPress: () => console.log('cancel') },
-		// 	{ text: '确定', onPress: () => console.log('ok') },
-		// ])
-
+		const that = this;
+		console.log(that)
+		that.props.refs.child.handleSubmit();
+		alert('保存', '确认保存吗???', [
+			{ text: '取消', onPress: () => console.log('cancel') },
+			{ text: '确定', onPress: () => console.log('ok') },
+		])
 	}
 
 	onRef(ref) {
@@ -129,8 +134,7 @@ class FollowUp extends React.Component {
 				>
 					添加跟进
 				</NavBar>
-				<Child onRef={that.onRef}/>
-				{/*<FormWrapper ref={r => this.child = r}/>*/}
+				<FormWrapper ref="child" onRef={this.onRef}/>
 			</div>
 		)
 	}

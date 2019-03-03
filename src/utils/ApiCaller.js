@@ -20,10 +20,9 @@ function getCommonHeader() {
     let tokenObj = JSON.parse(token)
     // 通用参数
     const commonParams = {
-        platformId: '201810191627220000000001000001',
-        source: 'web',
+        token: token
     }
-    commonParams['Content-Type'] = "application/x-www-form-urlencoded"
+    commonParams['Content-Type'] = "application/json"
     return commonParams
 }
 

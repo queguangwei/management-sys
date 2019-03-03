@@ -5,7 +5,7 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, Modal, Picker, InputItem, List } from 'antd-mobile'
+import { NavBar, Icon, Modal, Picker, InputItem, List, Toast } from 'antd-mobile'
 import { createForm } from 'rc-form'
 
 const alert = Modal.alert;
@@ -88,10 +88,18 @@ class Form extends  React.Component {
 }
 const FormWrapper = createForm()(Form);
 
-class EditCustomer extends React.Component {
+class AddCustomer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			hasError: false,
+			code: '',
+			name: '',
+			idCard: '',
+			company: '',
+			job: '',
+			sex: 0,
+			wx: '',
 			data: [],
 		}
 	}
@@ -112,12 +120,55 @@ class EditCustomer extends React.Component {
 		console.log(values)
 	}
 
+	onCompanyChange(value) {
+		this.setState({
+			company: value
+		})
+	}
+
+	onNameChange(value) {
+		his.setState({
+			name: value
+		})
+	}
+
+	onErrorClick() {
+		if (this.state.hasError) {
+			Toast.info('请输入11位电话号码！', 2);
+		}
+	}
+	onPhoneChange(value) {
+		if (value.replace(/\s/g, '').length < 11) {
+			this.setState({
+				hasError: true,
+			});
+		} else {
+			this.setState({
+				hasError: false,
+			});
+		}
+		this.setState({
+			code: value,
+		});
+	}
+
+	onJobChange(value) {
+		this.setState({job: value})
+	}
+
+	onIdCardChange(value) {
+
+	}
+
 	componentDidMount() {
 
 	}
 
 	render() {
-
+		const gender = [
+			{label: '男', value: 'male'},
+			{label: '女', value: 'female'}
+		];
 		return (
 			<div>
 				<NavBar
@@ -129,7 +180,51 @@ class EditCustomer extends React.Component {
 					添加客户
 				</NavBar>
 				<div className="">
-					<FormWrapper onSubmit={this.handleSubmit.bind(this)}/>
+					<List>
+						<InputItem
+							onChange={this.onCompanyChange.bind(this)}
+							clear
+							placeholder="请输入信息"
+							style={{textAlign:'right'}}
+						>公司名称</InputItem>
+						<InputItem
+							onChange={this.onNameChange.bind(this)}
+							clear
+							placeholder="请输入信息"
+							style={{textAlign:'right'}}
+						>联系人姓名</InputItem>
+						<InputItem
+							type="phone"
+							error={this.state.hasError}
+							onErrorClick={this.onErrorClick.bind(this)}
+							onChange={this.onPhoneChange.bind(this)}
+							value={this.state.code}
+							placeholder="请输入信息"
+							clear
+							style={{textAlign:'right'}}
+						>电话</InputItem>
+						<InputItem
+							onChange={this.onJobChange.bind(this)}
+							clear
+							placeholder="请输入信息"
+							style={{textAlign:'right'}}
+						>职位</InputItem>
+						<InputItem
+							onChange={this.onIdCardChange.bind(this)}
+							clear
+							placeholder="请输入信息"
+							style={{textAlign:'right'}}
+						>身份证</InputItem>
+						<InputItem
+							clear
+							placeholder="请输入信息"
+							style={{textAlign:'right'}}
+						>微信号</InputItem>
+						<Picker data={gender} cols={1}>
+							<List.Item arrow="horizontal">性别</List.Item>
+						</Picker>
+					</List>
+					{/*<FormWrapper onSubmit={this.handleSubmit.bind(this)} />*/}
 				</div>
 			</div>
 		)
@@ -140,5 +235,5 @@ export default connect(state => ({
 	user: state.user
 }), dispath => ({
 	actions: bindActionCreators(Actions, dispath)
-}))(EditCustomer)
+}))(AddCustomer)
 module.exports = exports['default']

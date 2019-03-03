@@ -5,7 +5,7 @@ var views = {
 	DealList: require('./DealList'),
 	AllList: require('./AllList'),
 	Search: require('./Search'),
-	Add: require('./Add'),
+	AddCustomer: require('./AddCustomer'),
 	EditCustomer: require('./EditCustomer'),
 	Detail: require('./Detail'),
 	FollowUp: require('./FollowUp'),
