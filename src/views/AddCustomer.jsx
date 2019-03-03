@@ -157,7 +157,7 @@ class AddCustomer extends React.Component {
 	}
 
 	onIdCardChange(value) {
-
+		this.setState({idCard: value})
 	}
 
 	componentDidMount() {
@@ -216,12 +216,20 @@ class AddCustomer extends React.Component {
 							style={{textAlign:'right'}}
 						>身份证</InputItem>
 						<InputItem
+							disabled
+							placeholder="自动生成"
+							style={{textAlign:'right'}}
+						>年龄</InputItem>
+						<InputItem
 							clear
 							placeholder="请输入信息"
 							style={{textAlign:'right'}}
 						>微信号</InputItem>
 						<Picker data={gender} cols={1}>
 							<List.Item arrow="horizontal">性别</List.Item>
+						</Picker>
+						<Picker data={gender} cols={1}>
+							<List.Item arrow="horizontal">地区</List.Item>
 						</Picker>
 					</List>
 					{/*<FormWrapper onSubmit={this.handleSubmit.bind(this)} />*/}

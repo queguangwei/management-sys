@@ -19,11 +19,27 @@ class PurposeList extends React.Component {
 			data: [],
 			momentHeader: [1],
 			momentList: [1],
+			filter: {
+				current: 1,
+				size: 10,
+				lessonState: 1,
+			}
 		}
 	}
 
 	componentDidMount() {
+		this.getCustomerList(this.state.filter);
+	}
 
+	getCustomerList(filter) {
+		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
+			if (res.code == 0) {
+				this.state.data = res.data.admin;
+				Cookie.set('token', JSON.stringify(res.data.logToken), {path: '/'})
+			} else {
+
+			}
+		})
 	}
 
 	onOpenChange(...args) {

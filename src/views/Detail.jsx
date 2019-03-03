@@ -12,6 +12,7 @@ class Detail extends React.Component {
 		super(props)
 		this.state = {
 			type: '',
+			userId: '',
 			data: [],
 		}
 	}
@@ -40,8 +41,22 @@ class Detail extends React.Component {
 		browserHistory.push('/deal')
 	}
 
+	getCustomerDetail(userId) {
+		const state = this.state;
+		ApiCaller.call(Api.user.info, JSON.stringify({userId: userId}), (res) => {
+			if (res.code == 0) {
+				state.data = res.data.records;
+				this.setState(state);
+			} else {
+
+			}
+		})
+	}
+
 	componentDidMount() {
 		this.setState({type: this.props.location.query.type})
+
+		this.getCustomerDetail(this.props.location.query.id);
 	}
 
 	render() {

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon } from 'antd-mobile'
+import Cookie from "../utils/Cookie";
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -15,21 +16,35 @@ class Home extends React.Component {
         super(props)
         this.state = {
 			open: false,
-            onUploading: false,
             data: [],
-            momentHeader: [1],
-            momentList: [1],
+			filter: {
+				current: 1,
+				size: 10,
+				lessonState: 0,
+			}
         }
     }
 
     componentDidMount() {
+    	this.getCustomerList(this.state.filter);
 		this.getLessonList()
     }
+
+	getCustomerList(filter) {
+    	const state = this.state;
+		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
+			if (res.code == 0) {
+				state.data = res.data.records;
+				this.setState(state);
+			} else {
+
+			}
+		})
+	}
     getLessonList() {
         ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
-            if (res.code == 200) {
-                this.state.data = res.data.admin;
-                Cookie.set('token', JSON.stringify(res.data.logToken), {path: '/'})
+            if (res.code == 0) {
+
             } else {
 
             }
@@ -52,11 +67,13 @@ class Home extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(value) {
+	detail(value, id) {
+    	console.log(id)
 		browserHistory.push({
 			pathname: '/detail',
 			query: {
-				type: value
+				type: value,
+				id: id
 			}
 		})
 	}
@@ -74,11 +91,12 @@ class Home extends React.Component {
 	}
 
 	loginout() {
-    	console.log(1)
+		Cookie.remove('token', {path: '/'});
+		location.href = '/'
 	}
 
     render() {
-
+		let state = this.state, that = this;
 		const sidebar = (
 			<div>
 				<List className="drawer-slider">
@@ -107,7 +125,17 @@ class Home extends React.Component {
 				</div>
 			</div>
 		);
-
+		let item = state.data.map(item =>
+			<Item multipleLine onClick={this.detail.bind(this, 'new', item.id)}>
+				<div className="my-list-content" >
+					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className="icon_new"></span>
+				</div>
+				<div className="my-list-info">
+					电话状态:<span className="status">{item.callState==0?'空号':(item.callState==1?'未接':'已接')}</span>
+					<span className="address">公司:{item.company}</span>
+				</div>
+			</Item>
+		)
         return (
             <div className="">
 				<NavBar
@@ -129,6 +157,7 @@ class Home extends React.Component {
 					onOpenChange={this.onOpenChange}
 				>
 					<List className="my-list">
+						{item}
 						<Item multipleLine onClick={this.detail.bind(this, 'new')}>
 							<div className="my-list-content" >
 								<span className="name">王小迪</span><span>电话:13765765436</span><span className="icon_new"></span>
@@ -167,18 +196,7 @@ class Home extends React.Component {
 								<span className="address">公司:杭州哈哈有限公司</span>
 							</div>
 						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							王小迪 电话:13765765436
-							<Brief>电话状态:已接</Brief>
-						</Item>
+
 					</List>
 				</Drawer>
             </div>

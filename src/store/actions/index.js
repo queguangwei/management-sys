@@ -1,9 +1,7 @@
 import Api from '../../constants/Api'
 import ApiCaller from '../../utils/ApiCaller'
 import Cookie from '../../utils/Cookie'
-import {
-    OPERATOR_LOAD_INFO,
-} from '../constants/ActionTypes'
+import { OPERATOR_LOAD_INFO,} from '../constants/ActionTypes'
 
 // 获取用户信息
 export function loadInfo(onSuccess = ()=>{}, onError = ()=>{}) {
@@ -12,7 +10,7 @@ export function loadInfo(onSuccess = ()=>{}, onError = ()=>{}) {
         if(!Cookie.get('token', cookieOptions)){
             return
         }
-        ApiCaller.call(Api.user.getInfo, (res) => {
+        ApiCaller.call(Api.other.getInfo, (res) => {
             if (res.code == 0) {
                 dispath({
                     type: OPERATOR_LOAD_INFO,

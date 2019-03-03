@@ -17,12 +17,12 @@ function getCookieOptions() {
 function getCommonHeader() {
     let cookieOptions = getCookieOptions()
     let token = Cookie.get('token', cookieOptions) || JSON.stringify({})
-    let tokenObj = JSON.parse(token)
+    // let tokenObj = JSON.parse(token)
     // 通用参数
     const commonParams = {
         token: token
     }
-    commonParams['Content-Type'] = "application/json"
+    commonParams['Content-Type'] = "application/x-www-form-urlencoded"
     return commonParams
 }
 
@@ -33,6 +33,7 @@ function call(inf, params, callback) {
     }
     const domain = getDomain()
     const commonParams = getCommonHeader()
+    console.log(inf)
     if (inf.typeJson) {
         commonParams["Content-Type"] = "application/json"
     }

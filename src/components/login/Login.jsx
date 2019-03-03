@@ -23,23 +23,23 @@ class Login extends React.Component {
     }
 
     handleLogin() {
-        if (!(/^1\d{10}$/.test(this.state.adminUser))) {
-            Toast.info("手机格式不正确", 2);
-            return;
-        }
-
-        if (this.state.pwd.length < 8) {
-            Toast.info("密码必须是8-16位", 2);
-            return;
-        }
+        // if (!(/^1\d{10}$/.test(this.state.adminUser))) {
+        //     Toast.info("手机格式不正确", 2);
+        //     return;
+        // }
+        //
+        // if (this.state.pwd.length < 8) {
+        //     Toast.info("密码必须是8-16位", 2);
+        //     return;
+        // }
 
         ApiCaller.call(Api.other.login, JSON.stringify({adminUser: this.state.adminUser,pwd: this.state.pwd}), (res) => {
-            if (res.code == 200) {
+            if (res.code == 0) {
                 this.state.data = res.data.admin;
-
-                Cookie.set('token', JSON.stringify(res.data.logToken), {path: '/'})
+                Cookie.set('token', res.data.logToken, {path: '/'});
+                location.href = '/';
             } else {
-
+                Toast.info(res.msg, 2);
             }
         })
 
@@ -64,7 +64,7 @@ class Login extends React.Component {
                 <div className="login-w login_bg_number">
                     <div className="number__left">账号</div>
                     <div className="number__right">
-                        <input className="number__right--input" type="text" value={this.state.adminUser} placeholder="请输入手机号"
+                        <input className="number__right--input" type="text" value={this.state.adminUser} placeholder="请输入登录账户"
                                onChange={this.handleChangePhone.bind(this)}/>
                     </div>
                 </div>
