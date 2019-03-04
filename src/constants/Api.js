@@ -55,6 +55,11 @@ export default {
             url: API_OTHER + '/lessonList',
             type: TYPES.POST,
             typeJson: true
+        },
+        cityList: {
+            url: API_OTHER + '/cityAreaList',
+            type: TYPES.POST,
+            typeJson: true
         }
     }
 }

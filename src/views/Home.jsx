@@ -19,7 +19,7 @@ class Home extends React.Component {
             data: [],
 			filter: {
 				current: 1,
-				size: 10,
+				size: 100,
 				lessonState: 0,
 			}
         }
@@ -181,10 +181,12 @@ class Home extends React.Component {
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<List className="my-list">
-						{item}
-
-					</List>
+                    <div className="ov" style={{}}>
+                        <List className="my-list">
+                            {item}
+                        </List>
+                        <div className="op"></div>
+                    </div>
 				</Drawer>
             </div>
         )

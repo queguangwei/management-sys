@@ -15,19 +15,33 @@ class DealList extends React.Component {
 		super(props)
 		this.state = {
 			open: false,
-			onUploading: false,
 			data: [],
-			momentHeader: [1],
-			momentList: [1],
+            filter: {
+                current: 1,
+                size: 100,
+                lessonState: 2,
+            }
 		}
 	}
 
 	componentDidMount() {
-
+        this.getCustomerList(this.state.filter);
 	}
 
-	onOpenChange(...args) {
+    getCustomerList(filter) {
+        console.log(filter)
+        const state = this.state;
+        ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
+            if (res.code == 0) {
+                state.data = res.data.records;
+                this.setState(state);
+            } else {
 
+            }
+        })
+    }
+
+	onOpenChange() {
 		this.setState({ open: !this.state.open });
 	}
 
@@ -44,13 +58,13 @@ class DealList extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(value) {
-		browserHistory.push({
-			pathname: '/detail',
-			query: {
-				type: value
-			}
-		})
+	detail(id) {
+        browserHistory.push({
+            pathname: '/detail',
+            query: {
+                id: id
+            }
+        })
 	}
 
 	home() {
@@ -70,19 +84,20 @@ class DealList extends React.Component {
 	}
 
 	loginout() {
-
+        Cookie.remove('token', {path: '/'});
+        location.href = '/'
 	}
 
 	render() {
-
+        let state = this.state;
 		const sidebar = (
 			<div>
 				<List className="drawer-slider">
 					<Item multipleLine>
 						<div className="header-img">
 						</div>
-						<div style={{color:'#fff'}}>王大锤</div>
-						<Brief style={{color:'#fff'}}>13867896542</Brief>
+						<div style={{color:'#fff'}}>{this.props.user.get('operator').get('name')}</div>
+						<Brief style={{color:'#fff'}}>{this.props.user.get('operator').get('code')}</Brief>
 					</Item>
 					<Item className="drawer-slider-item" onClick={this.home.bind(this)}>
 						新进客户
@@ -103,7 +118,24 @@ class DealList extends React.Component {
 				</div>
 			</div>
 		);
-
+        let item = state.data.map(item =>
+            <Item multipleLine onClick={this.detail.bind(this, item.id)}>
+                <div className="my-list-content" >
+                    <span className="name">{item.name}</span><span>电话:{item.code}</span>
+                </div>
+                {item.lessonRecords.length==0?
+                    <div className="my-list-info">
+                        <span className="empty">此客户还没有添加课程</span>
+                    </div>:null}
+                {item.lessonRecords.map(i =>
+                    <div className="my-list-info new-status">
+                        <span className="lesson-name">课程名称:{i.name}</span>
+                        <span>报名人数:{i.total}</span>
+                        <div className="company">公司:杭州帽科技有限公司</div>
+                    </div>
+                )}
+            </Item>
+        );
 		return (
 			<div className="">
 				<NavBar
@@ -124,42 +156,30 @@ class DealList extends React.Component {
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<List className="my-list">
-						<Item multipleLine onClick={this.detail.bind(this, 'deal')}>
-							<div className="my-list-content" >
-								<span className="name">王小迪</span><span>电话:13765765436</span>
-							</div>
-							<div className="my-list-info new-status">
-								<span className="lesson-name">课程名称:舌行演讲</span>
-								<span>报名人数:5</span>
-								<div className="company">公司:杭州帽科技有限公司</div>
-							</div>
-							<div className="my-list-info new-status">
-								<span className="lesson-name">课程名称:舌行演讲</span>
-								<span>报名人数:5</span>
-								<div className="company">公司:杭州帽科技有限公司</div>
-							</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">高勤斯维</span><span>电话:13868765436</span>
-							</div>
-							<div className="my-list-info">
-								<span className="lesson-name">课程名称:舌行演讲</span>
-								<span>报名人数:5</span>
-								<div className="company">公司:杭州帽科技有限公司</div>
-							</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">胡晴天</span><span>电话:13868765436</span>
-							</div>
-							<div className="my-list-info">
-								<span className="empty">此客户还没有添加课程</span>
-							</div>
-						</Item>
-					</List>
-
+                    <div className="ov" style={{}}>
+                        <List className="my-list">
+                            {item}
+                            <Item multipleLine onClick={() => {}}>
+                                <div className="my-list-content" >
+                                    <span className="name">高勤斯维</span><span>电话:13868765436</span>
+                                </div>
+                                <div className="my-list-info">
+                                    <span className="lesson-name">课程名称:舌行演讲</span>
+                                    <span>报名人数:5</span>
+                                    <div className="company">公司:杭州帽科技有限公司</div>
+                                </div>
+                            </Item>
+                            <Item multipleLine onClick={() => {}}>
+                                <div className="my-list-content" >
+                                    <span className="name">胡晴天</span><span>电话:13868765436</span>
+                                </div>
+                                <div className="my-list-info">
+                                    <span className="empty">此客户还没有添加课程</span>
+                                </div>
+                            </Item>
+                        </List>
+                        <div className="op"></div>
+                    </div>
 				</Drawer>
 			</div>
 		)

@@ -27,7 +27,14 @@
     font-size: px2rem(34px);
   }
 }
+.ov {
+  overflow-y: scroll;
+  .op {
+    height: px2rem(90px);
+  }
+}
 .my-list {
+
   .am-list-body {
     background-color: transparent;
     .am-list-item {

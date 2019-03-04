@@ -9,93 +9,14 @@ import { NavBar, Icon, Modal, DatePicker, TextareaItem, List, WhiteSpace } from 
 import { createForm } from 'rc-form'
 
 const alert = Modal.alert;
-let finialValues = {}
-
-class Form extends  React.Component {
-	constructor(props) {
-        super(props)
-        this.state={
-
-        }
-        this.props.onRef(this);
-	}
-
-	handleSubmit() {
-		this.props.form.validateFields({ force: true }, (error, value) => {
-			if (!error) {
-				console.log(this.props.form.getFieldsValue());
-			} else {
-				console.log(error);
-				alert('Validation failed');
-			}
-		});
-
-	}
-
-	componentDidMount()  {
-	}
-
-	render() {
-		const { getFieldProps } = this.props.form;
-		return (
-			<form onSubmit={this.handleSubmit.bind(this)}>
-				<List>
-					<DatePicker
-						mode="date"
-						{...getFieldProps('startDate')}
-					>
-						<List.Item arrow="horizontal">跟进时间</List.Item>
-					</DatePicker>
-				</List>
-				<WhiteSpace />
-				<List>
-					<TextareaItem
-						{...getFieldProps('count', {
-							initialValue: '跟进内容...',
-						})}
-						clear={true}
-						placeholder="请输入信息"
-						rows={10}
-						count={300}
-					/>
-				</List>
-			</form>
-		)
-	}
-}
-
-const FormWrapper = createForm()(Form);
-
-class Child extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			info:'快点击子组件按钮哈哈哈'
-		}
-	}
-	componentDidMount(){
-		this.props.onRef(this)
-		console.log(this)
-	}
-
-	handleChildClick() {
-		this.setState({info:'通过父组件按钮获取到子组件信息啦啦啦'})
-	}
-
-	render() {
-		return (
-			<div>
-				<button onClick={this.handleChildClick}>子组件按钮</button>
-			</div>
-		)
-	}
-}
 
 class FollowUp extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			data: [],
+		    userId: '',
+            followTime: '',
+            remark: ''
 		}
 	}
 
@@ -104,22 +25,27 @@ class FollowUp extends React.Component {
 	}
 
 	save() {
-		const that = this;
-		console.log(that)
-		that.props.refs.child.handleSubmit();
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => console.log('ok') },
+			{ text: '确定', onPress: () => this.handleSubmit() },
 		])
 	}
 
-	onRef(ref) {
-		this.child = ref;
-		console.log(ref)
-	}
+    handleSubmit() {
+	    console.log(1)
+
+    }
+
+    handleChange(value) {
+	    this.setState({followTime: value.getTime()})
+    }
+
+    onRemarkChange(value) {
+	    this.setState({remark: value})
+    }
 
 	componentDidMount() {
-
+        this.setState({userId: this.props.location.query.id})
 	}
 
 	render() {
@@ -134,7 +60,26 @@ class FollowUp extends React.Component {
 				>
 					添加跟进
 				</NavBar>
-				<FormWrapper ref="child" onRef={this.onRef}/>
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                    <List>
+                        <DatePicker
+                            mode="date"
+                            onChange={this.handleChange.bind(this)}
+                        >
+                            <List.Item arrow="horizontal">跟进时间</List.Item>
+                        </DatePicker>
+                    </List>
+                    <WhiteSpace />
+                    <List>
+                        <TextareaItem
+                            onChange={this.onRemarkChange.bind(this)}
+                            clear={true}
+                            placeholder="请输入信息"
+                            rows={10}
+                            count={300}
+                        />
+                    </List>
+                </form>
 			</div>
 		)
 	}

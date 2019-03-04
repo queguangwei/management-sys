@@ -112,12 +112,6 @@ class EditCustomer extends React.Component {
 		super(props)
 		this.state = {
 			data: [],
-			cols: 1,
-			pickerValue: [],
-			asyncValue: [],
-			sValue: ['2013', '春'],
-			visible: false,
-			colorValue: ['#00FF00'],
 		}
 	}
 
@@ -125,15 +119,20 @@ class EditCustomer extends React.Component {
 		browserHistory.goBack()
 	}
 
-	genderPick(val) {
-		console.log(val)
+    getCityList() {
+        ApiCaller.call(Api.other.cityList, JSON.stringify({"level": 2, "code": 140}), (res) => {
+            if (res.code == 0) {
+
+            } else {
+
+            }
+        })
 	}
 
-	degreePick(val) {
-		console.log(val)
-	}
 
 	componentDidMount() {
+		this.getCityList();
+
 
 	}
 

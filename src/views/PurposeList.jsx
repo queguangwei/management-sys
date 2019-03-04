@@ -18,7 +18,7 @@ class PurposeList extends React.Component {
 			data: [],
 			filter: {
 				current: 1,
-				size: 10,
+				size: 100,
 				lessonState: 1,
 				type: 'A'
 			}

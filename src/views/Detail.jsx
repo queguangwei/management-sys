@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import * as Format from '../utils/Format'
 import Api from '../constants/Api'
-import { NavBar, Icon } from 'antd-mobile'
+import { NavBar, Icon, Toast } from 'antd-mobile'
 
 class Detail extends React.Component {
 	constructor(props) {
@@ -27,28 +27,57 @@ class Detail extends React.Component {
 	edit() {
 		browserHistory.push('/edit')
 	}
-    //新进 设意向
+    //新进客户 设意向
 	set() {
-        browserHistory.push('/purposelist')
+        this.modifyCustomerStatus(1)
 	}
-    //成交 新增课程
+    //成交客户 新增课程
 	add() {
         browserHistory.push('/deal')
 	}
-    //意向 跟进
+    //意向客户 跟进
 	followUp() {
-		browserHistory.push('/followup')
+	    const state = this.state;
+        browserHistory.push({
+            pathname: '/followup',
+            query: {
+                id: state.userId
+            }
+        })
 	}
-    //意向 成交
+    //意向客户 成交
 	deal() {
-		browserHistory.push('/deal')
+        this.modifyCustomerStatus(2)
 	}
+
+	modifyCustomerStatus(status) {
+	    const state = this.state;
+	    const user = {
+            lessonState: status
+        }
+        const params = {
+            userId: state.userId,
+            user: user
+        }
+        ApiCaller.call(Api.user.edit, JSON.stringify(params), (res) => {
+            if (res.code == 0) {
+                if(status == 1) {
+                    browserHistory.push('/purposelist')
+                }else if (status == 2) {
+                    browserHistory.push('/deallist')
+                }
+            } else {
+                Toast.info(res.msg, 2);
+            }
+        })
+    }
 
 	getCustomerDetail(userId) {
 		const state = this.state;
 		ApiCaller.call(Api.user.info, JSON.stringify({userId: userId}), (res) => {
 			if (res.code == 0) {
 			    state.type = res.data.user.lessonState;
+			    state.userId = res.data.user.id;
 				state.info = res.data.user;
 				state.followData = res.data.followRecords;
 				state.lessonData = res.data.lessonRecords;
