@@ -48,6 +48,9 @@
       font-size: px2rem(30px);
       margin-right: px2rem(20px);
     }
+    .phone {
+      margin-right: px2rem(80px);
+    }
     span.icon_new {
       display: inline-block;
       width: px2rem(30px);
@@ -85,6 +88,7 @@
     line-height: 1;
     font-size: px2rem(26px);
     padding-top: px2rem(20px);
+    padding-bottom: px2rem(20px);
     border-top: 1px solid #EEEEEE;
     span.err-status {
       color: #FF0000;
@@ -102,10 +106,7 @@
       white-space: nowrap;
     }
     span.lesson-name {
-      margin-right: px2rem(170px);
-    }
-    div.company {
-      margin: px2rem(20px) 0;
+      margin-right: px2rem(200px);
     }
     span.empty {
       color: #999999;

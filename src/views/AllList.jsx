@@ -9,25 +9,36 @@ import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
 
-
 class AllList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			open: false,
-			onUploading: false,
 			data: [],
-			momentHeader: [1],
-			momentList: [1],
+            filter: {
+                current: 1,
+                size: 100,
+            }
 		}
 	}
 
 	componentDidMount() {
-
+        this.getCustomerList(this.state.filter);
 	}
 
-	onOpenChange(...args) {
+    getCustomerList(filter) {
+        const state = this.state;
+        ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
+            if (res.code == 0) {
+                state.data = res.data.records;
+                this.setState(state);
+            } else {
 
+            }
+        })
+    }
+
+	onOpenChange() {
 		this.setState({ open: !this.state.open });
 	}
 
@@ -39,8 +50,13 @@ class AllList extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail() {
-		browserHistory.push('/detail')
+	detail(id) {
+        browserHistory.push({
+            pathname: '/detail',
+            query: {
+                id: id
+            }
+        })
 	}
 
 	home() {
@@ -60,11 +76,12 @@ class AllList extends React.Component {
 	}
 
 	loginout() {
-
+        Cookie.remove('token', {path: '/'});
+        location.href = '/'
 	}
 
 	render() {
-
+        const state = this.state;
 		const sidebar = (
 			<div>
 				<List className="drawer-slider">
@@ -93,7 +110,26 @@ class AllList extends React.Component {
 				</div>
 			</div>
 		);
-
+        let item = state.data.map(item =>
+            <Item multipleLine onClick={this.detail.bind(this, item.id)}>
+                <div className="my-list-content" >
+                    <span className="name">{item.name}</span><span>电话:{item.code}</span>
+                    {item.lessonState==0?<span className="icon_new"></span>:null}
+                    {item.type=='A'?<span className="icon_type_a"></span>:(item.type=='B'?<span className="icon_type_b"></span>:<span className="icon_type_c"></span>)}
+                    <div><span>公司:{item.company}</span></div>
+                </div>
+                {item.lessonRecords.length==0?
+                    <div className="my-list-info">
+                        <span className="empty">此客户还没有添加课程</span>
+                    </div>:null}
+                {item.lessonRecords.map(i =>
+                    <div className="my-list-info new-status">
+                        <span className="lesson-name">课程名称:{i.name}</span>
+                        <span>报名人数:{i.total}</span>
+                    </div>
+                )}
+            </Item>
+        );
 		return (
 			<div className="">
 				<NavBar
@@ -115,6 +151,7 @@ class AllList extends React.Component {
 					onOpenChange={this.onOpenChange}
 				>
 					<List className="my-list">
+                        {item}
 						<Item multipleLine onClick={this.detail.bind(this)}>
 							<div className="my-list-content" >
 								<span className="name">王小迪</span><span>电话:13765765436</span>

@@ -121,7 +121,8 @@ class DealList extends React.Component {
         let item = state.data.map(item =>
             <Item multipleLine onClick={this.detail.bind(this, item.id)}>
                 <div className="my-list-content" >
-                    <span className="name">{item.name}</span><span>电话:{item.code}</span>
+                    <span className="name">{item.name}</span>
+					<div><span className="phone">电话:{item.code}</span><span>公司:{item.company}</span></div>
                 </div>
                 {item.lessonRecords.length==0?
                     <div className="my-list-info">
@@ -131,7 +132,6 @@ class DealList extends React.Component {
                     <div className="my-list-info new-status">
                         <span className="lesson-name">课程名称:{i.name}</span>
                         <span>报名人数:{i.total}</span>
-                        <div className="company">公司:杭州帽科技有限公司</div>
                     </div>
                 )}
             </Item>
@@ -166,15 +166,6 @@ class DealList extends React.Component {
                                 <div className="my-list-info">
                                     <span className="lesson-name">课程名称:舌行演讲</span>
                                     <span>报名人数:5</span>
-                                    <div className="company">公司:杭州帽科技有限公司</div>
-                                </div>
-                            </Item>
-                            <Item multipleLine onClick={() => {}}>
-                                <div className="my-list-content" >
-                                    <span className="name">胡晴天</span><span>电话:13868765436</span>
-                                </div>
-                                <div className="my-list-info">
-                                    <span className="empty">此客户还没有添加课程</span>
                                 </div>
                             </Item>
                         </List>
