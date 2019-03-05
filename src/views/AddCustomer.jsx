@@ -6,87 +6,9 @@ import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { NavBar, Icon, Modal, Picker, InputItem, List, Toast } from 'antd-mobile'
-import { createForm } from 'rc-form'
 
 const alert = Modal.alert;
 let finialValues = {}
-
-class Form extends  React.Component {
-	handleSubmit(e) {
-		e.preventDefault();
-		this.props.form.validateFields({ force: true }, (error, value) => {
-			console.log(value)
-			if (!error) {
-				console.log(this.props.form.getFieldsValue());
-			} else {
-				console.log(error);
-				alert('Validation failed');
-			}
-		});
-
-	}
-
-	render() {
-		const { getFieldProps } = this.props.form;
-		const IntentionDegree = [
-			{label: 'A类', value: 'classA'},
-			{label: 'B类', value: 'classB'},
-			{label: 'C类', value: 'classC'}
-		]
-		const gender = [
-			{label: '男', value: 'male'},
-			{label: '女', value: 'female'}
-		]
-		return (
-			<form onSubmit={this.handleSubmit.bind(this)}>
-				<List>
-					<InputItem
-						{...getFieldProps('companynNme')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>公司名称</InputItem>
-					<InputItem
-						{...getFieldProps('realName')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>联系人姓名</InputItem>
-					<InputItem
-						{...getFieldProps('mobile')}
-						type="phone"
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>电话</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>职位</InputItem>
-					<InputItem
-						{...getFieldProps('post')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>身份证</InputItem>
-					<InputItem
-						{...getFieldProps('wxNum')}
-						clear
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>微信号</InputItem>
-					<Picker data={gender} cols={1} {...getFieldProps('gender')}>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
-				</List>
-			</form>
-		)
-	}
-
-}
-const FormWrapper = createForm()(Form);
 
 class AddCustomer extends React.Component {
 	constructor(props) {
@@ -98,26 +20,20 @@ class AddCustomer extends React.Component {
 			idCard: '',
 			company: '',
 			job: '',
-			sex: 0,
+			sex: null,
 			wx: '',
-			data: [],
 		}
 	}
 
 	back() {
-		browserHistory.push('/')
+		browserHistory.goBack()
 	}
 
 	save() {
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => console.log('ok') },
+			{ text: '确定', onPress: () => this.handleSubmit() },
 		])
-		this.handleSubmit(finialValues)
-	}
-
-	handleSubmit(values) {
-		console.log(values)
 	}
 
 	onCompanyChange(value) {
@@ -127,7 +43,7 @@ class AddCustomer extends React.Component {
 	}
 
 	onNameChange(value) {
-		his.setState({
+		this.setState({
 			name: value
 		})
 	}
@@ -160,14 +76,51 @@ class AddCustomer extends React.Component {
 		this.setState({idCard: value})
 	}
 
+	onWxChange(value) {
+		this.setState({wx: value})
+	}
+
+	onSexChange(value) {
+		console.log(value[0])
+		this.setState({sex: value})
+	}
+
+	handleSubmit() {
+		const state = this.state;
+		const params = {
+			code: state.code,
+			name: state.name,
+			idCard: state.idCard,
+			company: state.company,
+			job: state.job,
+			sex: state.sex,
+			wx: state.wx,
+		}
+		for(let k in params) {
+			if(params[k] == null || params[k] == '') {
+				Toast.info("请检查补全信息！",2);
+				return;
+			}
+		}
+		params.sex = params.sex[0];
+		console.log(params)
+		ApiCaller.call(Api.user.add, JSON.stringify({ user: params }), (res) => {
+			if (res.code == 0) {
+
+			} else {
+
+			}
+		})
+	}
+
 	componentDidMount() {
 
 	}
 
 	render() {
 		const gender = [
-			{label: '男', value: 'male'},
-			{label: '女', value: 'female'}
+			{label: '男', value: 0},
+			{label: '女', value: 1}
 		];
 		return (
 			<div>
@@ -179,61 +132,64 @@ class AddCustomer extends React.Component {
 				>
 					添加客户
 				</NavBar>
-				<div className="">
-					<List>
-						<InputItem
-							onChange={this.onCompanyChange.bind(this)}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>公司名称</InputItem>
-						<InputItem
-							onChange={this.onNameChange.bind(this)}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>联系人姓名</InputItem>
-						<InputItem
-							type="phone"
-							error={this.state.hasError}
-							onErrorClick={this.onErrorClick.bind(this)}
-							onChange={this.onPhoneChange.bind(this)}
-							value={this.state.code}
-							placeholder="请输入信息"
-							clear
-							style={{textAlign:'right'}}
-						>电话</InputItem>
-						<InputItem
-							onChange={this.onJobChange.bind(this)}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>职位</InputItem>
-						<InputItem
-							onChange={this.onIdCardChange.bind(this)}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>身份证</InputItem>
-						<InputItem
-							disabled
-							placeholder="自动生成"
-							style={{textAlign:'right'}}
-						>年龄</InputItem>
-						<InputItem
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>微信号</InputItem>
-						<Picker data={gender} cols={1}>
-							<List.Item arrow="horizontal">性别</List.Item>
-						</Picker>
-						<Picker data={gender} cols={1}>
-							<List.Item arrow="horizontal">地区</List.Item>
-						</Picker>
-					</List>
-					{/*<FormWrapper onSubmit={this.handleSubmit.bind(this)} />*/}
-				</div>
+				<List>
+					<InputItem
+						onChange={this.onCompanyChange.bind(this)}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>公司名称</InputItem>
+					<InputItem
+						onChange={this.onNameChange.bind(this)}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>联系人姓名</InputItem>
+					<InputItem
+						type="phone"
+						error={this.state.hasError}
+						onErrorClick={this.onErrorClick.bind(this)}
+						onChange={this.onPhoneChange.bind(this)}
+						value={this.state.code}
+						placeholder="请输入信息"
+						clear
+						style={{textAlign:'right'}}
+					>电话</InputItem>
+					<InputItem
+						onChange={this.onJobChange.bind(this)}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>职位</InputItem>
+					<InputItem
+						onChange={this.onIdCardChange.bind(this)}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>身份证</InputItem>
+					<InputItem
+						disabled
+						placeholder="自动生成"
+						style={{textAlign:'right'}}
+					>年龄</InputItem>
+					<InputItem
+						onChange={this.onWxChange.bind(this)}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+					>微信号</InputItem>
+					<Picker
+						data={gender}
+						value={this.state.sex}
+						cols={1}
+						onChange={this.onSexChange.bind(this)}
+					>
+						<List.Item arrow="horizontal">性别</List.Item>
+					</Picker>
+					<Picker data={gender} cols={2}>
+						<List.Item arrow="horizontal">地区</List.Item>
+					</Picker>
+				</List>
 			</div>
 		)
 	}
