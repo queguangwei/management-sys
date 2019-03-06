@@ -174,24 +174,26 @@ class PurposeList extends React.Component {
 						  onChange={this.onTabChange.bind(this)}
 					>
 						{/* tabA */}
-						<div>
-							<List className="my-list">
-								{item}
-
-							</List>
-						</div>
+                        <div className="ov" style={{}}>
+                            <List className="my-list">
+                                {item}
+                            </List>
+                            <div className="op"></div>
+                        </div>
 						{/* tabB */}
-						<div>
-							<List className="my-list">
-								{item}
-							</List>
-						</div>
+                        <div className="ov" style={{}}>
+                            <List className="my-list">
+                                {item}
+                            </List>
+                            <div className="op"></div>
+                        </div>
 						{/* tabC */}
-						<div>
-							<List className="my-list">
-								{item}
-							</List>
-						</div>
+                        <div className="ov" style={{}}>
+                            <List className="my-list">
+                                {item}
+                            </List>
+                            <div className="op"></div>
+                        </div>
 					</Tabs>
 
 				</Drawer>

@@ -131,7 +131,7 @@ class DealList extends React.Component {
                 {item.lessonRecords.map(i =>
                     <div className="my-list-info new-status">
                         <span className="lesson-name">课程名称:{i.name}</span>
-                        <span>报名人数:{i.total}</span>
+                        <span className="total">报名人数:{i.total}</span>
                     </div>
                 )}
             </Item>

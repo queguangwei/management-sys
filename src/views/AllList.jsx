@@ -115,19 +115,20 @@ class AllList extends React.Component {
                 <div className="my-list-content" >
                     <span className="name">{item.name}</span><span>电话:{item.code}</span>
                     {item.lessonState==0?<span className="icon_new"></span>:null}
-                    {item.type=='A'?<span className="icon_type_a"></span>:(item.type=='B'?<span className="icon_type_b"></span>:<span className="icon_type_c"></span>)}
-                    <div><span>公司:{item.company}</span></div>
+                    {item.type=='A'?<span className="icon_type_a"></span>:(item.type=='B'?<span className="icon_type_b"></span>:(item.type=='C'?<span className="icon_type_c"></span>:null))}
                 </div>
                 {item.lessonRecords.length==0?
-                    <div className="my-list-info">
-                        <span className="empty">此客户还没有添加课程</span>
-                    </div>:null}
+					<div className="my-list-info">
+						电话状态:<span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
+						<span className="address">公司:{item.company}</span>
+					</div>:null}
                 {item.lessonRecords.map(i =>
                     <div className="my-list-info new-status">
                         <span className="lesson-name">课程名称:{i.name}</span>
-                        <span>报名人数:{i.total}</span>
+                        <span className="total">报名人数:{i.total}</span>
                     </div>
                 )}
+				{item.followTime ? <div className="my-list-time">下次跟进时间:2019-12-31</div> : null}
             </Item>
         );
 		return (
@@ -150,48 +151,12 @@ class AllList extends React.Component {
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<List className="my-list">
-                        {item}
-						<Item multipleLine onClick={this.detail.bind(this)}>
-							<div className="my-list-content" >
-								<span className="name">王小迪</span><span>电话:13765765436</span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="status">已接</span>
-								<span className="address">公司:上海天天食品安全有限公司有限公</span>
-							</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">高勤斯维</span><span>电话:13868765436</span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">未接</span>
-								<span className="address">公司:杭州帽科技有限公司</span>
-							</div>
-							<div className="my-list-time">下次跟进时间:2019-12-31</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">胡晴天</span><span>电话:13868765436</span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">空号</span>
-								<span className="address">公司:杭州哈哈有限公司</span>
-							</div>
-							<div className="my-list-time">下次跟进时间:2019-12-31</div>
-						</Item>
-						<Item multipleLine onClick={() => {}}>
-							<div className="my-list-content" >
-								<span className="name">哈哈炜</span><span>电话:13868765436</span>
-							</div>
-							<div className="my-list-info">
-								电话状态:<span className="err-status">错号</span>
-								<span className="address">公司:杭州哈哈有限公司</span>
-							</div>
-						</Item>
-					</List>
-
+					<div className="ov" style={{}}>
+						<List className="my-list">
+							{item}
+						</List>
+						<div className="op"></div>
+					</div>
 				</Drawer>
 			</div>
 		)
