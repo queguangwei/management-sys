@@ -25,7 +25,12 @@ class Detail extends React.Component {
 	}
 
 	edit() {
-		browserHistory.push('/edit')
+        browserHistory.push({
+            pathname: '/edit',
+            query: {
+                id: this.state.userId
+            }
+        })
 	}
     //新进客户 设意向
 	set() {

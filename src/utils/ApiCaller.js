@@ -1,5 +1,4 @@
 import request from 'superagent'
-import Sign from './Sign'
 import Cookie from './Cookie'
 import Global from '../constants/Global'
 import {getDomain} from './Runtime'

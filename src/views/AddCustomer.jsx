@@ -5,15 +5,131 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
+import * as VailddateHelper from '../utils/ValidateHelper'
 import { NavBar, Icon, Modal, Picker, InputItem, List, Toast } from 'antd-mobile'
-
+let cityJson = [
+	{
+	"value": "浙江省",
+	"label": "浙江省",
+	"children": [
+		{
+			"value": "杭州市",
+			"label": "杭州市"
+		},
+		{
+			"value": "宁波市",
+			"label": "宁波市"
+		},
+		{
+			"value": "温州市",
+			"label": "温州市"
+		},
+		{
+			"value": "嘉兴市",
+			"label": "嘉兴市"
+		},
+		{
+			"value": "湖州市",
+			"label": "湖州市"
+		},
+		{
+			"value": "绍兴市",
+			"label": "绍兴市"
+		},
+		{
+			"value": "金华市",
+			"label": "金华市"
+		},
+		{
+			"value": "衢州市",
+			"label": "衢州市"
+		},
+		{
+			"value": "舟山市",
+			"label": "舟山市"
+		},
+		{
+			"value": "台州市",
+			"label": "台州市"
+		},
+		{
+			"value": "丽水市",
+			"label": "丽水市"
+		}]
+},
+	{
+		"value": "上海",
+		"label": "上海",
+		"children": [
+			{
+				"value": "上海市",
+				"label": "上海市"
+			}
+		]
+	},
+	{
+		"value": "江苏省",
+		"label": "江苏省",
+		"children": [{
+			"value": "南京市",
+			"label": "南京市"
+		},
+			{
+				"value": "无锡市",
+				"label": "无锡市"
+			},
+			{
+				"value": "徐州市",
+				"label": "徐州市"
+			},
+			{
+				"value": "常州市",
+				"label": "常州市"
+			},
+			{
+				"value": "苏州市",
+				"label": "苏州市"
+			},
+			{
+				"value": "南通市",
+				"label": "南通市"
+			},
+			{
+				"value": "连云港市",
+				"label": "连云港市"
+			},
+			{
+				"value": "淮安市",
+				"label": "淮安市"
+			},
+			{
+				"value": "盐城市",
+				"label": "盐城市"
+			},
+			{
+				"value": "扬州市",
+				"label": "扬州市"
+			},
+			{
+				"value": "镇江市",
+				"label": "镇江市"
+			},
+			{
+				"value": "泰州市",
+				"label": "泰州市"
+			},
+			{
+				"value": "宿迁市",
+				"label": "宿迁市"
+			}]
+	}];
 const alert = Modal.alert;
-let finialValues = {}
 
 class AddCustomer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			age: '',
 			hasError: false,
 			code: '',
 			name: '',
@@ -22,6 +138,9 @@ class AddCustomer extends React.Component {
 			job: '',
 			sex: null,
 			wx: '',
+			province: '',
+			city: '',
+			district: []
 		}
 	}
 
@@ -74,6 +193,8 @@ class AddCustomer extends React.Component {
 
 	onIdCardChange(value) {
 		this.setState({idCard: value})
+		let age = VailddateHelper.checkIdCardAge(value)
+		this.setState({age: age})
 	}
 
 	onWxChange(value) {
@@ -81,8 +202,16 @@ class AddCustomer extends React.Component {
 	}
 
 	onSexChange(value) {
-		console.log(value[0])
 		this.setState({sex: value})
+	}
+
+	onCityChange(value) {
+		console.log(value)
+		this.setState({
+			district: value,
+			province: value[0],
+			city: value[1]
+		})
 	}
 
 	handleSubmit() {
@@ -95,6 +224,8 @@ class AddCustomer extends React.Component {
 			job: state.job,
 			sex: state.sex,
 			wx: state.wx,
+			province: state.province,
+			city: state.city
 		}
 		for(let k in params) {
 			if(params[k] == null || params[k] == '') {
@@ -106,9 +237,9 @@ class AddCustomer extends React.Component {
 		console.log(params)
 		ApiCaller.call(Api.user.add, JSON.stringify({ user: params }), (res) => {
 			if (res.code == 0) {
-
+				browserHistory.push('/');
 			} else {
-
+				Toast.info(res.msg, 2);
 			}
 		})
 	}
@@ -170,6 +301,7 @@ class AddCustomer extends React.Component {
 					<InputItem
 						disabled
 						placeholder="自动生成"
+						value={this.state.age}
 						style={{textAlign:'right'}}
 					>年龄</InputItem>
 					<InputItem
@@ -186,7 +318,12 @@ class AddCustomer extends React.Component {
 					>
 						<List.Item arrow="horizontal">性别</List.Item>
 					</Picker>
-					<Picker data={gender} cols={2}>
+					<Picker
+						data={cityJson}
+						value={this.state.district}
+						cols={2}
+						onChange={this.onCityChange.bind(this)}
+					>
 						<List.Item arrow="horizontal">地区</List.Item>
 					</Picker>
 				</List>
