@@ -57,7 +57,7 @@ export default {
             typeJson: true
         },
         cityList: {
-            url: API_OTHER + '/cityAreaList',
+            url: API_OTHER + '/allArea',
             type: TYPES.POST,
             typeJson: true
         }
