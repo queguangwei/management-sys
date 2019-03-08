@@ -5,6 +5,7 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import * as Format from '../utils/Format'
+import * as VailddateHelper from '../utils/ValidateHelper'
 import Api from '../constants/Api'
 import { NavBar, Icon, Toast } from 'antd-mobile'
 
@@ -38,7 +39,13 @@ class Detail extends React.Component {
 	}
     //成交客户 新增课程
 	add() {
-        browserHistory.push('/deal')
+        const state = this.state;
+        browserHistory.push({
+            pathname: '/deal',
+            query: {
+                id: state.userId
+            }
+        })
 	}
     //意向客户 跟进
 	followUp() {
@@ -87,43 +94,13 @@ class Detail extends React.Component {
 				state.followData = res.data.followRecords;
 				state.lessonData = res.data.lessonRecords;
 				state.info.cellphoneState = this.checkCallStatus(res.data.user.callState);
-				state.info.age = this.checkAge(res.data.user.idCard);
+				state.info.age = VailddateHelper.checkIdCardAge(res.data.user.idCard);
 				this.setState(state);
 			} else {
 
 			}
 		})
 	}
-
-    checkAge(idCard) {
-	    console.log(idCard)
-        let len = (idCard + "").length;
-        if (len == 0) {
-            return 0;
-        } else {
-            if ((len != 15) && (len != 18))//身份证号码只能为15位或18位其它不合法
-            {
-                return 0;
-            }
-        }
-        let strBirthday = "";
-        if (len == 18)//处理18位的身份证号码从号码中得到生日和性别代码
-        {
-            strBirthday = idCard.substr(6, 4) + "/" + idCard.substr(10, 2) + "/" + idCard.substr(12, 2);
-        }
-        if (len == 15) {
-            strBirthday = "19" + idCard.substr(6, 2) + "/" + idCard.substr(8, 2) + "/" + idCard.substr(10, 2);
-        }
-        //时间字符串里，必须是“/”
-        let birthDate = new Date(strBirthday);
-        let nowDateTime = new Date();
-        let age = nowDateTime.getFullYear() - birthDate.getFullYear();
-        //再考虑月、天的因素;.getMonth()获取的是从0开始的，这里进行比较，不需要加1
-        if (nowDateTime.getMonth() < birthDate.getMonth() || (nowDateTime.getMonth() == birthDate.getMonth() && nowDateTime.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-    }
 
     checkCallStatus(status) {
         let sta = '';
@@ -208,22 +185,16 @@ class Detail extends React.Component {
 								</div>
 							</div>
 						</div>
-						{type!=0?
+						{type==2?
 							<div className="detail-lesson">
 								<p className="title">课程数（{lessonData.length}）</p>
 								<ul className="detail-lesson-list">
                                     {lesLi}
-
-									<li>
-										<h4>课程名称：舌行演讲
-											<span>报名人数：3</span>
-										</h4>
-										<p>
-											<div>1.王小峰 13456409654 高级采购员</div>
-											<div>2.胡不大 13456788884 hr人员</div>
-											<div>1.王小峰 13456409654 高级采购员</div>
-										</p>
-									</li>
+                                    {lessonData.length==0?
+                                        <div className="no-record">
+                                            <h4>此客户还没有添加课程</h4>
+                                            <p>点击下方新增课程按钮进行跟进</p>
+                                        </div>:null}
 								</ul>
 							</div>:null
 						}

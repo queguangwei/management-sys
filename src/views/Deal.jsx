@@ -127,6 +127,8 @@ class Deal extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+            userId: '',
+            lessonList: [],
 			data: [],
 		}
 	}
@@ -138,17 +140,54 @@ class Deal extends React.Component {
 	save() {
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => console.log('ok') },
+			{ text: '确定', onPress: () => this.handleSubmit(finialValues) },
 		])
-		this.handleSubmit(finialValues)
+
 	}
 
 	handleSubmit(values) {
 		console.log(values)
+        const state = this.state;
+        const params = {
+            userId: state.userId,
+            lessonRecord: {
+                lessonId: ''
+            }
+        }
+        let lessonUsers = []
+        let users = {
+            name: '',
+            code: '',
+            job: '',
+            company: ''
+        }
+
+        ApiCaller.call(Api.user.addLesson, JSON.stringify(params), (res) => {
+            if (res.code == 0) {
+                if(status == 1) {
+                    browserHistory.push('/purposelist')
+                }else if (status == 2) {
+                    browserHistory.push('/deallist')
+                }
+            } else {
+                Toast.info(res.msg, 2);
+            }
+        })
 	}
 
-	componentDidMount() {
+    getLessonList() {
+        ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
+            if (res.code == 0) {
+                state.lessonList = res.data
+            } else {
 
+            }
+        })
+    }
+
+	componentDidMount() {
+        this.setState({userId: this.props.location.query.id})
+        this.getLessonList()
 	}
 
 	render() {

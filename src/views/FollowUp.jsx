@@ -5,8 +5,7 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, Modal, DatePicker, TextareaItem, List, WhiteSpace } from 'antd-mobile'
-import { createForm } from 'rc-form'
+import { NavBar, Icon, Modal, Toast, DatePicker, TextareaItem, List, WhiteSpace } from 'antd-mobile'
 
 const alert = Modal.alert;
 
@@ -15,6 +14,7 @@ class FollowUp extends React.Component {
 		super(props)
 		this.state = {
 		    userId: '',
+            followDate: '',
             followTime: '',
             remark: ''
 		}
@@ -32,12 +32,27 @@ class FollowUp extends React.Component {
 	}
 
     handleSubmit() {
-	    console.log(1)
+	    const state = this.state;
+	    const params = {
+            userId: state.userId,
+            record: {
+                followTime: state.followTime,
+                remark: state.remark
+            }
+        }
+        console.log(params)
+        ApiCaller.call(Api.user.addFollowRecord, JSON.stringify(params), (res) => {
+            if (res.code == 0) {
+                browserHistory.goBack()
+            } else {
+                Toast.info(res.msg, 2);
+            }
+        })
 
     }
 
     handleChange(value) {
-	    this.setState({followTime: value.getTime()})
+	    this.setState({followDate: value, followTime: value.getTime()})
     }
 
     onRemarkChange(value) {
@@ -49,7 +64,6 @@ class FollowUp extends React.Component {
 	}
 
 	render() {
-		const that = this;
 		return (
 			<div>
 				<NavBar
@@ -60,10 +74,11 @@ class FollowUp extends React.Component {
 				>
 					添加跟进
 				</NavBar>
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                <form>
                     <List>
                         <DatePicker
                             mode="date"
+                            value={this.state.followDate}
                             onChange={this.handleChange.bind(this)}
                         >
                             <List.Item arrow="horizontal">跟进时间</List.Item>

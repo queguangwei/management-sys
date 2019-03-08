@@ -60,6 +60,11 @@ export default {
             url: API_OTHER + '/allArea',
             type: TYPES.POST,
             typeJson: true
+        },
+        queryAreaByPhone: {
+            url: API_OTHER + '/phoneArea',
+            type: TYPES.POST,
+            typeJson: true
         }
     }
 }

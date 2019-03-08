@@ -31,7 +31,6 @@ class Home extends React.Component {
         } else {
             this.getCustomerList(this.state.filter);
         }
-		this.getLessonList()
     }
 
 	getCustomerList(filter) {
@@ -45,15 +44,6 @@ class Home extends React.Component {
 
 			}
 		})
-	}
-    getLessonList() {
-        ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
-            if (res.code == 0) {
-
-            } else {
-
-            }
-        })
 	}
 
 	onOpenChange() {
