@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
+import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
-import Cookie from "../utils/Cookie";
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -46,12 +46,7 @@ class PurposeList extends React.Component {
 	}
 
 	search() {
-		browserHistory.push({
-			pathname: '/search',
-			query: {
-				lastPage: 'purpose'
-			}
-		})
+		browserHistory.push('/search')
 	}
 
 	add() {

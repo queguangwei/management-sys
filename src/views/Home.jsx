@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
+import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, ListView } from 'antd-mobile'
-import Cookie from "../utils/Cookie";
+
 const Item = List.Item;
 const Brief = Item.Brief;
-
 
 class Home extends React.Component {
     constructor(props) {
@@ -26,15 +26,10 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.location.query.params) {
-            this.getCustomerList(JSON.parse(this.props.location.query.params));
-        } else {
-            this.getCustomerList(this.state.filter);
-        }
+        this.getCustomerList(this.state.filter);
     }
 
 	getCustomerList(filter) {
-        console.log(filter)
     	const state = this.state;
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
 			if (res.code == 0) {
@@ -55,12 +50,7 @@ class Home extends React.Component {
 	}
 
 	search() {
-		browserHistory.push({
-            pathname: '/search',
-            query: {
-                lastPage: 'home'
-            }
-        })
+		browserHistory.push('/search')
 	}
 
 	add() {

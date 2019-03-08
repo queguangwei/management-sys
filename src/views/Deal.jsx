@@ -176,6 +176,7 @@ class Deal extends React.Component {
 	}
 
     getLessonList() {
+		const state = this.state;
         ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
             if (res.code == 0) {
                 state.lessonList = res.data

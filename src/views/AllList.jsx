@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link, browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
+import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
@@ -20,10 +21,6 @@ class AllList extends React.Component {
                 size: 100,
             }
 		}
-	}
-
-	componentDidMount() {
-        this.getCustomerList(this.state.filter);
 	}
 
     getCustomerList(filter) {
@@ -78,6 +75,14 @@ class AllList extends React.Component {
 	loginout() {
         Cookie.remove('token', {path: '/'});
         location.href = '/'
+	}
+
+	componentDidMount() {
+		if(this.props.location.query.params) {
+			this.getCustomerList(JSON.parse(this.props.location.query.params));
+		} else {
+			this.getCustomerList(this.state.filter);
+		}
 	}
 
 	render() {

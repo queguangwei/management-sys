@@ -35,6 +35,10 @@ class Detail extends React.Component {
 	}
     //新进客户 设意向
 	set() {
+        if(this.state.info.type == '') {
+            Toast.info("请先设置意向度!",2);
+            return
+        }
         this.modifyCustomerStatus(1)
 	}
     //成交客户 新增课程
@@ -134,9 +138,9 @@ class Detail extends React.Component {
                     <span>报名人数：{item.total}</span>
                 </h4>
                 <p>
-                    <div>1.王小峰 13456409654 高级采购员</div>
-                    <div>2.胡不大 13456788884 hr人员</div>
-                    <div>1.王小峰 13456409654 高级采购员</div>
+                    {item.lessonUsers.map((v, i) =>
+                        <div>{i+1}.{v.name}  {v.code}  {v.job}</div>
+                    )}
                 </p>
             </li>
         );
@@ -191,7 +195,7 @@ class Detail extends React.Component {
 								<ul className="detail-lesson-list">
                                     {lesLi}
                                     {lessonData.length==0?
-                                        <div className="no-record">
+                                        <div className="no-lesson">
                                             <h4>此客户还没有添加课程</h4>
                                             <p>点击下方新增课程按钮进行跟进</p>
                                         </div>:null}
@@ -202,11 +206,19 @@ class Detail extends React.Component {
 							<p className="title">跟进记录（{followData.length}次）</p>
 							<ul className="detail-record-list">
                                 {fLi}
-                                {followData.length==0?
+                                {followData.length==0&&info.lessonState==0?
                                     <div className="no-record">
                                         <h4>此客户没有跟进记录，您可以</h4>
                                         <p>点击下方设为意向客户进行跟进</p>
-                                    </div>:null}
+                                    </div>:(followData.length==0&&info.lessonState==1?
+                                    <div className="no-record">
+                                        <h4>此客户没有跟进记录，您可以</h4>
+                                        <p>点击下方添加按钮进行跟进</p>
+                                    </div>:
+                                    <div className="no-record">
+                                        <h4>此客户没有跟进记录</h4>
+                                    </div>)
+                                }
 							</ul>
 						</div>
 						<div className="op"></div>

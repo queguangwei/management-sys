@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { Link, browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
+import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
-
 
 class DealList extends React.Component {
 	constructor(props) {
@@ -46,12 +46,7 @@ class DealList extends React.Component {
 	}
 
 	search() {
-		browserHistory.push({
-			pathname: '/search',
-			query: {
-				lastPage: 'deal'
-			}
-		})
+		browserHistory.push('/search')
 	}
 
 	add() {
@@ -129,7 +124,7 @@ class DealList extends React.Component {
                         <span className="empty">此客户还没有添加课程</span>
                     </div>:null}
                 {item.lessonRecords.map(i =>
-                    <div className="my-list-info new-status">
+                    <div className="my-list-info">
                         <span className="lesson-name">课程名称:{i.name}</span>
                         <span className="total">报名人数:{i.total}</span>
                     </div>
@@ -159,15 +154,16 @@ class DealList extends React.Component {
                     <div className="ov" style={{}}>
                         <List className="my-list">
                             {item}
-                            <Item multipleLine onClick={() => {}}>
-                                <div className="my-list-content" >
-                                    <span className="name">高勤斯维</span><span>电话:13868765436</span>
-                                </div>
-                                <div className="my-list-info">
-                                    <span className="lesson-name">课程名称:舌行演讲</span>
-                                    <span>报名人数:5</span>
-                                </div>
-                            </Item>
+
+                            {/*<Item multipleLine onClick={() => {}}>*/}
+                                {/*<div className="my-list-content" >*/}
+                                    {/*<span className="name">高勤斯维</span><span>电话:13868765436</span>*/}
+                                {/*</div>*/}
+                                {/*<div className="my-list-info new-status">*/}
+                                    {/*<span className="lesson-name">课程名称:舌行演讲</span>*/}
+                                    {/*<span>报名人数:5</span>*/}
+                                {/*</div>*/}
+                            {/*</Item>*/}
                         </List>
                         <div className="op"></div>
                     </div>

@@ -109,12 +109,34 @@
         &:before {
           display: inline-block;
           content: '';
+          background: url("../../assets/images/icon_lesson.png")no-repeat;
+          background-size: px2rem(30px);
           width: px2rem(30px);
           height: px2rem(30px);
-          margin-right: px2rem(6px);
+          margin-right: px2rem(20px);
         }
         span {
           float: right;
+        }
+      }
+      .no-lesson {
+        background-color: #ffffff;
+        padding: px2rem(30px);
+        h4 {
+          border-bottom: 0;
+          &:before {
+            content: '';
+            display: inline-block;
+            width: px2rem(26px);
+            height: px2rem(26px);
+            background: url("../../assets/images/icon_mark.png")no-repeat;
+            background-size: px2rem(26px);
+            margin-right: px2rem(20px);
+          }
+        }
+        p {
+          font-size: px2rem(24px);
+          margin-left: px2rem(46px);
         }
       }
     }

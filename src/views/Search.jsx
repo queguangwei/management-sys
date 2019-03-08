@@ -101,7 +101,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-        	lastPage: '',
+			cityJson: [],
 			filter: {
 				current: 1,
 				size: 10
@@ -116,20 +116,14 @@ class Search extends React.Component {
 	onSubmit() {
 		const state = this.state;
 		let params = {};
-		if(state.lastPage == 'home') {
-			params = Object.assign(state.filter, {lessonState: 0}, finialValues);
-		} else if (state.lastPage == 'purpose') {
-			params = Object.assign(state,filter, {lessonState: 1}, finialValues);
-		} else if (state.lastPage == 'deal') {
-			params = Object.assign(state.filter, {lessonState: 2}, finialValues);
-		}
+		params = Object.assign(state.filter, finialValues);
 		ApiCaller.call(Api.user.list, JSON.stringify(params), (res) => {
 			if (res.code == 0) {
 				if(res.data.total == 0) {
 					Toast.info("暂无搜索结果！");
 				} else {
 					browserHistory.push({
-						pathname: '/',
+						pathname: '/alllist',
 						query: {
 							params: JSON.stringify(params)
 						}
@@ -140,7 +134,6 @@ class Search extends React.Component {
 	}
 
     componentDidMount() {
-		this.setState({lastPage: this.props.location.query.lastPage})
     }
 
     render() {
