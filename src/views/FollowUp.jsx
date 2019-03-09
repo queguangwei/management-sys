@@ -32,7 +32,15 @@ class FollowUp extends React.Component {
 	}
 
     handleSubmit() {
-	    const state = this.state;
+        const state = this.state;
+        if(state.followTime == '') {
+            Toast.info("请选择跟进时间！", 2);
+            return;
+        }
+	    if(state.remark =='' || state.remark == null) {
+            Toast.info("跟进内容为空！",2);
+            return;
+        }
 	    const params = {
             userId: state.userId,
             record: {
@@ -40,7 +48,6 @@ class FollowUp extends React.Component {
                 remark: state.remark
             }
         }
-        console.log(params)
         ApiCaller.call(Api.user.addFollowRecord, JSON.stringify(params), (res) => {
             if (res.code == 0) {
                 browserHistory.goBack()
@@ -48,7 +55,6 @@ class FollowUp extends React.Component {
                 Toast.info(res.msg, 2);
             }
         })
-
     }
 
     handleChange(value) {
@@ -90,8 +96,8 @@ class FollowUp extends React.Component {
                             onChange={this.onRemarkChange.bind(this)}
                             clear={true}
                             placeholder="请输入信息"
-                            rows={10}
-                            count={300}
+                            rows={8}
+                            count={155}
                         />
                     </List>
                 </form>

@@ -181,6 +181,7 @@ class AddCustomer extends React.Component {
 						value={this.state.code}
 						placeholder="请输入信息"
 						clear
+						maxLength={11}
 						style={{textAlign:'right'}}
 					>电话</InputItem>
 					<InputItem
@@ -204,6 +205,7 @@ class AddCustomer extends React.Component {
 					<InputItem
 						onChange={this.onWxChange.bind(this)}
 						clear
+						maxLength={20}
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 					>微信号</InputItem>

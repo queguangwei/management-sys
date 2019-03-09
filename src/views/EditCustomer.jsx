@@ -160,7 +160,7 @@ class EditCustomer extends React.Component {
 
 	onIdCardChange(value) {
 		this.setState({idCard: value})
-		let age = this.checkAge(value)
+		let age = VailddateHelper.checkIdCardAge(value)
 		this.setState({age: age})
 	}
 
@@ -192,7 +192,6 @@ class EditCustomer extends React.Component {
 	componentDidMount() {
 		this.getCustomerDetail(this.props.location.query.id);
 		this.getCityList();
-
 	}
 
 	render() {
@@ -244,6 +243,7 @@ class EditCustomer extends React.Component {
 						type="number"
 						clear
 						placeholder="请输入信息"
+						maxLength={11}
 						style={{textAlign:'right'}}
 					>电话</InputItem>
 					<InputItem
@@ -270,6 +270,7 @@ class EditCustomer extends React.Component {
 						value={state.wx}
 						clear
 						placeholder="请输入信息"
+						maxLength={20}
 						style={{textAlign:'right'}}
 						onChange={this.onWxChange.bind(this)}
 					>微信号</InputItem>

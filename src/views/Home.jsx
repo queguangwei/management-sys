@@ -83,21 +83,6 @@ class Home extends React.Component {
 		location.href = '/'
 	}
 
-    // checkStatus(status) {
-    //     console.log(status)
-    //     let sta = '';
-    //     if(status == 0) {
-    //         sta = '空号'
-    //     }else if (status == 1) {
-    //         sta = '未接'
-    //     }else if(status == 2) {
-    //         sta = '已接'
-    //     }else {
-    //         sta = '错号'
-    //     }
-    //     return sta;
-    // }
-
     render() {
 		let state = this.state, that = this;
 		const sidebar = (

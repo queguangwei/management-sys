@@ -7,7 +7,8 @@ import ApiCaller from '../utils/ApiCaller'
 import * as Format from '../utils/Format'
 import * as VailddateHelper from '../utils/ValidateHelper'
 import Api from '../constants/Api'
-import { NavBar, Icon, Toast } from 'antd-mobile'
+import {NavBar, Icon, Toast, Modal} from 'antd-mobile'
+const alert = Modal.alert;
 
 class Detail extends React.Component {
 	constructor(props) {
@@ -39,7 +40,10 @@ class Detail extends React.Component {
             Toast.info("请先设置意向度!",2);
             return
         }
-        this.modifyCustomerStatus(1)
+        alert('提交', '确认设为意向客户吗???', [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确定', onPress: () => this.modifyCustomerStatus(1) },
+        ]);
 	}
     //成交客户 新增课程
 	add() {
@@ -63,7 +67,10 @@ class Detail extends React.Component {
 	}
     //意向客户 成交
 	deal() {
-        this.modifyCustomerStatus(2)
+        alert('成交', '确认成交吗???', [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确定', onPress: () => this.modifyCustomerStatus(2) },
+        ]);
 	}
 
 	modifyCustomerStatus(status) {
@@ -163,7 +170,7 @@ class Detail extends React.Component {
 									<div className="headerimg"></div>
 									<div className="headerinfo">
 										<span>{info.name}</span>
-                                        {info.sex==0?'先生':'女生'} {info.age}岁
+                                        {info.sex==0?'先生':'女士'} {info.age}岁
 										{type==0?
 											<i className="new"></i>:
 											<i className={info.type=='A'?'classa':(info.type=='B'?'classb':'classc')}></i>
@@ -183,7 +190,7 @@ class Detail extends React.Component {
 										<span>意向度:{info.type}类</span>
 									</p>
 									<p>
-										<span>区域:{info.province}{info.city}</span>
+										<span className="area">区域:{info.province}{info.city}</span>
 									</p>
 									<p>身份证:{info.idCard}</p>
 								</div>
@@ -197,7 +204,7 @@ class Detail extends React.Component {
                                     {lessonData.length==0?
                                         <div className="no-lesson">
                                             <h4>此客户还没有添加课程</h4>
-                                            <p>点击下方新增课程按钮进行跟进</p>
+                                            <p>点击下方新增课程按钮进行添加</p>
                                         </div>:null}
 								</ul>
 							</div>:null
@@ -211,14 +218,13 @@ class Detail extends React.Component {
                                         <h4>此客户没有跟进记录，您可以</h4>
                                         <p>点击下方设为意向客户进行跟进</p>
                                     </div>:(followData.length==0&&info.lessonState==1?
-                                    <div className="no-record">
-                                        <h4>此客户没有跟进记录，您可以</h4>
-                                        <p>点击下方添加按钮进行跟进</p>
-                                    </div>:
-                                    <div className="no-record">
-                                        <h4>此客户没有跟进记录</h4>
-                                    </div>)
-                                }
+                                        <div className="no-record">
+                                            <h4>此客户没有跟进记录，您可以</h4>
+                                            <p>点击下方添加按钮进行跟进</p>
+                                        </div>:(followData.length==0&&info.lessonState==2?
+                                            <div className="no-record">
+                                                <h4>此客户没有跟进记录</h4>
+                                            </div>:null))}
 							</ul>
 						</div>
 						<div className="op"></div>

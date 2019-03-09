@@ -10,13 +10,16 @@ import { NavBar, Icon, Modal, Picker, InputItem, List, Stepper, WhiteSpace } fro
 const alert = Modal.alert;
 let finialValues = {}
 
-
 class Deal extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
             userId: '',
+			lessonArray: [],
             lessonList: [],
+			lesson: [],
+			price: null,
+			fee: null,
 			data: [],
 			val: 1,
 			keys: [1]
@@ -69,10 +72,17 @@ class Deal extends React.Component {
 		const state = this.state;
         ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
             if (res.code == 0) {
-                state.lessonList = res.data.map(item => {
-                    state.lessonList.label = item.name
-                    state.lessonList.value = item.id
-                })
+            	let list = [];
+            	for(let i = 0;i < res.data.length; i ++) {
+            		let obj = {
+            			label: res.data[i].name,
+						value: res.data[i].id
+					}
+					list.push(obj);
+				}
+                state.lessonList = list;
+            	state.lessonArray = res.data;
+				this.setState(state)
             } else {
 
             }
@@ -88,6 +98,17 @@ class Deal extends React.Component {
 		this.setState({ val, keys });
 	}
 
+	lessonChange(value) {
+		const state = this.state;
+		for(let i = 0; i < state.lessonArray.length; i ++) {
+			if(value[0] == state.lessonArray[i].id) {
+				state.price = state.lessonArray[i].price;
+			}
+		}
+		state.lesson = value;
+		this.setState(state);
+	}
+
 	componentDidMount() {
         this.setState({userId: this.props.location.query.id})
         this.getLessonList()
@@ -95,13 +116,6 @@ class Deal extends React.Component {
 
 	render() {
 		const state = this.state;
-		const lessons = [
-			{label: '男', value: 'male'},
-			{label: '女', value: 'female'},
-			{label: 'A类', value: 'classA'},
-			{label: 'B类', value: 'classB'},
-			{label: 'C类', value: 'classC'}
-		]
 		const formItems = this.state.keys.map((k, index) => {
 			return (
 				<div style={{background:'#F0F0F0'}}>
@@ -146,14 +160,15 @@ class Deal extends React.Component {
 							data={state.lessonList}
 							cols={1}
 							value={state.lesson}
+							onChange={this.lessonChange.bind(this)}
 						>
 							<List.Item arrow="horizontal">课程名称</List.Item>
 						</Picker>
 						<InputItem
-							value={state.companynNme}
+							value={state.price}
 							type="money"
-							clear
-							placeholder="请输入信息"
+							disabled
+							placeholder="请选择课程"
 						>课程单价</InputItem>
 						<List.Item
 							wrap
@@ -172,8 +187,8 @@ class Deal extends React.Component {
 						<InputItem
 							value={state.fee}
 							type="money"
-							clear
-							placeholder="请输入信息"
+							disabled
+							placeholder="请选择课程"
 						>费用</InputItem>
 					</List>
 					<WhiteSpace />

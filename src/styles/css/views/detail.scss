@@ -80,6 +80,12 @@
           span {
             width: 50%;
             display: inline-block;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+          }
+          span.area {
+            width: 100%;
           }
         }
       }
