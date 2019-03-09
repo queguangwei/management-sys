@@ -69,7 +69,10 @@ class Deal extends React.Component {
 		const state = this.state;
         ApiCaller.call(Api.other.lessonList, JSON.stringify({}), (res) => {
             if (res.code == 0) {
-                state.lessonList = res.data
+                state.lessonList = res.data.map(item => {
+                    state.lessonList.label = item.name
+                    state.lessonList.value = item.id
+                })
             } else {
 
             }
@@ -140,7 +143,7 @@ class Deal extends React.Component {
 				<form onSubmit={this.handleSubmit.bind(this)}>
 					<List>
 						<Picker
-							data={lessons}
+							data={state.lessonList}
 							cols={1}
 							value={state.lesson}
 						>
