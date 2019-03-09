@@ -5,10 +5,9 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, Modal, Picker, InputItem, List, Stepper, WhiteSpace } from 'antd-mobile'
+import { NavBar, Icon, Modal, Picker, InputItem, List, Stepper, WhiteSpace, Toast } from 'antd-mobile'
 
 const alert = Modal.alert;
-let finialValues = {}
 
 class Deal extends React.Component {
 	constructor(props) {
@@ -20,9 +19,8 @@ class Deal extends React.Component {
 			lesson: [],
 			price: null,
 			fee: null,
-			data: [],
 			val: 1,
-			keys: [1]
+			lessonUsers: [{name: '', code: '', job: ''}]
 		}
 	}
 
@@ -33,35 +31,36 @@ class Deal extends React.Component {
 	save() {
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: () => this.handleSubmit(finialValues) },
-		])
-
+			{ text: '确定', onPress: () => this.handleSubmit() },
+		]);
 	}
 
-	handleSubmit(values) {
-		console.log(values)
+	handleSubmit() {
         const state = this.state;
+        console.log(state.lesson)
+        if(state.lesson.length == 0) {
+			Toast.info("请选择课程!",2);
+        	return;
+		}
+		for(let i = 0; i < state.lessonUsers.length; i ++) {
+			for(let j in state.lessonUsers[i]) {
+				if(state.lessonUsers[i][j] == '' || state.lessonUsers[i][j] == null) {
+					Toast.info("请补全报名人信息！", 2);
+					return;
+				}
+			}
+		}
         const params = {
             userId: state.userId,
             lessonRecord: {
-                lessonId: ''
+                lessonId: state.lesson[0],
+				lessonUsers: state.lessonUsers
             }
         }
-        let lessonUsers = []
-        let users = {
-            name: '',
-            code: '',
-            job: '',
-            company: ''
-        }
-
         ApiCaller.call(Api.user.addLesson, JSON.stringify(params), (res) => {
             if (res.code == 0) {
-                if(status == 1) {
-                    browserHistory.push('/purposelist')
-                }else if (status == 2) {
-                    browserHistory.push('/deallist')
-                }
+            	browserHistory.goBack();
+
             } else {
                 Toast.info(res.msg, 2);
             }
@@ -90,12 +89,20 @@ class Deal extends React.Component {
     }
 
 	onChange(val) {
-		console.log(val);
-		let keys = []
-		for(let i = 1;i <= val;i ++) {
-			keys.push(val)
+		const state = this.state;
+		let lessonUsers = state.lessonUsers;
+		let index = this.state.lessonUsers.length;
+		let user = {name: '', code: '', job: ''}
+		if(val > index) {
+			lessonUsers.push(user);
+		}else {
+			lessonUsers.pop();
 		}
-		this.setState({ val, keys });
+		let fee = val * this.state.price;
+		state.val = val;
+		state.fee = fee;
+		state.lessonUsers = lessonUsers;
+		this.setState(state);
 	}
 
 	lessonChange(value) {
@@ -106,44 +113,54 @@ class Deal extends React.Component {
 			}
 		}
 		state.lesson = value;
+		state.fee = state.price * state.val;
 		this.setState(state);
 	}
 
+	onInputChange(index, item, fileds, value) {
+		let obj = this.state.lessonUsers;
+		obj[index][fileds] = value;
+		this.setState({lessonUsers: obj});
+	}
+
 	componentDidMount() {
-        this.setState({userId: this.props.location.query.id})
+		const state = this.state;
+		state.userId = this.props.location.query.id;
+        this.setState(state)
         this.getLessonList()
 	}
 
 	render() {
 		const state = this.state;
-		const formItems = this.state.keys.map((k, index) => {
-			return (
-				<div style={{background:'#F0F0F0'}}>
-					<List>
-						<InputItem
-							value={state.name}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>姓名</InputItem>
-						<InputItem
-							value={state.code}
-							type="phone"
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>电话</InputItem>
-						<InputItem
-							value={state.job}
-							clear
-							placeholder="请输入信息"
-							style={{textAlign:'right'}}
-						>职位</InputItem>
-					</List>
-					<WhiteSpace size="xs"/>
-				</div>
-			)
-		});
+		const formItems = state.lessonUsers.map((item, index) =>
+			<div style={{background:'#F0F0F0'}}>
+				<List key={index}>
+					<InputItem
+						value={item.name}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+						onChange={this.onInputChange.bind(this, index, item, 'name')}
+					>姓名</InputItem>
+					<InputItem
+						value={item.code}
+						type="number"
+						clear
+						maxLength={11}
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+						onChange={this.onInputChange.bind(this, index, item, 'code')}
+					>电话</InputItem>
+					<InputItem
+						value={item.job}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+						onChange={this.onInputChange.bind(this, index, item, 'job')}
+					>职位</InputItem>
+				</List>
+				<WhiteSpace size="xs"/>
+			</div>);
 		return (
 			<div>
 				<NavBar
@@ -194,9 +211,7 @@ class Deal extends React.Component {
 					<WhiteSpace />
 					<List>
 						{formItems}
-
 					</List>
-
 				</form>
 			</div>
 		)

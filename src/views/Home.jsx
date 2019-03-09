@@ -15,6 +15,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            height: '',
 			open: false,
             data: [],
 			filter: {
@@ -27,6 +28,9 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.getCustomerList(this.state.filter);
+        let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
+        let height = document.body.clientHeight - hh;
+        this.setState({height: height})
     }
 
 	getCustomerList(filter) {
@@ -84,7 +88,7 @@ class Home extends React.Component {
 	}
 
     render() {
-		let state = this.state, that = this;
+		let state = this.state;
 		const sidebar = (
 			<div>
 				<List className="drawer-slider">
@@ -140,13 +144,13 @@ class Home extends React.Component {
 				</NavBar>
 				<Drawer
 					className="my-drawer"
-					style={{ minHeight: document.documentElement.clientHeight }}
+					style={{ minHeight: state.height + 'px' }}
 					touch={false}
 					sidebar={sidebar}
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-                    <div className="ov" style={{}}>
+                    <div className="ov">
                         <List className="my-list">
                             {item}
                         </List>

@@ -14,6 +14,7 @@ class AllList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			height: '',
 			open: false,
 			data: [],
             filter: {
@@ -78,6 +79,9 @@ class AllList extends React.Component {
 	}
 
 	componentDidMount() {
+		let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
+		let height = document.body.clientHeight - hh;
+		this.setState({height: height})
 		if(this.props.location.query.params) {
 			this.getCustomerList(JSON.parse(this.props.location.query.params));
 		} else {
@@ -150,7 +154,7 @@ class AllList extends React.Component {
 				</NavBar>
 				<Drawer
 					className="my-drawer"
-					style={{ minHeight: document.documentElement.clientHeight }}
+					style={{ minHeight: state.height + 'px' }}
 					touch={false}
 					sidebar={sidebar}
 					open={this.state.open}

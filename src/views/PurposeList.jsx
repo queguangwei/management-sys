@@ -14,6 +14,7 @@ class PurposeList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			height: '',
 			open: false,
 			data: [],
 			filter: {
@@ -26,6 +27,9 @@ class PurposeList extends React.Component {
 	}
 
 	componentDidMount() {
+		let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
+		let height = document.body.clientHeight - hh;
+		this.setState({height: height})
 		this.getCustomerList(this.state.filter);
 	}
 
@@ -158,7 +162,7 @@ class PurposeList extends React.Component {
 				</NavBar>
 				<Drawer
 					className="my-drawer"
-					style={{ minHeight: document.documentElement.clientHeight }}
+					style={{ minHeight: state.height + 'px' }}
 					touch={false}
 					sidebar={sidebar}
 					open={this.state.open}
