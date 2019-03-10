@@ -15,12 +15,13 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            isLoading: true,
             height: '',
 			open: false,
             data: [],
 			filter: {
 				current: 1,
-				size: 100,
+				size: 300,
 				lessonState: 0,
 			}
         }
@@ -30,7 +31,7 @@ class Home extends React.Component {
         this.getCustomerList(this.state.filter);
         let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
         let height = document.body.clientHeight - hh;
-        this.setState({height: height})
+        this.setState({height: height});
     }
 
 	getCustomerList(filter) {
@@ -38,6 +39,8 @@ class Home extends React.Component {
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
 			if (res.code == 0) {
 				state.data = res.data.records;
+				state.pages = res.data.pages;
+				state.total = res.data.total;
 				this.setState(state);
 			} else {
 
@@ -129,7 +132,7 @@ class Home extends React.Component {
 				</div>
                 {item.followTime ? <div className="my-list-time">下次跟进时间:2019-12-31</div> : null}
 			</Item>
-		)
+		);
         return (
             <div className="">
 				<NavBar
@@ -154,7 +157,6 @@ class Home extends React.Component {
                         <List className="my-list">
                             {item}
                         </List>
-                        <div className="op"></div>
                     </div>
 				</Drawer>
             </div>

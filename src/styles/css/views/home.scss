@@ -28,10 +28,7 @@
   }
 }
 .ov {
-  overflow-y: scroll;
-  .op {
-    height: px2rem(90px);
-  }
+  overflow: auto;
 }
 .my-list {
 

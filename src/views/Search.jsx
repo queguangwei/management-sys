@@ -104,7 +104,7 @@ class Search extends React.Component {
 			cityJson: [],
 			filter: {
 				current: 1,
-				size: 10
+				size: 100
 			}
         }
     }

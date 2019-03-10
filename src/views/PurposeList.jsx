@@ -19,7 +19,7 @@ class PurposeList extends React.Component {
 			data: [],
 			filter: {
 				current: 1,
-				size: 100,
+				size: 300,
 				lessonState: 1,
 				type: 'A'
 			}
@@ -91,7 +91,7 @@ class PurposeList extends React.Component {
 		const state = this.state;
 		state.filter = {
 			current: 1,
-			size: 10,
+			size: 300,
 			lessonState: 1,
 			type: index.sub
 		}

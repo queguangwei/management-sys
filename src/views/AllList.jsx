@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
+import { Drawer, List, NavBar, Icon, Toast } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -16,25 +16,16 @@ class AllList extends React.Component {
 		this.state = {
 			height: '',
 			open: false,
+			isLoading: false,
 			data: [],
             filter: {
                 current: 1,
-                size: 100,
-            }
+                size: 500,
+            },
+			pages: '',
+			total: ''
 		}
 	}
-
-    getCustomerList(filter) {
-        const state = this.state;
-        ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
-            if (res.code == 0) {
-                state.data = res.data.records;
-                this.setState(state);
-            } else {
-
-            }
-        })
-    }
 
 	onOpenChange() {
 		this.setState({ open: !this.state.open });
@@ -78,6 +69,35 @@ class AllList extends React.Component {
         location.href = '/'
 	}
 
+	getCustomerList(filter) {
+		const state = this.state;
+		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
+			if (res.code == 0) {
+				state.pages = res.data.pages;
+				state.total = res.data.total;
+				state.data = res.data.records;
+				state.isLoading = false;
+				this.setState(state);
+				// Toast.hide();
+			} else {
+
+			}
+		})
+	}
+
+	handleScroll() {
+		const state = this.state;
+		if(this.state.total / this.state.filter.size >= this.state.filter.current) {
+			return false;
+		}else {
+			Toast.loading("loading...", 0);
+			state.isLoading = true;
+			state.filter.current = state.filter.current + 1;
+			this.setState(state);
+			this.getCustomerList(this.state.filter);
+		}
+	}
+
 	componentDidMount() {
 		let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
 		let height = document.body.clientHeight - hh;
@@ -87,6 +107,11 @@ class AllList extends React.Component {
 		} else {
 			this.getCustomerList(this.state.filter);
 		}
+		// window.addEventListener('scroll', this.handleScroll.bind(this));
+	}
+
+	componentWillUnmount() {
+		// window.removeEventListener('scroll', this.handleScroll.bind(this));
 	}
 
 	render() {
@@ -119,6 +144,7 @@ class AllList extends React.Component {
 				</div>
 			</div>
 		);
+
         let item = state.data.map(item =>
             <Item multipleLine onClick={this.detail.bind(this, item.id)}>
                 <div className="my-list-content" >
@@ -132,7 +158,7 @@ class AllList extends React.Component {
 						<span className="address">公司:{item.company}</span>
 					</div>:null}
                 {item.lessonRecords.map(i =>
-                    <div className="my-list-info new-status">
+                    <div className="my-list-info">
                         <span className="lesson-name">课程名称:{i.name}</span>
                         <span className="total">报名人数:{i.total}</span>
                     </div>
@@ -154,17 +180,16 @@ class AllList extends React.Component {
 				</NavBar>
 				<Drawer
 					className="my-drawer"
-					style={{ minHeight: state.height + 'px' }}
+					style={{ minHeight: state.height + 'px'}}
 					touch={false}
 					sidebar={sidebar}
 					open={this.state.open}
 					onOpenChange={this.onOpenChange}
 				>
-					<div className="ov" style={{}}>
+					<div className="ov">
 						<List className="my-list">
 							{item}
 						</List>
-						<div className="op"></div>
 					</div>
 				</Drawer>
 			</div>

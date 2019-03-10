@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
+import { Drawer, List, NavBar, Icon } from 'antd-mobile'
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -19,7 +19,7 @@ class DealList extends React.Component {
 			data: [],
             filter: {
                 current: 1,
-                size: 100,
+                size: 300,
                 lessonState: 2,
             }
 		}
