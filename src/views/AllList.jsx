@@ -150,7 +150,7 @@ class AllList extends React.Component {
                 <div className="my-list-content" >
                     <span className="name">{item.name}</span><span>电话:{item.code}</span>
                     {item.lessonState==0?<span className="icon_new"></span>:null}
-                    {item.type=='A'?<span className="icon_type_a"></span>:(item.type=='B'?<span className="icon_type_b"></span>:(item.type=='C'?<span className="icon_type_c"></span>:null))}
+                    {item.lessonState!=0&&item.type=='A'?<span className="icon_type_a"></span>:(item.lessonState!=0&&item.type=='B'?<span className="icon_type_b"></span>:(item.lessonState!=0&&item.type=='C'?<span className="icon_type_c"></span>:null))}
                 </div>
                 {item.lessonRecords.length==0?
 					<div className="my-list-info">

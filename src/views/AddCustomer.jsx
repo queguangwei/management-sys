@@ -34,6 +34,7 @@ class AddCustomer extends React.Component {
 	}
 
 	save() {
+		this.queryAreaByPhone(this.state.code);
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => this.handleSubmit() },
@@ -99,6 +100,19 @@ class AddCustomer extends React.Component {
 		})
 	}
 
+	queryAreaByPhone(phone) {
+		const state = this.state;
+		ApiCaller.call(Api.other.queryAreaByPhone, JSON.stringify({code: phone}), (res) => {
+			if (res.code == 0) {
+				state.province = res.data.province;
+				state.city = res.data.city;
+				this.setState(state);
+			}else {
+				Toast.info("请输入正确格式的手机号！",2);
+			}
+		})
+	}
+
 	handleSubmit() {
 		const state = this.state;
 		const params = {
@@ -142,7 +156,7 @@ class AddCustomer extends React.Component {
     }
 
 	componentDidMount() {
-        this.getCityList();
+        // this.getCityList();
 	}
 
 	render() {
@@ -217,14 +231,14 @@ class AddCustomer extends React.Component {
 					>
 						<List.Item arrow="horizontal">性别</List.Item>
 					</Picker>
-					<Picker
-						data={this.state.cityJson}
-						value={this.state.district}
-						cols={2}
-						onChange={this.onCityChange.bind(this)}
-					>
-						<List.Item arrow="horizontal">地区</List.Item>
-					</Picker>
+					{/*<Picker*/}
+						{/*data={this.state.cityJson}*/}
+						{/*value={this.state.district}*/}
+						{/*cols={2}*/}
+						{/*onChange={this.onCityChange.bind(this)}*/}
+					{/*>*/}
+						{/*<List.Item arrow="horizontal">地区</List.Item>*/}
+					{/*</Picker>*/}
 				</List>
 			</div>
 		)

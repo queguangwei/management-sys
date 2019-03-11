@@ -187,7 +187,7 @@ class Detail extends React.Component {
 									</p>
 									<p>
 										<span>微信:{info.wx}</span>
-										<span>意向度:{info.type}类</span>
+										<span>意向度:{info.type?info.type:'~~'}类</span>
 									</p>
 									<p>
 										<span className="area">区域:{info.province}{info.city}</span>
@@ -217,14 +217,11 @@ class Detail extends React.Component {
                                     <div className="no-record">
                                         <h4>此客户没有跟进记录，您可以</h4>
                                         <p>点击下方设为意向客户进行跟进</p>
-                                    </div>:(followData.length==0&&info.lessonState==1?
+                                    </div>:(followData.length==0?
                                         <div className="no-record">
                                             <h4>此客户没有跟进记录，您可以</h4>
                                             <p>点击下方添加按钮进行跟进</p>
-                                        </div>:(followData.length==0&&info.lessonState==2?
-                                            <div className="no-record">
-                                                <h4>此客户没有跟进记录</h4>
-                                            </div>:null))}
+                                        </div>:null)}
 							</ul>
 						</div>
 						<div className="op"></div>
@@ -236,7 +233,8 @@ class Detail extends React.Component {
 					</div>:
 					type==2?
 						<div className="bottom-button">
-							<button className="bottom-button-blu" onClick={this.add.bind(this)}>新增课程</button>
+							<button className="bottom-button-yel fifty-per" onClick={this.followUp.bind(this)}>添加跟进</button>
+							<button className="bottom-button-blu fifty-per" onClick={this.add.bind(this)}>新增课程</button>
 						</div>:
 						<div className="bottom-button">
 							<button className="bottom-button-yel fifty-per" onClick={this.followUp.bind(this)}>添加跟进</button>
