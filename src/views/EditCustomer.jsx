@@ -48,7 +48,7 @@ class EditCustomer extends React.Component {
 		const params = {
 			code: state.code,
 			name: state.name,
-			idCard: state.idCard,
+			// idCard: state.idCard,
 			company: state.company,
 			job: state.job,
 			sex: state.sex,
@@ -64,6 +64,7 @@ class EditCustomer extends React.Component {
 				return;
 			}
 		}
+		params.idCard = state.idCard;
 		params.sex = params.sex[0];
 		params.callState = params.callState[0];
 		params.type = params.type[0];

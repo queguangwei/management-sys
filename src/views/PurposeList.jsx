@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import Cookie from "../utils/Cookie"
+import * as Format from '../utils/Format'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Tabs } from 'antd-mobile'
@@ -145,7 +146,7 @@ class PurposeList extends React.Component {
 					<span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
 					<span className="address">公司:{item.company}</span>
 				</div>
-				{item.followTime?<div className="my-list-time">下次跟进时间:2019-12-31</div>:null}
+				{item.nextFollowTime?<div className="my-list-time">下次跟进时间:{Format.date(item.nextFollowTime, 'yyyy-MM-dd')}</div>:null}
 			</Item>
 		)
 		return (

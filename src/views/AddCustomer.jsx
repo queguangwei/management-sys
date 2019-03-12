@@ -118,7 +118,7 @@ class AddCustomer extends React.Component {
 		const params = {
 			code: state.code,
 			name: state.name,
-			idCard: state.idCard,
+			// idCard: state.idCard,
 			company: state.company,
 			job: state.job,
 			sex: state.sex,
@@ -132,6 +132,7 @@ class AddCustomer extends React.Component {
 				return;
 			}
 		}
+		params.idCard = state.idCard;
 		params.sex = params.sex[0];
 		console.log(params)
 		ApiCaller.call(Api.user.add, JSON.stringify({ user: params }), (res) => {
