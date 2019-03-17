@@ -34,11 +34,10 @@ class AddCustomer extends React.Component {
 	}
 
 	save() {
-		this.queryAreaByPhone(this.state.code);
 		alert('保存', '确认保存吗???', [
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => this.handleSubmit() },
-		])
+		]);
 	}
 
 	onCompanyChange(value) {
@@ -55,7 +54,7 @@ class AddCustomer extends React.Component {
 
 	onErrorClick() {
 		if (this.state.hasError) {
-			Toast.info('请输入11位电话号码！', 2);
+			Toast.info('请输入正确的11位电话号码！', 2);
 		}
 	}
 	onPhoneChange(value) {
@@ -71,6 +70,10 @@ class AddCustomer extends React.Component {
 		this.setState({
 			code: value,
 		});
+	}
+
+	onPhoneBlur() {
+		this.queryAreaByPhone(this.state.code);
 	}
 
 	onJobChange(value) {
@@ -108,31 +111,36 @@ class AddCustomer extends React.Component {
 				state.city = res.data.city;
 				this.setState(state);
 			}else {
-				Toast.info("请输入正确格式的手机号！",2);
+				this.setState({
+					hasError: true,
+				});
 			}
 		})
 	}
 
 	handleSubmit() {
 		const state = this.state;
+		if(!VailddateHelper.IdCardValidate(state.idCard)) {
+			Toast.info("请输入正确的身份证信息！", 2);
+			return;
+		}
 		const params = {
 			code: state.code,
 			name: state.name,
-			// idCard: state.idCard,
+			idCard: state.idCard,
 			company: state.company,
 			job: state.job,
-			sex: state.sex,
 			wx: state.wx,
+			sex: state.sex,
 			province: state.province,
 			city: state.city
-		}
+		};
 		for(let k in params) {
 			if(params[k] == null || params[k] == '') {
 				Toast.info("请检查补全信息！",2);
 				return;
 			}
 		}
-		params.idCard = state.idCard;
 		params.sex = params.sex[0];
 		console.log(params)
 		ApiCaller.call(Api.user.add, JSON.stringify({ user: params }), (res) => {
@@ -181,24 +189,25 @@ class AddCustomer extends React.Component {
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
-					>公司名称</InputItem>
+					>单位</InputItem>
 					<InputItem
 						onChange={this.onNameChange.bind(this)}
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
-					>联系人姓名</InputItem>
+					>姓名</InputItem>
 					<InputItem
 						type="number"
 						error={this.state.hasError}
 						onErrorClick={this.onErrorClick.bind(this)}
 						onChange={this.onPhoneChange.bind(this)}
+						onBlur={this.onPhoneBlur.bind(this)}
 						value={this.state.code}
 						placeholder="请输入信息"
 						clear
 						maxLength={11}
 						style={{textAlign:'right'}}
-					>电话</InputItem>
+					>手机</InputItem>
 					<InputItem
 						onChange={this.onJobChange.bind(this)}
 						clear
@@ -209,6 +218,7 @@ class AddCustomer extends React.Component {
 						onChange={this.onIdCardChange.bind(this)}
 						clear
 						placeholder="请输入信息"
+						maxLength={18}
 						style={{textAlign:'right'}}
 					>身份证</InputItem>
 					<InputItem

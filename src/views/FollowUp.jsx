@@ -5,7 +5,8 @@ import * as Actions from '../store/actions'
 import { bindActionCreators } from 'redux'
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
-import { NavBar, Icon, Modal, Toast, DatePicker, TextareaItem, List, WhiteSpace } from 'antd-mobile'
+import * as Format from "../utils/Format"
+import { NavBar, Icon, Modal, Toast, DatePicker, InputItem, TextareaItem, List, WhiteSpace } from 'antd-mobile'
 
 const alert = Modal.alert;
 
@@ -33,10 +34,10 @@ class FollowUp extends React.Component {
 
     handleSubmit() {
         const state = this.state;
-        if(state.followTime == '') {
-            Toast.info("请选择跟进时间！", 2);
-            return;
-        }
+        // if(state.followTime == '') {
+        //     Toast.info("请选择跟进时间！", 2);
+        //     return;
+        // }
 	    if(state.remark =='' || state.remark == null) {
             Toast.info("跟进内容为空！",2);
             return;
@@ -58,6 +59,7 @@ class FollowUp extends React.Component {
     }
 
     handleChange(value) {
+	    console.log(value)
 	    this.setState({followDate: value, followTime: value.getTime()})
     }
 
@@ -66,7 +68,13 @@ class FollowUp extends React.Component {
     }
 
 	componentDidMount() {
-        this.setState({userId: this.props.location.query.id})
+	    let now = new Date().getTime();
+        let today = Format.date(now, 'yyyy-MM-dd');
+        this.setState({
+            userId: this.props.location.query.id,
+            followDate: today,
+            followTime: now
+        })
 	}
 
 	render() {
@@ -82,13 +90,18 @@ class FollowUp extends React.Component {
 				</NavBar>
                 <form>
                     <List>
-                        <DatePicker
-                            mode="date"
+                        {/*<DatePicker*/}
+                            {/*mode="date"*/}
+                            {/*value={this.state.followDate}*/}
+                            {/*onChange={this.handleChange.bind(this)}*/}
+                        {/*>*/}
+                            {/*<List.Item arrow="horizontal">跟进时间</List.Item>*/}
+                        {/*</DatePicker>*/}
+                        <InputItem
                             value={this.state.followDate}
-                            onChange={this.handleChange.bind(this)}
-                        >
-                            <List.Item arrow="horizontal">跟进时间</List.Item>
-                        </DatePicker>
+                            disabled
+                            style={{textAlign:'right'}}
+                        >跟进时间</InputItem>
                     </List>
                     <WhiteSpace />
                     <List>

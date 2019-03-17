@@ -48,7 +48,7 @@ class EditCustomer extends React.Component {
 		const params = {
 			code: state.code,
 			name: state.name,
-			// idCard: state.idCard,
+			idCard: state.idCard,
 			company: state.company,
 			job: state.job,
 			sex: state.sex,
@@ -58,17 +58,15 @@ class EditCustomer extends React.Component {
 			province: state.province,
 			city: state.city
 		}
-		for(let k in params) {
-			if(params[k] == null || params[k] == '') {
-				Toast.info("请检查补全信息！",2);
-				return;
-			}
-		}
-		params.idCard = state.idCard;
+		// for(let k in params) {
+		// 	if(params[k] == null || params[k] == '') {
+		// 		Toast.info("请检查补全信息！",2);
+		// 		return;
+		// 	}
+		// }
 		params.sex = params.sex[0];
 		params.callState = params.callState[0];
 		params.type = params.type[0];
-		console.log(params)
 		ApiCaller.call(Api.user.edit, JSON.stringify({ userId: state.userId, user: params }), (res) => {
 			if (res.code == 0) {
 				browserHistory.goBack();
@@ -205,8 +203,7 @@ class EditCustomer extends React.Component {
 		const phoneStatus = [
 			{label: '已接', value: 2},
 			{label: '未接', value: 1},
-			{label: '错号', value: 3},
-			{label: '空号', value: 0}
+			{label: '空错号', value: 0}
 		];
 		const gender = [
 			{label: '男', value: 0},
@@ -228,14 +225,14 @@ class EditCustomer extends React.Component {
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 						onChange={this.onCompanyChange.bind(this)}
-					>公司名称</InputItem>
+					>单位</InputItem>
 					<InputItem
 						value={state.name}
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 						onChange={this.onNameChange.bind(this)}
-					>联系人姓名</InputItem>
+					>姓名</InputItem>
 					<InputItem
 						value={state.code}
 						error={this.state.hasError}
@@ -246,7 +243,7 @@ class EditCustomer extends React.Component {
 						placeholder="请输入信息"
 						maxLength={11}
 						style={{textAlign:'right'}}
-					>电话</InputItem>
+					>手机</InputItem>
 					<InputItem
 						value={state.job}
 						clear
@@ -258,6 +255,7 @@ class EditCustomer extends React.Component {
 						value={state.idCard}
 						clear
 						placeholder="请输入信息"
+						maxLength={18}
 						style={{textAlign:'right'}}
 						onChange={this.onIdCardChange.bind(this)}
 					>身份证</InputItem>
