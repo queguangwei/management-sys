@@ -97,6 +97,10 @@
     p.title {
       padding-left: px2rem(30px);
       margin-bottom: px2rem(20px);
+      span.total {
+        float: right;
+        padding-right: px2rem(30px);
+      }
     }
     p {
       color: #999999;

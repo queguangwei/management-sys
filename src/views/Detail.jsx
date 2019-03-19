@@ -198,7 +198,7 @@ class Detail extends React.Component {
 						</div>
 						{type==2?
 							<div className="detail-lesson">
-								<p className="title">课程数（{lessonData.length}）</p>
+								<p className="title">课程数（{lessonData.length}）<span className="total">成交金额:{info.totalPrice?info.totalPrice:'0'}元</span></p>
 								<ul className="detail-lesson-list">
                                     {lesLi}
                                     {lessonData.length==0?

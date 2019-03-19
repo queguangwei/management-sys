@@ -120,19 +120,22 @@ class DealList extends React.Component {
         let item = state.data.map(item =>
             <Item multipleLine onClick={this.detail.bind(this, item.id)}>
                 <div className="my-list-content" >
-                    <span className="name">{item.name}</span>
-					<div><span className="phone">电话:{item.code}</span><span>公司:{item.company}</span></div>
+                    <span className="name">{item.name}</span><span className="phone">电话:{item.code}</span>
                 </div>
-                {item.lessonRecords.length==0?
-                    <div className="my-list-info">
-                        <span className="empty">此客户还没有添加课程</span>
-                    </div>:null}
-                {item.lessonRecords.map(i =>
-                    <div className="my-list-info">
-                        <span className="lesson-name">课程名称:{i.name}</span>
-                        <span className="total">报名人数:{i.total}</span>
-                    </div>
-                )}
+				<div className="my-list-info">
+					<span className="total-price">成交金额:{item.totalPrice?item.totalPrice:'0'}</span>
+					<span>公司:{item.company}</span>
+				</div>
+                {/*{item.lessonRecords.length==0?*/}
+                    {/*<div className="my-list-info">*/}
+                        {/*<span className="empty">此客户还没有添加课程</span>*/}
+                    {/*</div>:null}*/}
+                {/*{item.lessonRecords.map(i =>*/}
+                    {/*<div className="my-list-info">*/}
+                        {/*<span className="lesson-name">课程名称:{i.name}</span>*/}
+                        {/*<span className="total">报名人数:{i.total}</span>*/}
+                    {/*</div>*/}
+                {/*)}*/}
             </Item>
         );
 		return (
