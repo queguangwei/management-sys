@@ -20,7 +20,7 @@ class Deal extends React.Component {
 			price: null,
 			fee: null,
 			val: 1,
-			lessonUsers: [{name: '', code: '', job: ''}]
+			lessonUsers: [{name: '', code: '', job: '', idCard:''}]
 		}
 	}
 
@@ -92,7 +92,7 @@ class Deal extends React.Component {
 		const state = this.state;
 		let lessonUsers = state.lessonUsers;
 		let index = this.state.lessonUsers.length;
-		let user = {name: '', code: '', job: ''}
+		let user = {name: '', code: '', job: '', idCard: ''}
 		if(val > index) {
 			lessonUsers.push(user);
 		}else {
@@ -158,6 +158,13 @@ class Deal extends React.Component {
 						style={{textAlign:'right'}}
 						onChange={this.onInputChange.bind(this, index, item, 'job')}
 					>职位</InputItem>
+					<InputItem
+						value={item.idCard}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+						onChange={this.onInputChange.bind(this, index, item, 'idCard')}
+					>身份证</InputItem>
 				</List>
 				<WhiteSpace size="xs"/>
 			</div>);
