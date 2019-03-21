@@ -7,6 +7,7 @@ import Cookie from "../utils/Cookie"
 import ApiCaller from '../utils/ApiCaller'
 import Api from '../constants/Api'
 import { Drawer, List, NavBar, Icon, Toast } from 'antd-mobile'
+import * as Format from "../utils/Format";
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -154,16 +155,20 @@ class AllList extends React.Component {
                 </div>
                 {item.lessonRecords.length==0?
 					<div className="my-list-info">
-						电话状态:<span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
+						电话状态:<span className={item.callState==2?'status':'err-status'}>{item.callState==2?'已接':(item.callState==1?'未接':'空错号')}</span>
 						<span className="address">公司:{item.company}</span>
-					</div>:null}
-                {item.lessonRecords.map(i =>
-                    <div className="my-list-info">
-                        <span className="lesson-name">课程名称:{i.name}</span>
-                        <span className="total">报名人数:{i.total}</span>
-                    </div>
-                )}
-				{item.followTime ? <div className="my-list-time">下次跟进时间:2019-12-31</div> : null}
+					</div>:
+					<div className="my-list-info">
+						<span className="total-price">成交金额:{item.totalPrice?item.totalPrice:'0'}</span>
+						<span>公司:{item.company}</span>
+					</div>}
+                {/*{item.lessonRecords.map(i =>*/}
+                    {/*<div className="my-list-info">*/}
+                        {/*<span className="lesson-name">课程名称:{i.name}</span>*/}
+                        {/*<span className="total">报名人数:{i.total}</span>*/}
+                    {/*</div>*/}
+                {/*)}*/}
+				{item.nextFollowTime ? <div className="my-list-time">下次跟进时间:{Format.date(item.nextFollowTime, 'yyyy-MM-dd')}</div> : null}
             </Item>
         );
 		return (

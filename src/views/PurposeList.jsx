@@ -143,7 +143,7 @@ class PurposeList extends React.Component {
 				</div>
 				<div className="my-list-info">
 					电话状态:
-					<span className={item.callState==2?'status':'err-status'}>{item.callState==0?'空号':(item.callState==1?'未接':(item.callState==2?'已接':'错号'))}</span>
+					<span className={item.callState==2?'status':'err-status'}>{item.callState==2?'已接':(item.callState==1?'未接':'空错号')}</span>
 					<span className="address">公司:{item.company}</span>
 				</div>
 				{item.nextFollowTime?<div className="my-list-time">下次跟进时间:{Format.date(item.nextFollowTime, 'yyyy-MM-dd')}</div>:null}
