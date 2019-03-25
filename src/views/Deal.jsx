@@ -37,7 +37,6 @@ class Deal extends React.Component {
 
 	handleSubmit() {
         const state = this.state;
-        console.log(state.lesson)
         if(state.lesson.length == 0) {
 			Toast.info("请选择课程!",2);
         	return;
@@ -54,9 +53,11 @@ class Deal extends React.Component {
             userId: state.userId,
             lessonRecord: {
                 lessonId: state.lesson[0],
+				totalPrice: state.fee,
 				lessonUsers: state.lessonUsers
             }
         }
+		console.log(params)
         ApiCaller.call(Api.user.addLesson, JSON.stringify(params), (res) => {
             if (res.code == 0) {
             	browserHistory.goBack();
@@ -87,6 +88,13 @@ class Deal extends React.Component {
             }
         })
     }
+
+	priceChange(value) {
+		const state = this.state;
+		state.price = value;
+		state.fee = value * state.val;
+		this.setState(state);
+	}
 
 	onChange(val) {
 		const state = this.state;
@@ -160,9 +168,11 @@ class Deal extends React.Component {
 					>职位</InputItem>
 					<InputItem
 						value={item.idCard}
+						type="number"
 						clear
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
+						maxLength={18}
 						onChange={this.onInputChange.bind(this, index, item, 'idCard')}
 					>身份证</InputItem>
 				</List>
@@ -191,8 +201,8 @@ class Deal extends React.Component {
 						<InputItem
 							value={state.price}
 							type="money"
-							disabled
 							placeholder="请选择课程"
+							onChange={this.priceChange.bind(this)}
 						>课程单价</InputItem>
 						<List.Item
 							wrap

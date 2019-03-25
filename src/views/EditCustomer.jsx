@@ -48,11 +48,11 @@ class EditCustomer extends React.Component {
 		const params = {
 			code: state.code,
 			name: state.name,
-			idCard: state.idCard,
+			// idCard: state.idCard,
 			company: state.company,
 			job: state.job,
-			sex: state.sex,
-			wx: state.wx,
+			// sex: state.sex,
+			// wx: state.wx,
 			callState: state.callState,
 			type: state.type,
 			province: state.province,
@@ -64,7 +64,7 @@ class EditCustomer extends React.Component {
 		// 		return;
 		// 	}
 		// }
-		params.sex = params.sex[0];
+		// params.sex = params.sex[0];
 		params.callState = params.callState[0];
 		params.type = params.type[0];
 		ApiCaller.call(Api.user.edit, JSON.stringify({ userId: state.userId, user: params }), (res) => {
@@ -251,36 +251,36 @@ class EditCustomer extends React.Component {
 						style={{textAlign:'right'}}
 						onChange={this.onJobChange.bind(this)}
 					>职位</InputItem>
-					<InputItem
-						value={state.idCard}
-						clear
-						placeholder="请输入信息"
-						maxLength={18}
-						style={{textAlign:'right'}}
-						onChange={this.onIdCardChange.bind(this)}
-					>身份证</InputItem>
-					<InputItem
-						value={state.age}
-						disabled
-						placeholder="自动生成"
-						style={{textAlign:'right'}}
-					>年龄</InputItem>
-					<InputItem
-						value={state.wx}
-						clear
-						placeholder="请输入信息"
-						maxLength={20}
-						style={{textAlign:'right'}}
-						onChange={this.onWxChange.bind(this)}
-					>微信号</InputItem>
-					<Picker
-						data={gender}
-						cols={1}
-						value={state.sex}
-						onChange={this.onSexChange.bind(this)}
-					>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
+					{/*<InputItem*/}
+						{/*value={state.idCard}*/}
+						{/*clear*/}
+						{/*placeholder="请输入信息"*/}
+						{/*maxLength={18}*/}
+						{/*style={{textAlign:'right'}}*/}
+						{/*onChange={this.onIdCardChange.bind(this)}*/}
+					{/*>身份证</InputItem>*/}
+					{/*<InputItem*/}
+						{/*value={state.age}*/}
+						{/*disabled*/}
+						{/*placeholder="自动生成"*/}
+						{/*style={{textAlign:'right'}}*/}
+					{/*>年龄</InputItem>*/}
+					{/*<InputItem*/}
+						{/*value={state.wx}*/}
+						{/*clear*/}
+						{/*placeholder="请输入信息"*/}
+						{/*maxLength={20}*/}
+						{/*style={{textAlign:'right'}}*/}
+						{/*onChange={this.onWxChange.bind(this)}*/}
+					{/*>微信号</InputItem>*/}
+					{/*<Picker*/}
+						{/*data={gender}*/}
+						{/*cols={1}*/}
+						{/*value={state.sex}*/}
+						{/*onChange={this.onSexChange.bind(this)}*/}
+					{/*>*/}
+						{/*<List.Item arrow="horizontal">性别</List.Item>*/}
+					{/*</Picker>*/}
 					<Picker
 						data={phoneStatus}
 						cols={1}

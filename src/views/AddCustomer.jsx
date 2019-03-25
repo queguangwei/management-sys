@@ -120,20 +120,20 @@ class AddCustomer extends React.Component {
 
 	handleSubmit() {
 		const state = this.state;
-		if(!VailddateHelper.IdCardValidate(state.idCard)) {
-			Toast.info("请输入正确的身份证信息！", 2);
-			return;
-		}
+		// if(!VailddateHelper.IdCardValidate(state.idCard)) {
+		// 	Toast.info("请输入正确的身份证信息！", 2);
+		// 	return;
+		// }
 		const params = {
 			code: state.code,
 			name: state.name,
-			idCard: state.idCard,
+			// idCard: state.idCard,
 			company: state.company,
 			job: state.job,
-			wx: state.wx,
-			sex: state.sex,
-			province: state.province,
-			city: state.city
+			// wx: state.wx,
+			// sex: state.sex,
+			// province: state.province,
+			// city: state.city
 		};
 		for(let k in params) {
 			if(params[k] == null || params[k] == '') {
@@ -141,7 +141,7 @@ class AddCustomer extends React.Component {
 				return;
 			}
 		}
-		params.sex = params.sex[0];
+		// params.sex = params.sex[0];
 		console.log(params)
 		ApiCaller.call(Api.user.add, JSON.stringify({ user: params }), (res) => {
 			if (res.code == 0) {
@@ -214,34 +214,34 @@ class AddCustomer extends React.Component {
 						placeholder="请输入信息"
 						style={{textAlign:'right'}}
 					>职位</InputItem>
-					<InputItem
-						onChange={this.onIdCardChange.bind(this)}
-						clear
-						placeholder="请输入信息"
-						maxLength={18}
-						style={{textAlign:'right'}}
-					>身份证</InputItem>
-					<InputItem
-						disabled
-						placeholder="自动生成"
-						value={this.state.age}
-						style={{textAlign:'right'}}
-					>年龄</InputItem>
-					<InputItem
-						onChange={this.onWxChange.bind(this)}
-						clear
-						maxLength={20}
-						placeholder="请输入信息"
-						style={{textAlign:'right'}}
-					>微信号</InputItem>
-					<Picker
-						data={gender}
-						value={this.state.sex}
-						cols={1}
-						onChange={this.onSexChange.bind(this)}
-					>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
+					{/*<InputItem*/}
+						{/*onChange={this.onIdCardChange.bind(this)}*/}
+						{/*clear*/}
+						{/*placeholder="请输入信息"*/}
+						{/*maxLength={18}*/}
+						{/*style={{textAlign:'right'}}*/}
+					{/*>身份证</InputItem>*/}
+					{/*<InputItem*/}
+						{/*disabled*/}
+						{/*placeholder="自动生成"*/}
+						{/*value={this.state.age}*/}
+						{/*style={{textAlign:'right'}}*/}
+					{/*>年龄</InputItem>*/}
+					{/*<InputItem*/}
+						{/*onChange={this.onWxChange.bind(this)}*/}
+						{/*clear*/}
+						{/*maxLength={20}*/}
+						{/*placeholder="请输入信息"*/}
+						{/*style={{textAlign:'right'}}*/}
+					{/*>微信号</InputItem>*/}
+					{/*<Picker*/}
+						{/*data={gender}*/}
+						{/*value={this.state.sex}*/}
+						{/*cols={1}*/}
+						{/*onChange={this.onSexChange.bind(this)}*/}
+					{/*>*/}
+						{/*<List.Item arrow="horizontal">性别</List.Item>*/}
+					{/*</Picker>*/}
 					{/*<Picker*/}
 						{/*data={this.state.cityJson}*/}
 						{/*value={this.state.district}*/}

@@ -115,14 +115,12 @@ class Detail extends React.Component {
 
     checkCallStatus(status) {
         let sta = '';
-        if(status == 0) {
-            sta = '空号'
+        if(status == 2) {
+            sta = '已接'
         }else if (status == 1) {
             sta = '未接'
-        }else if(status == 2) {
-            sta = '已接'
         }else {
-            sta = '错号'
+            sta = '空错号'
         }
         return sta;
     }
@@ -170,7 +168,7 @@ class Detail extends React.Component {
 									<div className="headerimg"></div>
 									<div className="headerinfo">
 										<span>{info.name}</span>
-                                        {info.sex==0?'先生':'女士'} {info.age}岁
+                                        {/*{info.sex==0?'先生':'女士'} {info.age}岁*/}
 										{type==0?
 											<i className="new"></i>:
 											<i className={info.type=='A'?'classa':(info.type=='B'?'classb':'classc')}></i>
@@ -186,13 +184,13 @@ class Detail extends React.Component {
                                         <span>电话状态:<span className={info.callState==2?'status-gre':'status-red'}>{info.cellphoneState}</span></span>
 									</p>
 									<p>
-										<span>微信:{info.wx}</span>
+										{/*<span>微信:{info.wx}</span>*/}
 										<span>意向度:{info.type?info.type:'~~'}类</span>
 									</p>
 									<p>
 										<span className="area">区域:{info.province}{info.city}</span>
 									</p>
-									<p>身份证:{info.idCard}</p>
+									{/*<p>身份证:{info.idCard}</p>*/}
 								</div>
 							</div>
 						</div>

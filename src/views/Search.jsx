@@ -16,9 +16,9 @@ class Form extends  React.Component {
 			if (!error) {
 				finialValues = value;
 				console.log()
-				if(value.sex !=undefined) {
-					finialValues.sex = value.sex[0];
-				}
+				// if(value.sex !=undefined) {
+				// 	finialValues.sex = value.sex[0];
+				// }
 				if(value.type != undefined) {
 					finialValues.type = value.type[0];
 				}
@@ -51,9 +51,9 @@ class Form extends  React.Component {
 					<Picker data={IntentionDegree} cols={1} {...getFieldProps('type')}>
 						<List.Item arrow="horizontal">意向度</List.Item>
 					</Picker>
-					<Picker data={gender} cols={1} {...getFieldProps('sex')}>
-						<List.Item arrow="horizontal">性别</List.Item>
-					</Picker>
+					{/*<Picker data={gender} cols={1} {...getFieldProps('sex')}>*/}
+						{/*<List.Item arrow="horizontal">性别</List.Item>*/}
+					{/*</Picker>*/}
 					<InputItem
 						{...getFieldProps('name')}
 						clear
