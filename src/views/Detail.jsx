@@ -180,8 +180,8 @@ class Detail extends React.Component {
 								</div>
 								<div className="bottom">
 									<p>
-										<span>电话:<a href="tel:13867896470">{info.code}</a></span>
-                                        <span>电话状态:<span className={info.callState==2?'status-gre':'status-red'}>{info.cellphoneState}</span></span>
+										<span className="fl-lef">电话:<a href="tel:13867896470">{info.code}</a></span>
+                                        <span>电话状态:<em className={info.callState==2?'status-gre':'status-red'}>{info.cellphoneState}</em></span>
 									</p>
 									<p>
 										{/*<span>微信:{info.wx}</span>*/}

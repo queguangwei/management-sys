@@ -75,11 +75,9 @@
       .bottom {
         font-size: px2rem(26px);
         p {
-          line-height: 1;
           margin-bottom: px2rem(30px);
           span {
             width: 50%;
-            display: inline-block;
             overflow: hidden;
             text-overflow:ellipsis;
             white-space: nowrap;
@@ -221,4 +219,7 @@
 }
 .status-red {
   color: #FF0000;
+}
+.fl-lef {
+  float: left;
 }
