@@ -1,4 +1,4 @@
-const API_ROOT = "http://danjuan-pan.yicp.io:28135"
+const API_ROOT = "http://47.110.251.30:8080"
 const API_USER = API_ROOT + "/user"
 const API_OTHER = API_ROOT + "/other"
 

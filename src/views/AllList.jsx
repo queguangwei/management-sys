@@ -44,7 +44,8 @@ class AllList extends React.Component {
         browserHistory.push({
             pathname: '/detail',
             query: {
-                id: id
+                id: id,
+				flag: true
             }
         })
 	}

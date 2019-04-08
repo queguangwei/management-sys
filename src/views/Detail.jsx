@@ -19,18 +19,38 @@ class Detail extends React.Component {
             info: {},
             followData: [],
             lessonData: [],
+            flag: false
         }
 	}
 
 	back() {
-		browserHistory.goBack()
+	    const state = this.state;
+	    if(state.info.lessonState == 1 && !state.flag) {
+	        let ind;
+	        if(state.info.type == 'A') {
+                ind = 0;
+            }else if(state.info.type == 'B') {
+	            ind = 1;
+            } else if(state.info.type == 'C') {
+                ind = 2;
+            }
+            browserHistory.push({
+                pathname: '/purposelist',
+                query: {
+                    indextab: ind
+                }
+            })
+        }else {
+            browserHistory.goBack()
+        }
 	}
 
 	edit() {
         browserHistory.push({
             pathname: '/edit',
             query: {
-                id: this.state.userId
+                id: this.state.userId,
+                typeDisabled: this.state.type == 2 ? true : false
             }
         })
 	}
@@ -127,6 +147,9 @@ class Detail extends React.Component {
 
 	componentDidMount() {
 		this.getCustomerDetail(this.props.location.query.id);
+		const state = this.state;
+		state.flag = this.props.location.query.flag;
+		this.setState(state);
 	}
 
 	render() {
@@ -175,7 +198,7 @@ class Detail extends React.Component {
 										}
 									</div>
 									<div className="headerinfo">
-                                        {info.job}/{info.company}
+                                        {info.job} / {info.company}
 									</div>
 								</div>
 								<div className="bottom">
@@ -185,12 +208,13 @@ class Detail extends React.Component {
 									</p>
 									<p>
 										{/*<span>微信:{info.wx}</span>*/}
-										<span>意向度:{info.type?info.type:'~~'}类</span>
+                                        {type==1?<span>意向度:{info.type?info.type:'~~'}类</span>:null}
 									</p>
 									<p>
-										<span className="area">区域:{info.province}{info.city}</span>
+										<span className="area">地区:{info.province}{info.city}</span>
 									</p>
 									{/*<p>身份证:{info.idCard}</p>*/}
+                                    {type==1?<p>意向课程:{}</p>:null}
 								</div>
 							</div>
 						</div>

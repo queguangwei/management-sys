@@ -17,6 +17,7 @@ class PurposeList extends React.Component {
 		this.state = {
 			height: '',
 			open: false,
+			indexTab: null,
 			data: [],
 			filter: {
 				current: 1,
@@ -25,13 +26,6 @@ class PurposeList extends React.Component {
 				type: 'A'
 			}
 		}
-	}
-
-	componentDidMount() {
-		let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
-		let height = document.body.clientHeight - hh;
-		this.setState({height: height})
-		this.getCustomerList(this.state.filter);
 	}
 
 	getCustomerList(filter) {
@@ -96,17 +90,40 @@ class PurposeList extends React.Component {
 			lessonState: 1,
 			type: index.sub
 		}
+		state.indexTab = index.index;
 		this.setState(state);
 		this.getCustomerList(this.state.filter);
 	}
 
+	componentDidMount() {
+		let hh = document.getElementsByClassName("am-navbar")[0].offsetHeight;
+		let height = document.body.clientHeight - hh;
+		let fil = {
+			current: 1,
+			size: 300,
+			lessonState: 1
+		}
+		if(this.props.location.query.indextab == 2) {
+			fil.type = 'C'
+		}else if (this.props.location.query.indextab == 1) {
+			fil.type = 'B'
+		}else {
+			fil.type = 'A'
+		}
+		const state = this.state;
+		state.height = height;
+		state.indexTab = parseInt(this.props.location.query.indextab);
+		state.filter = fil;
+		this.setState(state);
+		this.getCustomerList(this.state.filter);
+	}
 
 	render() {
 		let state = this.state;
 		const tabs = [
-			{ title: 'A类', sub: 'A'},
-			{ title: 'B类', sub: 'B' },
-			{ title: 'C类', sub: 'C' },
+			{ title: 'A类', sub: 'A', index: 0 },
+			{ title: 'B类', sub: 'B', index: 1 },
+			{ title: 'C类', sub: 'C', index: 2 },
 		];
 		const sidebar = (
 			<div>
@@ -170,7 +187,7 @@ class PurposeList extends React.Component {
 					onOpenChange={this.onOpenChange}
 				>
 					<Tabs tabs={tabs}
-						  initialPage={0}
+						  page={state.indexTab}
 						  onChange={this.onTabChange.bind(this)}
 					>
 						{/* tabA */}

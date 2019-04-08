@@ -16,6 +16,7 @@ class EditCustomer extends React.Component {
 			userId: '',
             cityJson: [],
 			hasError: false,
+			disabled: false,
 			age: '',
 			code: '',
 			name: '',
@@ -190,6 +191,9 @@ class EditCustomer extends React.Component {
 
 	componentDidMount() {
 		this.getCustomerDetail(this.props.location.query.id);
+		const state = this.state;
+		state.disabled = eval(this.props.location.query.typeDisabled);
+		this.setState(state);
 		this.getCityList();
 	}
 
@@ -292,6 +296,7 @@ class EditCustomer extends React.Component {
 					<Picker data={level}
 							cols={1}
 							value={state.type}
+							disabled={state.disabled}
 							onChange={this.onTypeChange.bind(this)}
 					>
 						<List.Item arrow="horizontal">意向度</List.Item>
