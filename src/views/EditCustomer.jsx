@@ -29,7 +29,9 @@ class EditCustomer extends React.Component {
 			type: [],
 			province: '',
 			city: '',
-			district: []
+			district: [],
+			lessonType: '',
+			status: ''
 		}
 	}
 
@@ -68,6 +70,9 @@ class EditCustomer extends React.Component {
 		// params.sex = params.sex[0];
 		params.callState = params.callState[0];
 		params.type = params.type[0];
+		if(state.status == 1) {
+			params.lessonType = state.lessonType
+		}
 		ApiCaller.call(Api.user.edit, JSON.stringify({ userId: state.userId, user: params }), (res) => {
 			if (res.code == 0) {
 				browserHistory.goBack();
@@ -101,6 +106,7 @@ class EditCustomer extends React.Component {
 				state.idCard = res.data.user.idCard;
 				state.age = VailddateHelper.checkIdCardAge(res.data.user.idCard);
 				state.wx = res.data.user.wx;
+				state.lessonType = res.data.user.lessonType;
 				let sex = [];
 				sex.push(res.data.user.sex)
 				state.sex = sex;
@@ -115,6 +121,7 @@ class EditCustomer extends React.Component {
 				state.district = district;
 				state.province = res.data.user.province;
 				state.city = res.data.user.city;
+				state.status = res.data.user.lessonState;
 				this.setState(state);
 			} else {
 				Toast.info(res.msg, 2)
@@ -187,6 +194,10 @@ class EditCustomer extends React.Component {
 			province: value[0],
 			city: value[1]
 		})
+	}
+
+	onLessonChange(value) {
+		this.setState({lessonType: value})
 	}
 
 	componentDidMount() {
@@ -309,6 +320,13 @@ class EditCustomer extends React.Component {
 					>
 						<List.Item arrow="horizontal">地区</List.Item>
 					</Picker>
+					{state.status == 1 ?<InputItem
+						value={state.lessonType}
+						clear
+						placeholder="请输入信息"
+						style={{textAlign:'right'}}
+						onChange={this.onLessonChange.bind(this)}
+					>意向课程</InputItem> : null}
 				</List>
 			</div>
 		)

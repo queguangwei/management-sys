@@ -214,7 +214,7 @@ class Detail extends React.Component {
 										<span className="area">地区:{info.province}{info.city}</span>
 									</p>
 									{/*<p>身份证:{info.idCard}</p>*/}
-                                    {type==1?<p>意向课程:{}</p>:null}
+                                    {type==1?<p>意向课程:{info.lessonType}</p>:null}
 								</div>
 							</div>
 						</div>
