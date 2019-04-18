@@ -164,6 +164,7 @@ class Detail extends React.Component {
             <li>
                 <h4>课程名称：{item.name}
                     <span>报名人数：{item.total}</span>
+                    <span>期数：{item.number}</span>
                 </h4>
                 <p>
                     {item.lessonUsers.map((v, i) =>

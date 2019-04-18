@@ -19,6 +19,7 @@ class Deal extends React.Component {
 			lesson: [],
 			price: null,
 			fee: null,
+			number: null,
 			val: 1,
 			lessonUsers: [{name: '', code: '', job: '', idCard:''}]
 		}
@@ -41,6 +42,10 @@ class Deal extends React.Component {
 			Toast.info("请选择课程!",2);
         	return;
 		}
+        if(state.number < 1 || state.number == null) {
+        	Toast.info("请输入课程期数!",2);
+        	return;
+		}
 		for(let i = 0; i < state.lessonUsers.length; i ++) {
 			for(let j in state.lessonUsers[i]) {
 				if(state.lessonUsers[i][j] == '' || state.lessonUsers[i][j] == null) {
@@ -54,6 +59,7 @@ class Deal extends React.Component {
             lessonRecord: {
                 lessonId: state.lesson[0],
 				totalPrice: state.fee,
+				number: state.number,
 				lessonUsers: state.lessonUsers
             }
         }
@@ -122,6 +128,12 @@ class Deal extends React.Component {
 		}
 		state.lesson = value;
 		state.fee = state.price * state.val;
+		this.setState(state);
+	}
+
+	numberChange(value) {
+		const state = this.state;
+		state.number = value;
 		this.setState(state);
 	}
 
@@ -198,6 +210,13 @@ class Deal extends React.Component {
 						>
 							<List.Item arrow="horizontal">课程名称</List.Item>
 						</Picker>
+						<InputItem
+							value={state.number}
+							type="number"
+							placeholder="请输入信息"
+							onChange={this.numberChange.bind(this)}
+							style={{textAlign:'right'}}
+						>期数</InputItem>
 						<InputItem
 							value={state.price}
 							type="money"
