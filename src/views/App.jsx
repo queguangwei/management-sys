@@ -1,20 +1,17 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import * as Actions from "../store/actions";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import ApiCaller from "../utils/ApiCaller";
-import Api from "../constants/Api";
 import Cookie from "../utils/Cookie";
 import { Login } from '../components/index';
 
-
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
         super(props)
         // this.shouldComponentUpdate = shouldComponentUpdate.bind(this)
         this.state = {
-            isLogined: false,
-
+            isLogined: false
         }
     }
 

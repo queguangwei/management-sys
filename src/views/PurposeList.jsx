@@ -34,10 +34,19 @@ class PurposeList extends React.Component {
 			if (res.code == 0) {
 				state.data = res.data.records;
 				this.setState(state);
+				let locationId = Cookie.get('locationId');
+				this.scrollToAnchor(locationId)
 			} else {
 
 			}
 		})
+	}
+
+	scrollToAnchor(anchorName) {
+		if (anchorName) {
+			let anchorElement = document.getElementById(anchorName);
+			if(anchorElement) { anchorElement.scrollIntoView(); }
+		}
 	}
 
 	onOpenChange() {
@@ -52,7 +61,8 @@ class PurposeList extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(id) {
+	detail(id, e) {
+		Cookie.set('locationId',e.currentTarget.id)
 		browserHistory.push({
 			pathname: '/detail',
 			query: {
@@ -79,6 +89,7 @@ class PurposeList extends React.Component {
 
 	loginout() {
 		Cookie.remove('token', {path: '/'});
+		Cookie.remove('locationId', {path: '/'});
 		location.href = '/'
 	}
 
@@ -154,7 +165,7 @@ class PurposeList extends React.Component {
 			</div>
 		);
 		let item = state.data.map(item =>
-			<Item multipleLine onClick={this.detail.bind(this, item.id)}>
+			<Item multipleLine onClick={this.detail.bind(this, item.id)} id={'li'+item.id+'st'}>
 				<div className="my-list-content" >
 					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className={item.type=='A'?'icon_type_a':(item.type=='B'?'icon_class_b':'icon_class_c')}></span>
 				</div>

@@ -40,7 +40,8 @@ class AllList extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(id) {
+	detail(id, e) {
+        Cookie.set('locationId',e.currentTarget.id)
         browserHistory.push({
             pathname: '/detail',
             query: {
@@ -68,8 +69,16 @@ class AllList extends React.Component {
 
 	loginout() {
         Cookie.remove('token', {path: '/'});
+        Cookie.remove('locationId', {path: '/'});
         location.href = '/'
 	}
+
+    scrollToAnchor(anchorName) {
+        if (anchorName) {
+            let anchorElement = document.getElementById(anchorName);
+            if(anchorElement) { anchorElement.scrollIntoView(); }
+        }
+    }
 
 	getCustomerList(filter) {
 		const state = this.state;
@@ -81,6 +90,8 @@ class AllList extends React.Component {
 				state.isLoading = false;
 				this.setState(state);
 				// Toast.hide();
+                let locationId = Cookie.get('locationId');
+                this.scrollToAnchor(locationId)
 			} else {
 
 			}
@@ -148,7 +159,7 @@ class AllList extends React.Component {
 		);
 
         let item = state.data.map(item =>
-            <Item multipleLine onClick={this.detail.bind(this, item.id)}>
+            <Item multipleLine onClick={this.detail.bind(this, item.id)} id={'li'+item.id+'st'}>
                 <div className="my-list-content" >
                     <span className="name">{item.name}</span><span>电话:{item.code}</span>
                     {item.lessonState==0?<span className="icon_new"></span>:null}

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import * as Actions from '../store/actions'
@@ -35,6 +36,13 @@ class Home extends React.Component {
         this.setState({height: height});
     }
 
+	scrollToAnchor(anchorName) {
+		if (anchorName) {
+			let anchorElement = document.getElementById(anchorName);
+			if(anchorElement) { anchorElement.scrollIntoView(); }
+		}
+	}
+
 	getCustomerList(filter) {
     	const state = this.state;
 		ApiCaller.call(Api.user.list, JSON.stringify(filter), (res) => {
@@ -43,6 +51,8 @@ class Home extends React.Component {
 				state.pages = res.data.pages;
 				state.total = res.data.total;
 				this.setState(state);
+				let locationId = Cookie.get('locationId');
+				this.scrollToAnchor(locationId)
 			} else {
 
 			}
@@ -65,7 +75,8 @@ class Home extends React.Component {
 		browserHistory.push('/add')
 	}
 
-	detail(id) {
+	detail(id, e) {
+		Cookie.set('locationId',e.currentTarget.id)
 		browserHistory.push({
 			pathname: '/detail',
 			query: {
@@ -88,6 +99,7 @@ class Home extends React.Component {
 
 	loginout() {
 		Cookie.remove('token', {path: '/'});
+		Cookie.remove('locationId', {path: '/'});
 		location.href = '/'
 	}
 
@@ -122,7 +134,7 @@ class Home extends React.Component {
 			</div>
 		);
 		let item = state.data.map(item =>
-			<Item multipleLine onClick={this.detail.bind(this, item.id)}>
+			<Item multipleLine onClick={this.detail.bind(this, item.id)} id={'li'+item.id+'st'}>
 				<div className="my-list-content" >
 					<span className="name">{item.name}</span><span>电话:{item.code}</span><span className="icon_new"></span>
 				</div>
@@ -149,6 +161,7 @@ class Home extends React.Component {
 				<Drawer
 					className="my-drawer"
 					style={{ minHeight: state.height + 'px' }}
+					// style={{ minHeight: document.documentElement.clientHeight }}
 					touch={false}
 					sidebar={sidebar}
 					open={this.state.open}
